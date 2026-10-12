@@ -1,0 +1,431 @@
+{
+  "a0_compare": {
+    "a0_exact_call": 0.3852,
+    "a0_false_mutation_rate": 0.4727272727272727,
+    "a1_exact_call": 0.8668,
+    "a1_false_mutation_rate": 0.0,
+    "delta_exact_call": 0.48160000000000003,
+    "source": "artifacts/eval/A0/A0_metrics.json"
+  },
+  "checks": [
+    {
+      "detail": "generated/phase0-v1/test.jsonl",
+      "name": "test_split_exists",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/eval/A1-test/A1-test_metrics.json",
+      "name": "a1_test_metrics_exist",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/eval/A1-test/A1-test_predictions.jsonl",
+      "name": "a1_test_predictions_exist",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": []
+      },
+      "name": "reports_required_metrics",
+      "ok": true
+    },
+    {
+      "detail": "greedy",
+      "name": "greedy_decoding",
+      "ok": true
+    },
+    {
+      "detail": "generated/phase0-v1/test.jsonl",
+      "name": "eval_on_test_split",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/checkpoints/phase0-full-sft",
+      "name": "post_sft_checkpoint",
+      "ok": true
+    },
+    {
+      "detail": {
+        "expected": 2500,
+        "n": 2500
+      },
+      "name": "frozen_test_n",
+      "ok": true
+    },
+    {
+      "detail": {
+        "predictions": 2500,
+        "test": 2500
+      },
+      "name": "predictions_cover_test",
+      "ok": true
+    },
+    {
+      "detail": {
+        "actual": 0.0,
+        "higher_is_better": false,
+        "n": 550,
+        "threshold": 0.005
+      },
+      "name": "safety.false_mutation_rate",
+      "ok": true
+    },
+    {
+      "detail": {
+        "actual": 0.8350515463917526,
+        "higher_is_better": true,
+        "n": 1455,
+        "threshold": 0.99
+      },
+      "name": "active_field.primitive_extraction",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.9032258064516129,
+        "higher_is_better": true,
+        "n": 372,
+        "threshold": 0.99
+      },
+      "name": "active_field.integer",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.6926829268292682,
+        "higher_is_better": true,
+        "n": 205,
+        "threshold": 0.985
+      },
+      "name": "active_field.number",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.8475336322869955,
+        "higher_is_better": true,
+        "n": 223,
+        "threshold": 0.99
+      },
+      "name": "active_field.boolean",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.8350785340314136,
+        "higher_is_better": true,
+        "n": 382,
+        "threshold": 0.98
+      },
+      "name": "active_field.enum",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.8972222222222223,
+        "higher_is_better": true,
+        "n": 360,
+        "threshold": 0.97
+      },
+      "name": "active_field.correction",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.9656488549618321,
+        "higher_is_better": true,
+        "n": 262,
+        "threshold": 0.95
+      },
+      "name": "active_field.synthetic_asr",
+      "ok": true
+    },
+    {
+      "detail": {
+        "actual": 0.9333333333333333,
+        "higher_is_better": true,
+        "n": 420,
+        "threshold": 0.99
+      },
+      "name": "active_field.no_change_precision",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 1.0,
+        "higher_is_better": true,
+        "n": 420,
+        "threshold": 0.97
+      },
+      "name": "active_field.no_change_recall",
+      "ok": true
+    },
+    {
+      "detail": {
+        "actual": 0.875,
+        "higher_is_better": true,
+        "n": 312,
+        "threshold": 0.98
+      },
+      "name": "reachable_fields.candidates_2",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.8288770053475936,
+        "higher_is_better": true,
+        "n": 187,
+        "threshold": 0.97
+      },
+      "name": "reachable_fields.candidates_3",
+      "ok": false
+    },
+    {
+      "detail": {
+        "actual": 0.7368421052631579,
+        "higher_is_better": true,
+        "n": 38,
+        "threshold": 0.95
+      },
+      "name": "reachable_fields.candidates_5",
+      "ok": false
+    },
+    {
+      "detail": [
+        "boolean",
+        "date",
+        "enum",
+        "integer",
+        "no_change",
+        "number",
+        "string"
+      ],
+      "name": "breakdown_by_primitive",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5"
+      ],
+      "name": "breakdown_by_difficulty",
+      "ok": true
+    },
+    {
+      "detail": [
+        "active_field",
+        "reachable_fields"
+      ],
+      "name": "breakdown_by_mode",
+      "ok": true
+    },
+    {
+      "detail": [
+        "asr_only",
+        "clean",
+        "correction_and_asr",
+        "correction_only"
+      ],
+      "name": "breakdown_by_noise",
+      "ok": true
+    },
+    {
+      "detail": [
+        "asr_robustness",
+        "hard_negatives_adversarial",
+        "iid_control",
+        "unseen_corrections",
+        "unseen_enums",
+        "unseen_fields",
+        "unseen_numeric_compositions",
+        "unseen_templates"
+      ],
+      "name": "breakdown_by_holdout",
+      "ok": true
+    }
+  ],
+  "decision": "NO-GO",
+  "device": "mps",
+  "gate": "G9",
+  "generated_at": "2026-10-07T17:36:21+00:00",
+  "go_no_go": {
+    "active_field": {
+      "enum": 0.8350785340314136,
+      "enum_n": 382,
+      "exact_call": 0.872,
+      "exact_call_count": 1635,
+      "false_mutation_count": 0,
+      "false_mutation_rate": 0.0,
+      "field": 0.9397333333333333,
+      "n": 1875,
+      "no_change_f1": 0.9655172413793104,
+      "no_change_precision": 0.9333333333333333,
+      "no_change_recall": 1.0,
+      "no_change_support": 420,
+      "op": 0.9834666666666667,
+      "parse_ok": 0.9994666666666666,
+      "value": 0.8350515463917526,
+      "value_n": 1455
+    },
+    "checks": [
+      {
+        "actual": 0.0,
+        "higher_is_better": false,
+        "n": 550,
+        "name": "safety.false_mutation_rate",
+        "ok": true,
+        "threshold": 0.005
+      },
+      {
+        "actual": 0.8350515463917526,
+        "higher_is_better": true,
+        "n": 1455,
+        "name": "active_field.primitive_extraction",
+        "ok": false,
+        "threshold": 0.99
+      },
+      {
+        "actual": 0.9032258064516129,
+        "higher_is_better": true,
+        "n": 372,
+        "name": "active_field.integer",
+        "ok": false,
+        "threshold": 0.99
+      },
+      {
+        "actual": 0.6926829268292682,
+        "higher_is_better": true,
+        "n": 205,
+        "name": "active_field.number",
+        "ok": false,
+        "threshold": 0.985
+      },
+      {
+        "actual": 0.8475336322869955,
+        "higher_is_better": true,
+        "n": 223,
+        "name": "active_field.boolean",
+        "ok": false,
+        "threshold": 0.99
+      },
+      {
+        "actual": 0.8350785340314136,
+        "higher_is_better": true,
+        "n": 382,
+        "name": "active_field.enum",
+        "ok": false,
+        "threshold": 0.98
+      },
+      {
+        "actual": 0.8972222222222223,
+        "higher_is_better": true,
+        "n": 360,
+        "name": "active_field.correction",
+        "ok": false,
+        "threshold": 0.97
+      },
+      {
+        "actual": 0.9656488549618321,
+        "higher_is_better": true,
+        "n": 262,
+        "name": "active_field.synthetic_asr",
+        "ok": true,
+        "threshold": 0.95
+      },
+      {
+        "actual": 0.9333333333333333,
+        "higher_is_better": true,
+        "n": 420,
+        "name": "active_field.no_change_precision",
+        "ok": false,
+        "threshold": 0.99
+      },
+      {
+        "actual": 1.0,
+        "higher_is_better": true,
+        "n": 420,
+        "name": "active_field.no_change_recall",
+        "ok": true,
+        "threshold": 0.97
+      },
+      {
+        "actual": 0.875,
+        "higher_is_better": true,
+        "n": 312,
+        "name": "reachable_fields.candidates_2",
+        "ok": false,
+        "threshold": 0.98
+      },
+      {
+        "actual": 0.8288770053475936,
+        "higher_is_better": true,
+        "n": 187,
+        "name": "reachable_fields.candidates_3",
+        "ok": false,
+        "threshold": 0.97
+      },
+      {
+        "actual": 0.7368421052631579,
+        "higher_is_better": true,
+        "n": 38,
+        "name": "reachable_fields.candidates_5",
+        "ok": false,
+        "threshold": 0.95
+      }
+    ],
+    "fmr_stretch": {
+      "actual": 0.0,
+      "met": true,
+      "n": 550,
+      "threshold": 0.001
+    },
+    "go": false,
+    "overall": {
+      "enum": 0.82,
+      "enum_n": 500,
+      "exact_call": 0.8668,
+      "exact_call_count": 2167,
+      "false_mutation_count": 0,
+      "false_mutation_rate": 0.0,
+      "field": 0.9372,
+      "n": 2500,
+      "no_change_f1": 0.9674582233948988,
+      "no_change_precision": 0.9369676320272572,
+      "no_change_recall": 1.0,
+      "no_change_support": 550,
+      "op": 0.9844,
+      "parse_ok": 0.9996,
+      "value": 0.8292307692307692,
+      "value_n": 1950
+    }
+  },
+  "hint": "Primary: exact tool-call + FMR vs config go_no_go thresholds on frozen test.",
+  "model_id": "artifacts/checkpoints/phase0-full-sft",
+  "overall": {
+    "enum": 0.82,
+    "enum_n": 500,
+    "exact_call": 0.8668,
+    "exact_call_count": 2167,
+    "false_mutation_count": 0,
+    "false_mutation_rate": 0.0,
+    "field": 0.9372,
+    "n": 2500,
+    "no_change_f1": 0.9674582233948988,
+    "no_change_precision": 0.9369676320272572,
+    "no_change_recall": 1.0,
+    "no_change_support": 550,
+    "op": 0.9844,
+    "parse_ok": 0.9996,
+    "value": 0.8292307692307692,
+    "value_n": 1950
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "fail",
+  "title": "Evaluation / GO-NO-GO (test)"
+}

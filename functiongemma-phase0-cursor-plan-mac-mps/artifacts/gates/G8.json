@@ -1,0 +1,76 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "mps_built": true
+      },
+      "name": "mps_available",
+      "ok": true
+    },
+    {
+      "detail": "mps",
+      "name": "device_plan_mps",
+      "ok": true
+    },
+    {
+      "detail": "/Users/mukil/.cache/huggingface/hub/models--google--functiongemma-270m-it/snapshots/39eccb091651513a5dfb56892d3714c1b5b8276c/config.json",
+      "name": "hf_model_access_verified",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "sft_exists:train.sft.jsonl",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "sft_exists:validation.sft.jsonl",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/checkpoints/phase0-full-sft-smoke",
+      "name": "smoke_checkpoint_dir_exists",
+      "ok": true
+    },
+    {
+      "detail": [
+        "chat_template.jinja",
+        "config.json",
+        "generation_config.json",
+        "model.safetensors",
+        "smoke_report.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "trainer_state.json",
+        "training_args.bin"
+      ],
+      "name": "smoke_weights_present",
+      "ok": true
+    },
+    {
+      "detail": {
+        "last_loss": 0.2678,
+        "min_loss": 0.2678,
+        "n_logs": 5
+      },
+      "name": "smoke_finite_loss_logged",
+      "ok": true
+    },
+    {
+      "detail": {
+        "params": 268098176
+      },
+      "name": "checkpoint_reloads",
+      "ok": true
+    }
+  ],
+  "gate": "G8",
+  "generated_at": "2026-10-07T09:52:14+00:00",
+  "hint": "Run: ./scripts/smoke_train_macos.sh",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "smoke_dir": "artifacts/checkpoints/phase0-full-sft-smoke",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "MPS smoke SFT (Phase-0 host)"
+}

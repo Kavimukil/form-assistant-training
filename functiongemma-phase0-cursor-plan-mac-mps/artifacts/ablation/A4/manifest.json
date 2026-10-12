@@ -1,0 +1,15 @@
+{
+  "frozen_test_path": "generated/phase0-v1/test.jsonl",
+  "frozen_test_sha256": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+  "level": 4,
+  "nested_in_previous": true,
+  "tag": "A4",
+  "title": "corrections",
+  "train": "artifacts/ablation/A4/train.sft.jsonl",
+  "train_ids": "artifacts/ablation/A4/train_ids.json",
+  "train_n": 9458,
+  "train_sha256": "663227bdb9d4b1d277bc9ebd16000d621d4e3cc03120562549e8d645755d349a",
+  "validation": "artifacts/ablation/A4/validation.sft.jsonl",
+  "validation_n": 1159,
+  "validation_sha256": "cb763f4672182e186a50aafec23436ca23a496ff7131e0bd7218d550e0a15d23"
+}

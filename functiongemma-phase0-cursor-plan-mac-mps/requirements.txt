@@ -1,0 +1,12 @@
+torch>=2.6
+transformers>=4.53
+trl>=0.19
+datasets>=3.6
+accelerate>=1.8
+huggingface_hub>=0.33
+safetensors>=0.5
+PyYAML>=6.0
+jsonschema>=4.23
+pydantic>=2.11
+numpy>=2.0
+tqdm>=4.67

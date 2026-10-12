@@ -1,0 +1,390 @@
+{
+  "checks": [
+    {
+      "detail": "artifacts/ablation/ladder_report.json",
+      "name": "ladder_report_exists",
+      "ok": true
+    },
+    {
+      "detail": "generated/phase0-v1/test.jsonl",
+      "name": "frozen_test_exists",
+      "ok": true
+    },
+    {
+      "detail": {
+        "live": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+        "report": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3"
+      },
+      "name": "frozen_test_unchanged",
+      "ok": true
+    },
+    {
+      "detail": {
+        "expected": 2500,
+        "report_n": 2500
+      },
+      "name": "frozen_test_n",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A0/manifest.json",
+      "name": "manifest:A0",
+      "ok": true
+    },
+    {
+      "detail": "base (no SFT)",
+      "name": "title:A0",
+      "ok": true
+    },
+    {
+      "detail": 0,
+      "name": "A0_no_train_rows",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A1/manifest.json",
+      "name": "manifest:A1",
+      "ok": true
+    },
+    {
+      "detail": "primitives (clean active-field, deterministic)",
+      "name": "title:A1",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A1/train.sft.jsonl",
+      "name": "train_exists:A1",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 4786,
+        "manifest": 4786
+      },
+      "name": "train_n_matches:A1",
+      "ok": true
+    },
+    {
+      "detail": 4786,
+      "name": "ids_n:A1",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A2/manifest.json",
+      "name": "manifest:A2",
+      "ok": true
+    },
+    {
+      "detail": "linguistic variation (+ curated_manual)",
+      "name": "title:A2",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A2/train.sft.jsonl",
+      "name": "train_exists:A2",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 5581,
+        "manifest": 5581
+      },
+      "name": "train_n_matches:A2",
+      "ok": true
+    },
+    {
+      "detail": 5581,
+      "name": "ids_n:A2",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": 0
+      },
+      "name": "nested_subset:A2",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A3/manifest.json",
+      "name": "manifest:A3",
+      "ok": true
+    },
+    {
+      "detail": "negatives (+ no_change)",
+      "name": "title:A3",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A3/train.sft.jsonl",
+      "name": "train_exists:A3",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 7595,
+        "manifest": 7595
+      },
+      "name": "train_n_matches:A3",
+      "ok": true
+    },
+    {
+      "detail": 7595,
+      "name": "ids_n:A3",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": 0
+      },
+      "name": "nested_subset:A3",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A4/manifest.json",
+      "name": "manifest:A4",
+      "ok": true
+    },
+    {
+      "detail": "corrections",
+      "name": "title:A4",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A4/train.sft.jsonl",
+      "name": "train_exists:A4",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 9458,
+        "manifest": 9458
+      },
+      "name": "train_n_matches:A4",
+      "ok": true
+    },
+    {
+      "detail": 9458,
+      "name": "ids_n:A4",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": 0
+      },
+      "name": "nested_subset:A4",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A5/manifest.json",
+      "name": "manifest:A5",
+      "ok": true
+    },
+    {
+      "detail": "synthetic ASR",
+      "name": "title:A5",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A5/train.sft.jsonl",
+      "name": "train_exists:A5",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 10544,
+        "manifest": 10544
+      },
+      "name": "train_n_matches:A5",
+      "ok": true
+    },
+    {
+      "detail": 10544,
+      "name": "ids_n:A5",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": 0
+      },
+      "name": "nested_subset:A5",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A6/manifest.json",
+      "name": "manifest:A6",
+      "ok": true
+    },
+    {
+      "detail": "teacher paraphrases",
+      "name": "title:A6",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A6/train.sft.jsonl",
+      "name": "train_exists:A6",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 14277,
+        "manifest": 14277
+      },
+      "name": "train_n_matches:A6",
+      "ok": true
+    },
+    {
+      "detail": 14277,
+      "name": "ids_n:A6",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": 0
+      },
+      "name": "nested_subset:A6",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A7/manifest.json",
+      "name": "manifest:A7",
+      "ok": true
+    },
+    {
+      "detail": "real ASR seeds",
+      "name": "title:A7",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A7/train.sft.jsonl",
+      "name": "train_exists:A7",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 15000,
+        "manifest": 15000
+      },
+      "name": "train_n_matches:A7",
+      "ok": true
+    },
+    {
+      "detail": 15000,
+      "name": "ids_n:A7",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": 0
+      },
+      "name": "nested_subset:A7",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A8/manifest.json",
+      "name": "manifest:A8",
+      "ok": true
+    },
+    {
+      "detail": "reachable-field training (full)",
+      "name": "title:A8",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/ablation/A8/train.sft.jsonl",
+      "name": "train_exists:A8",
+      "ok": true
+    },
+    {
+      "detail": {
+        "file": 20000,
+        "manifest": 20000
+      },
+      "name": "train_n_matches:A8",
+      "ok": true
+    },
+    {
+      "detail": 20000,
+      "name": "ids_n:A8",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": 0
+      },
+      "name": "nested_subset:A8",
+      "ok": true
+    },
+    {
+      "detail": {
+        "A8": 20000,
+        "full": 20000
+      },
+      "name": "A8_equals_full_train",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "filter_a1_invariants",
+      "ok": true
+    }
+  ],
+  "evals_present": [
+    "A1-test"
+  ],
+  "frozen_test_sha256": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+  "gate": "G10",
+  "generated_at": "2026-10-07T17:42:27+00:00",
+  "hint": "Materialize subsets, then train each rung with `python -m form_sft.cli ablation train-cmd A1` and evaluate on frozen test.",
+  "ladder_rungs": {
+    "A0": {
+      "title": "base (no SFT)",
+      "train_n": 0,
+      "validation_n": 0
+    },
+    "A1": {
+      "title": "primitives (clean active-field, deterministic)",
+      "train_n": 4786,
+      "validation_n": 567
+    },
+    "A2": {
+      "title": "linguistic variation (+ curated_manual)",
+      "train_n": 5581,
+      "validation_n": 677
+    },
+    "A3": {
+      "title": "negatives (+ no_change)",
+      "train_n": 7595,
+      "validation_n": 912
+    },
+    "A4": {
+      "title": "corrections",
+      "train_n": 9458,
+      "validation_n": 1159
+    },
+    "A5": {
+      "title": "synthetic ASR",
+      "train_n": 10544,
+      "validation_n": 1311
+    },
+    "A6": {
+      "title": "teacher paraphrases",
+      "train_n": 14277,
+      "validation_n": 1777
+    },
+    "A7": {
+      "title": "real ASR seeds",
+      "train_n": 15000,
+      "validation_n": 1875
+    },
+    "A8": {
+      "title": "reachable-field training (full)",
+      "train_n": 20000,
+      "validation_n": 2500
+    }
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "Ablation ladder (A0\u2013A8)"
+}

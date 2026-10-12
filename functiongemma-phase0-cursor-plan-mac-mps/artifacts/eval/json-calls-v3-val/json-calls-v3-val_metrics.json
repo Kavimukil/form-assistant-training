@@ -1,0 +1,28 @@
+{
+  "overall": {
+    "n": 3483,
+    "exact_call": 0.9876543209876543,
+    "exact_call_count": 3440,
+    "op": 0.9988515647430376,
+    "field": 0.9979902383003159,
+    "value": 0.9861399861399861,
+    "value_n": 2886,
+    "enum": 0.9970193740685543,
+    "enum_n": 671,
+    "no_change_precision": 1.0,
+    "no_change_recall": 0.9949748743718593,
+    "no_change_f1": 0.9974811083123426,
+    "no_change_support": 597,
+    "false_mutation_rate": 0.005025125628140704,
+    "false_mutation_count": 3,
+    "parse_ok": 1.0
+  },
+  "model_id": "artifacts/checkpoints/json-calls-sft-v3",
+  "device": "mps",
+  "decoding": "greedy",
+  "format": "function_calls_json",
+  "n": 3483,
+  "tag": "json-calls-v3-val",
+  "split_path": "generated/json-calls-v1/validation.sft.jsonl",
+  "predictions_path": "artifacts/eval/json-calls-v3-val/json-calls-v3-val_predictions.jsonl"
+}

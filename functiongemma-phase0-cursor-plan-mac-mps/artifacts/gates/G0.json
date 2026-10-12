@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+        "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+        "status": "ok"
+      },
+      "name": "doctor_ok",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": []
+      },
+      "name": "config_parses",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "config_total_rows_25000",
+      "ok": true
+    },
+    {
+      "detail": {
+        "failures": [],
+        "modules": 30
+      },
+      "name": "all_modules_import",
+      "ok": true
+    },
+    {
+      "detail": {
+        "present": []
+      },
+      "name": "no_generated_corpus_yet",
+      "ok": true
+    }
+  ],
+  "gate": "G0",
+  "generated_at": "2026-10-07T08:00:33+00:00",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "Bootstrap"
+}

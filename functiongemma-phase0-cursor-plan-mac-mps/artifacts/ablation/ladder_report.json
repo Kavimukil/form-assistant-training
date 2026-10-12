@@ -1,0 +1,66 @@
+{
+  "corpus_dir": "generated/phase0-v1",
+  "frozen_test_n": 2500,
+  "frozen_test_path": "generated/phase0-v1/test.jsonl",
+  "frozen_test_sha256": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+  "note": "Evaluate every rung on the same frozen test.jsonl; never regenerate test.",
+  "out_root": "artifacts/ablation",
+  "rungs": {
+    "A0": {
+      "title": "base (no SFT)",
+      "train_n": 0,
+      "validation_n": 0
+    },
+    "A1": {
+      "title": "primitives (clean active-field, deterministic)",
+      "train_n": 4786,
+      "validation_n": 567
+    },
+    "A2": {
+      "title": "linguistic variation (+ curated_manual)",
+      "train_n": 5581,
+      "validation_n": 677
+    },
+    "A3": {
+      "title": "negatives (+ no_change)",
+      "train_n": 7595,
+      "validation_n": 912
+    },
+    "A4": {
+      "title": "corrections",
+      "train_n": 9458,
+      "validation_n": 1159
+    },
+    "A5": {
+      "title": "synthetic ASR",
+      "train_n": 10544,
+      "validation_n": 1311
+    },
+    "A6": {
+      "title": "teacher paraphrases",
+      "train_n": 14277,
+      "validation_n": 1777
+    },
+    "A7": {
+      "title": "real ASR seeds",
+      "train_n": 15000,
+      "validation_n": 1875
+    },
+    "A8": {
+      "title": "reachable-field training (full)",
+      "train_n": 20000,
+      "validation_n": 2500
+    }
+  },
+  "titles": {
+    "A0": "base (no SFT)",
+    "A1": "primitives (clean active-field, deterministic)",
+    "A2": "linguistic variation (+ curated_manual)",
+    "A3": "negatives (+ no_change)",
+    "A4": "corrections",
+    "A5": "synthetic ASR",
+    "A6": "teacher paraphrases",
+    "A7": "real ASR seeds",
+    "A8": "reachable-field training (full)"
+  }
+}

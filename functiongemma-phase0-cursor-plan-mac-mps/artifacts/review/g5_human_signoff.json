@@ -1,0 +1,7 @@
+{
+  "human_signoff": true,
+  "signed_off_by": "user",
+  "signed_off_at": "2026-10-07T14:33:00+05:30",
+  "sample_file": "artifacts/review/g5_review_sample.jsonl",
+  "note": "User verified G5 review sample looks good before proceeding to G6."
+}

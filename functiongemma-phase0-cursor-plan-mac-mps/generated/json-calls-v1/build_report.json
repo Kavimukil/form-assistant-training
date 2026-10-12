@@ -1,0 +1,74 @@
+{
+  "model_id": "google/functiongemma-270m-it",
+  "max_seq_length": 1024,
+  "format": "function_calls_json",
+  "splits": {
+    "train": {
+      "compiled_rows": 31699,
+      "output": "generated/json-calls-v1/train.sft.jsonl",
+      "p50": 258.0,
+      "p95": 545.1999999999971,
+      "p99": 669.0,
+      "max": 946,
+      "synthetic_rows": 11699
+    },
+    "validation": {
+      "compiled_rows": 3872,
+      "output": "generated/json-calls-v1/validation.sft.jsonl",
+      "p50": 257.0,
+      "p95": 522.0,
+      "p99": 670.0,
+      "max": 971,
+      "synthetic_rows": 1372
+    },
+    "test": {
+      "compiled_rows": 2500,
+      "output": "generated/json-calls-v1/test.sft.jsonl",
+      "p50": 250.0,
+      "p95": 428.0,
+      "p99": 565.0,
+      "max": 822,
+      "synthetic_rows": 0
+    }
+  },
+  "passed": true,
+  "problems": [],
+  "fixtures": {
+    "compiled_rows": 32,
+    "output": "generated/json-calls-v1/fixtures.jsonl"
+  },
+  "held_out_ids": [
+    "ambiguous_number",
+    "ambiguous_option",
+    "boolean_backroom",
+    "boolean_consent",
+    "choice_alias",
+    "clear_promotion",
+    "compound_age_consent_001",
+    "compound_age_consent_002",
+    "compound_age_consent_003",
+    "compound_store",
+    "constraint_age",
+    "correction_age",
+    "date_birth",
+    "date_visit",
+    "email_spoken",
+    "integer_age",
+    "integer_registers",
+    "multi_add",
+    "multi_selection",
+    "negation_choice",
+    "negation_consent",
+    "noise_choice",
+    "noise_compound",
+    "noise_registers",
+    "number_discount",
+    "number_weight",
+    "option_truncated",
+    "out_of_context",
+    "reference_age",
+    "reference_multi",
+    "string_city",
+    "string_name"
+  ]
+}

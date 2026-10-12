@@ -1,0 +1,52 @@
+spec:
+  name: functiongemma-form-extraction-phase0
+  version: 1.0.0
+  experiment_id: phase0-v1
+  total_rows: 25000
+  random_seed: 20261006
+  model_id: google/functiongemma-270m-it
+splits: {train: 20000, validation: 2500, test: 2500}
+primitives:
+  integer: {total: 5000, split: {train: 4000, validation: 500, test: 500}}
+  number: {total: 3000, split: {train: 2400, validation: 300, test: 300}}
+  boolean: {total: 3000, split: {train: 2400, validation: 300, test: 300}}
+  enum: {total: 5000, split: {train: 4000, validation: 500, test: 500}}
+  string: {total: 2000, split: {train: 1600, validation: 200, test: 200}}
+  date: {total: 1500, split: {train: 1200, validation: 150, test: 150}}
+  no_change: {total: 5500, split: {train: 4400, validation: 550, test: 550}}
+specialization:
+  active_field: {total: 18750, split: {train: 15000, validation: 1875, test: 1875}}
+  reachable_fields:
+    total: 6250
+    split: {train: 5000, validation: 625, test: 625}
+    candidate_counts: {2: 3125, 3: 1875, 4: 625, 5: 375, 6_to_8: 250}
+phenomena:
+  correction:
+    total: 5000
+    split: {train: 4000, validation: 500, test: 500}
+    subtypes: {explicit_no_replacement: 1250, sorry_self_correction: 1000, actually_correction: 1000, restart_repetition: 750, negated_distractor: 500, multiple_corrections: 250, unresolved_to_no_change: 250}
+  asr_noise:
+    total: 3750
+    split: {train: 3000, validation: 375, test: 375}
+    subtypes: {punctuation_case_loss: 750, filler_insertion: 750, repetition_stutter: 550, homophone_substitution: 500, number_specific_confusion: 500, minor_word_deletion: 300, minor_word_duplication: 250, compound_two_noise: 150}
+intersection: {clean: 17000, correction_only: 4250, asr_only: 3000, correction_and_asr: 750}
+realization_source: {deterministic_template: 15000, teacher_generated: 6250, curated_manual: 2500, realistic_asr_seed: 1250}
+field_identity: {semantic: 12500, synthetic_semantic: 6250, opaque: 6250}
+difficulty: {D1: 5000, D2: 6250, D3: 6250, D4: 5000, D5: 2500}
+test_partitions: {iid_control: 400, unseen_fields: 400, unseen_templates: 400, unseen_numeric_compositions: 300, unseen_enums: 300, unseen_corrections: 250, asr_robustness: 200, hard_negatives_adversarial: 250}
+constraints:
+  random_row_split_allowed: false
+  split_assignment_before_realization: true
+  exact_quota_tolerance: 0
+  duplicate_ids: 0
+  structural_errors: 0
+  semantic_errors: 0
+  prohibited_leakage: 0
+  single_operation_only: true
+  relative_dates: false
+  locale: en-IN
+  correction_asr_overlap: 750
+go_no_go:
+  active_field: {primitive_extraction: 0.99, integer: 0.99, number: 0.985, boolean: 0.99, enum: 0.98, correction: 0.97, no_change_precision: 0.99, no_change_recall: 0.97, synthetic_asr: 0.95}
+  reachable_fields: {candidates_2: 0.98, candidates_3: 0.97, candidates_5: 0.95}
+  safety: {false_mutation_rate_max: 0.005, stretch: 0.001}

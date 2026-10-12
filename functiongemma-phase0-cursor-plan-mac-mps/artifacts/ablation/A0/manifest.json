@@ -1,0 +1,12 @@
+{
+  "frozen_test_path": "generated/phase0-v1/test.jsonl",
+  "frozen_test_sha256": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+  "level": 0,
+  "nested_in_next": true,
+  "tag": "A0",
+  "title": "base (no SFT)",
+  "train": null,
+  "train_n": 0,
+  "validation": null,
+  "validation_n": 0
+}

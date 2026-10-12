@@ -1,0 +1,36 @@
+# Mac -> WSL2 source sync policy.
+# First matching rule wins. Keep source/config/generated datasets; exclude host-specific state.
+- /.git/
+- /.venv/
+- /venv/
+- /.idea/
+- /.vscode/
+- /.DS_Store
+- **/.DS_Store
+- **/__pycache__/
+- **/*.py[cod]
+- /.pytest_cache/
+- /.mypy_cache/
+- /.ruff_cache/
+- /.coverage
+- /htmlcov/
+- /**/*.egg-info/
+
+# Never push training state/results from Mac to WSL.
+- /outputs/
+- /checkpoints/
+- /wandb/
+- /artifacts/remote-results/
+- /artifacts/remote-checkpoints/
+- /artifacts/packages/
+- /artifacts/*.tar.gz
+
+# Hugging Face / ML caches must remain local to WSL.
+- /.cache/
+- /huggingface-cache/
+
+# Temporary/editor files.
+- **/*~
+- **/*.swp
+- **/*.swo
+- **/.Trash/

@@ -1,0 +1,135 @@
+{
+  "checks": [
+    {
+      "detail": 10000,
+      "name": "dry_run_samples",
+      "ok": true
+    },
+    {
+      "detail": 0,
+      "name": "zero_structural_errors",
+      "ok": true
+    },
+    {
+      "detail": 0,
+      "name": "zero_semantic_errors",
+      "ok": true
+    },
+    {
+      "detail": 0,
+      "name": "regenerable_deterministically_from_slot_seed",
+      "ok": true
+    },
+    {
+      "detail": {
+        "boolean": 1199,
+        "date": 596,
+        "enum": 2004,
+        "integer": 1997,
+        "no_change": 2200,
+        "number": 1214,
+        "string": 790
+      },
+      "name": "every_primitive_covered",
+      "ok": true
+    },
+    {
+      "detail": {
+        "boolean": 1543,
+        "date": 951,
+        "enum": 2404,
+        "integer": 2375,
+        "number": 1573,
+        "string": 1154
+      },
+      "name": "every_field_type_covered_by_no_change_and_primitives",
+      "ok": true
+    },
+    {
+      "detail": {
+        "opaque": 2441,
+        "semantic": 5015,
+        "synthetic_semantic": 2544
+      },
+      "name": "all_identity_classes_covered",
+      "ok": true
+    },
+    {
+      "detail": {
+        "active_field": 7482,
+        "reachable_fields": 2518
+      },
+      "name": "both_specialization_modes_covered",
+      "ok": true
+    },
+    {
+      "detail": {
+        "ok": 2441,
+        "opaque_rows": 2441
+      },
+      "name": "opaque_ids_supported",
+      "ok": true
+    },
+    {
+      "detail": {
+        "None": 7800,
+        "declined": 273,
+        "hypothetical": 231,
+        "negated_assertion": 218,
+        "nonreachable_field": 328,
+        "other_person": 553,
+        "question": 199,
+        "unrelated": 299,
+        "unresolved": 99
+      },
+      "name": "no_change_kinds_incl_other_person",
+      "ok": true
+    }
+  ],
+  "coverage": {
+    "identity": {
+      "opaque": 2441,
+      "semantic": 5015,
+      "synthetic_semantic": 2544
+    },
+    "mode": {
+      "active_field": 7482,
+      "reachable_fields": 2518
+    },
+    "nc_kind": {
+      "None": 7800,
+      "declined": 273,
+      "hypothetical": 231,
+      "negated_assertion": 218,
+      "nonreachable_field": 328,
+      "other_person": 553,
+      "question": 199,
+      "unrelated": 299,
+      "unresolved": 99
+    },
+    "primitive": {
+      "boolean": 1199,
+      "date": 596,
+      "enum": 2004,
+      "integer": 1997,
+      "no_change": 2200,
+      "number": 1214,
+      "string": 790
+    },
+    "subject_type": {
+      "boolean": 1543,
+      "date": 951,
+      "enum": 2404,
+      "integer": 2375,
+      "number": 1573,
+      "string": 1154
+    }
+  },
+  "gate": "G3",
+  "generated_at": "2026-10-07T08:00:39+00:00",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "Semantic truth generators"
+}

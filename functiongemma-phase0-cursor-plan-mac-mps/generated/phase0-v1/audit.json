@@ -1,0 +1,667 @@
+{
+  "benchmark_files_ok": true,
+  "consistency_errors": 0,
+  "distribution": {
+    "nc_kind": {
+      "declined": 718,
+      "hypothetical": 529,
+      "negated_assertion": 584,
+      "nonreachable_field": 821,
+      "other_person": 1355,
+      "question": 515,
+      "unrelated": 728,
+      "unresolved": 250
+    },
+    "source": {
+      "curated_manual": 2500,
+      "deterministic_template": 15000,
+      "realistic_asr_seed": 1250,
+      "teacher_generated": 6250
+    },
+    "test_partition": {
+      "asr_robustness": 200,
+      "hard_negatives_adversarial": 250,
+      "iid_control": 400,
+      "unseen_corrections": 250,
+      "unseen_enums": 300,
+      "unseen_fields": 400,
+      "unseen_numeric_compositions": 300,
+      "unseen_templates": 400
+    }
+  },
+  "duplicate_content": 0,
+  "duplicate_ids": 0,
+  "error_samples": [],
+  "experiment_id": "phase0-v1",
+  "failed_quota_checks": [],
+  "file_counts": {
+    "test.jsonl": 2500,
+    "train.jsonl": 20000,
+    "validation.jsonl": 2500
+  },
+  "leakage_samples": [],
+  "manifest_ok": true,
+  "passed": true,
+  "problems": [],
+  "prohibited_leakage": 0,
+  "quota_checks": [
+    {
+      "actual": 25000,
+      "expected": 25000,
+      "name": "total_rows",
+      "ok": true
+    },
+    {
+      "actual": 20000,
+      "expected": 20000,
+      "name": "split:train",
+      "ok": true
+    },
+    {
+      "actual": 2500,
+      "expected": 2500,
+      "name": "split:validation",
+      "ok": true
+    },
+    {
+      "actual": 2500,
+      "expected": 2500,
+      "name": "split:test",
+      "ok": true
+    },
+    {
+      "actual": 5000,
+      "expected": 5000,
+      "name": "primitive:integer",
+      "ok": true
+    },
+    {
+      "actual": 4000,
+      "expected": 4000,
+      "name": "primitive:integer:train",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "primitive:integer:validation",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "primitive:integer:test",
+      "ok": true
+    },
+    {
+      "actual": 3000,
+      "expected": 3000,
+      "name": "primitive:number",
+      "ok": true
+    },
+    {
+      "actual": 2400,
+      "expected": 2400,
+      "name": "primitive:number:train",
+      "ok": true
+    },
+    {
+      "actual": 300,
+      "expected": 300,
+      "name": "primitive:number:validation",
+      "ok": true
+    },
+    {
+      "actual": 300,
+      "expected": 300,
+      "name": "primitive:number:test",
+      "ok": true
+    },
+    {
+      "actual": 3000,
+      "expected": 3000,
+      "name": "primitive:boolean",
+      "ok": true
+    },
+    {
+      "actual": 2400,
+      "expected": 2400,
+      "name": "primitive:boolean:train",
+      "ok": true
+    },
+    {
+      "actual": 300,
+      "expected": 300,
+      "name": "primitive:boolean:validation",
+      "ok": true
+    },
+    {
+      "actual": 300,
+      "expected": 300,
+      "name": "primitive:boolean:test",
+      "ok": true
+    },
+    {
+      "actual": 5000,
+      "expected": 5000,
+      "name": "primitive:enum",
+      "ok": true
+    },
+    {
+      "actual": 4000,
+      "expected": 4000,
+      "name": "primitive:enum:train",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "primitive:enum:validation",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "primitive:enum:test",
+      "ok": true
+    },
+    {
+      "actual": 2000,
+      "expected": 2000,
+      "name": "primitive:string",
+      "ok": true
+    },
+    {
+      "actual": 1600,
+      "expected": 1600,
+      "name": "primitive:string:train",
+      "ok": true
+    },
+    {
+      "actual": 200,
+      "expected": 200,
+      "name": "primitive:string:validation",
+      "ok": true
+    },
+    {
+      "actual": 200,
+      "expected": 200,
+      "name": "primitive:string:test",
+      "ok": true
+    },
+    {
+      "actual": 1500,
+      "expected": 1500,
+      "name": "primitive:date",
+      "ok": true
+    },
+    {
+      "actual": 1200,
+      "expected": 1200,
+      "name": "primitive:date:train",
+      "ok": true
+    },
+    {
+      "actual": 150,
+      "expected": 150,
+      "name": "primitive:date:validation",
+      "ok": true
+    },
+    {
+      "actual": 150,
+      "expected": 150,
+      "name": "primitive:date:test",
+      "ok": true
+    },
+    {
+      "actual": 5500,
+      "expected": 5500,
+      "name": "primitive:no_change",
+      "ok": true
+    },
+    {
+      "actual": 4400,
+      "expected": 4400,
+      "name": "primitive:no_change:train",
+      "ok": true
+    },
+    {
+      "actual": 550,
+      "expected": 550,
+      "name": "primitive:no_change:validation",
+      "ok": true
+    },
+    {
+      "actual": 550,
+      "expected": 550,
+      "name": "primitive:no_change:test",
+      "ok": true
+    },
+    {
+      "actual": 18750,
+      "expected": 18750,
+      "name": "specialization:active_field",
+      "ok": true
+    },
+    {
+      "actual": 15000,
+      "expected": 15000,
+      "name": "specialization:active_field:train",
+      "ok": true
+    },
+    {
+      "actual": 1875,
+      "expected": 1875,
+      "name": "specialization:active_field:validation",
+      "ok": true
+    },
+    {
+      "actual": 1875,
+      "expected": 1875,
+      "name": "specialization:active_field:test",
+      "ok": true
+    },
+    {
+      "actual": 6250,
+      "expected": 6250,
+      "name": "specialization:reachable_fields",
+      "ok": true
+    },
+    {
+      "actual": 5000,
+      "expected": 5000,
+      "name": "specialization:reachable_fields:train",
+      "ok": true
+    },
+    {
+      "actual": 625,
+      "expected": 625,
+      "name": "specialization:reachable_fields:validation",
+      "ok": true
+    },
+    {
+      "actual": 625,
+      "expected": 625,
+      "name": "specialization:reachable_fields:test",
+      "ok": true
+    },
+    {
+      "actual": 3125,
+      "expected": 3125,
+      "name": "reachable_bucket:2",
+      "ok": true
+    },
+    {
+      "actual": 1875,
+      "expected": 1875,
+      "name": "reachable_bucket:3",
+      "ok": true
+    },
+    {
+      "actual": 625,
+      "expected": 625,
+      "name": "reachable_bucket:4",
+      "ok": true
+    },
+    {
+      "actual": 375,
+      "expected": 375,
+      "name": "reachable_bucket:5",
+      "ok": true
+    },
+    {
+      "actual": 250,
+      "expected": 250,
+      "name": "reachable_bucket:6_to_8",
+      "ok": true
+    },
+    {
+      "actual": 18750,
+      "expected": 18750,
+      "name": "reachable_bucket:none_for_active",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "reachable_bucket:only_reachable_mode",
+      "ok": true
+    },
+    {
+      "actual": 5000,
+      "expected": 5000,
+      "name": "correction:total",
+      "ok": true
+    },
+    {
+      "actual": 4000,
+      "expected": 4000,
+      "name": "correction:train",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "correction:validation",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "correction:test",
+      "ok": true
+    },
+    {
+      "actual": 1250,
+      "expected": 1250,
+      "name": "correction_subtype:explicit_no_replacement",
+      "ok": true
+    },
+    {
+      "actual": 1000,
+      "expected": 1000,
+      "name": "correction_subtype:sorry_self_correction",
+      "ok": true
+    },
+    {
+      "actual": 1000,
+      "expected": 1000,
+      "name": "correction_subtype:actually_correction",
+      "ok": true
+    },
+    {
+      "actual": 750,
+      "expected": 750,
+      "name": "correction_subtype:restart_repetition",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "correction_subtype:negated_distractor",
+      "ok": true
+    },
+    {
+      "actual": 250,
+      "expected": 250,
+      "name": "correction_subtype:multiple_corrections",
+      "ok": true
+    },
+    {
+      "actual": 250,
+      "expected": 250,
+      "name": "correction_subtype:unresolved_to_no_change",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "correction_subtype:null_iff_clean",
+      "ok": true
+    },
+    {
+      "actual": 3750,
+      "expected": 3750,
+      "name": "asr:total",
+      "ok": true
+    },
+    {
+      "actual": 3000,
+      "expected": 3000,
+      "name": "asr:train",
+      "ok": true
+    },
+    {
+      "actual": 375,
+      "expected": 375,
+      "name": "asr:validation",
+      "ok": true
+    },
+    {
+      "actual": 375,
+      "expected": 375,
+      "name": "asr:test",
+      "ok": true
+    },
+    {
+      "actual": 750,
+      "expected": 750,
+      "name": "asr_subtype:punctuation_case_loss",
+      "ok": true
+    },
+    {
+      "actual": 750,
+      "expected": 750,
+      "name": "asr_subtype:filler_insertion",
+      "ok": true
+    },
+    {
+      "actual": 550,
+      "expected": 550,
+      "name": "asr_subtype:repetition_stutter",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "asr_subtype:homophone_substitution",
+      "ok": true
+    },
+    {
+      "actual": 500,
+      "expected": 500,
+      "name": "asr_subtype:number_specific_confusion",
+      "ok": true
+    },
+    {
+      "actual": 300,
+      "expected": 300,
+      "name": "asr_subtype:minor_word_deletion",
+      "ok": true
+    },
+    {
+      "actual": 250,
+      "expected": 250,
+      "name": "asr_subtype:minor_word_duplication",
+      "ok": true
+    },
+    {
+      "actual": 150,
+      "expected": 150,
+      "name": "asr_subtype:compound_two_noise",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "asr_subtype:null_iff_clean",
+      "ok": true
+    },
+    {
+      "actual": 17000,
+      "expected": 17000,
+      "name": "intersection:clean",
+      "ok": true
+    },
+    {
+      "actual": 4250,
+      "expected": 4250,
+      "name": "intersection:correction_only",
+      "ok": true
+    },
+    {
+      "actual": 3000,
+      "expected": 3000,
+      "name": "intersection:asr_only",
+      "ok": true
+    },
+    {
+      "actual": 750,
+      "expected": 750,
+      "name": "intersection:correction_and_asr",
+      "ok": true
+    },
+    {
+      "actual": 750,
+      "expected": 750,
+      "name": "intersection:overlap_constraint",
+      "ok": true
+    },
+    {
+      "actual": 15000,
+      "expected": 15000,
+      "name": "realization_source:deterministic_template",
+      "ok": true
+    },
+    {
+      "actual": 6250,
+      "expected": 6250,
+      "name": "realization_source:teacher_generated",
+      "ok": true
+    },
+    {
+      "actual": 2500,
+      "expected": 2500,
+      "name": "realization_source:curated_manual",
+      "ok": true
+    },
+    {
+      "actual": 1250,
+      "expected": 1250,
+      "name": "realization_source:realistic_asr_seed",
+      "ok": true
+    },
+    {
+      "actual": 12500,
+      "expected": 12500,
+      "name": "field_identity:semantic",
+      "ok": true
+    },
+    {
+      "actual": 6250,
+      "expected": 6250,
+      "name": "field_identity:synthetic_semantic",
+      "ok": true
+    },
+    {
+      "actual": 6250,
+      "expected": 6250,
+      "name": "field_identity:opaque",
+      "ok": true
+    },
+    {
+      "actual": 5000,
+      "expected": 5000,
+      "name": "difficulty:D1",
+      "ok": true
+    },
+    {
+      "actual": 6250,
+      "expected": 6250,
+      "name": "difficulty:D2",
+      "ok": true
+    },
+    {
+      "actual": 6250,
+      "expected": 6250,
+      "name": "difficulty:D3",
+      "ok": true
+    },
+    {
+      "actual": 5000,
+      "expected": 5000,
+      "name": "difficulty:D4",
+      "ok": true
+    },
+    {
+      "actual": 2500,
+      "expected": 2500,
+      "name": "difficulty:D5",
+      "ok": true
+    },
+    {
+      "actual": 400,
+      "expected": 400,
+      "name": "test_partition:iid_control",
+      "ok": true
+    },
+    {
+      "actual": 400,
+      "expected": 400,
+      "name": "test_partition:unseen_fields",
+      "ok": true
+    },
+    {
+      "actual": 400,
+      "expected": 400,
+      "name": "test_partition:unseen_templates",
+      "ok": true
+    },
+    {
+      "actual": 300,
+      "expected": 300,
+      "name": "test_partition:unseen_numeric_compositions",
+      "ok": true
+    },
+    {
+      "actual": 300,
+      "expected": 300,
+      "name": "test_partition:unseen_enums",
+      "ok": true
+    },
+    {
+      "actual": 250,
+      "expected": 250,
+      "name": "test_partition:unseen_corrections",
+      "ok": true
+    },
+    {
+      "actual": 200,
+      "expected": 200,
+      "name": "test_partition:asr_robustness",
+      "ok": true
+    },
+    {
+      "actual": 250,
+      "expected": 250,
+      "name": "test_partition:hard_negatives_adversarial",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "test_partition:no_unknown",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "test_partition:absent_outside_test",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "coupling:unresolved_is_no_change",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "coupling:number_confusion_numeric",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "expected": 0,
+      "name": "coupling:asr_seed_is_asr",
+      "ok": true
+    }
+  ],
+  "quota_checks_failed": 0,
+  "quota_checks_total": 102,
+  "quota_tolerance": 0,
+  "semantic_errors": 0,
+  "structural_errors": 0,
+  "total_rows": 25000
+}

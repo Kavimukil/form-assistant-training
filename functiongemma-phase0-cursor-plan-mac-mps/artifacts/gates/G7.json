@@ -1,0 +1,132 @@
+{
+  "checks": [
+    {
+      "detail": "artifacts/eval/A0/A0_metrics.json",
+      "name": "a0_metrics_exist",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/eval/A0/A0_predictions.jsonl",
+      "name": "a0_predictions_exist",
+      "ok": true
+    },
+    {
+      "detail": {
+        "missing": [],
+        "overall": {
+          "enum": 0.42,
+          "enum_n": 500,
+          "exact_call": 0.3852,
+          "exact_call_count": 963,
+          "false_mutation_count": 260,
+          "false_mutation_rate": 0.4727272727272727,
+          "field": 0.5936,
+          "n": 2500,
+          "no_change_f1": 0.255609756097561,
+          "no_change_precision": 0.27578947368421053,
+          "no_change_recall": 0.2381818181818182,
+          "no_change_support": 550,
+          "op": 0.6268,
+          "parse_ok": 0.8844,
+          "value": 0.42717948717948717,
+          "value_n": 1950
+        }
+      },
+      "name": "reports_required_metrics",
+      "ok": true
+    },
+    {
+      "detail": [
+        "boolean",
+        "date",
+        "enum",
+        "integer",
+        "no_change",
+        "number",
+        "string"
+      ],
+      "name": "breakdown_by_primitive",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5"
+      ],
+      "name": "breakdown_by_difficulty",
+      "ok": true
+    },
+    {
+      "detail": [
+        "active_field",
+        "reachable_fields"
+      ],
+      "name": "breakdown_by_mode",
+      "ok": true
+    },
+    {
+      "detail": [
+        "asr_only",
+        "clean",
+        "correction_and_asr",
+        "correction_only"
+      ],
+      "name": "breakdown_by_noise",
+      "ok": true
+    },
+    {
+      "detail": [
+        "validation"
+      ],
+      "name": "breakdown_by_holdout",
+      "ok": true
+    },
+    {
+      "detail": {
+        "metrics_n": 2500,
+        "predictions": 2500
+      },
+      "name": "predictions_persisted_nonempty",
+      "ok": true
+    },
+    {
+      "detail": "greedy",
+      "name": "greedy_decoding",
+      "ok": true
+    },
+    {
+      "detail": "google/functiongemma-270m-it",
+      "name": "model_id_matches_spec",
+      "ok": true
+    }
+  ],
+  "device": "mps",
+  "gate": "G7",
+  "generated_at": "2026-10-07T09:41:43+00:00",
+  "overall": {
+    "enum": 0.42,
+    "enum_n": 500,
+    "exact_call": 0.3852,
+    "exact_call_count": 963,
+    "false_mutation_count": 260,
+    "false_mutation_rate": 0.4727272727272727,
+    "field": 0.5936,
+    "n": 2500,
+    "no_change_f1": 0.255609756097561,
+    "no_change_precision": 0.27578947368421053,
+    "no_change_recall": 0.2381818181818182,
+    "no_change_support": 550,
+    "op": 0.6268,
+    "parse_ok": 0.8844,
+    "value": 0.42717948717948717,
+    "value_n": 1950
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "Baseline before training (A0)"
+}

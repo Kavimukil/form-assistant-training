@@ -1,0 +1,47 @@
+{
+  "experiment_id": "phase0-v1",
+  "files": {
+    "benchmark/asr_robustness.jsonl": "c172d1870f6f15f782f3d34dd2fc605a992c9ebb58e2ff2a476d9dbe7d56de9d",
+    "benchmark/hard_negatives_adversarial.jsonl": "a4bc26b01431c251bcf608f9eb527026b59bbf5a882d0db88325febcccc6a850",
+    "benchmark/iid_control.jsonl": "c4217e6f8972fcaa8703de7bf084055da1081eb3c967a9b7ec13ebfaf5afd560",
+    "benchmark/unseen_corrections.jsonl": "f5d6a1a965d0ff560a5857f50b60040cda483a0501c46e0eaa9a9403f1e802b5",
+    "benchmark/unseen_enums.jsonl": "24992d8a073427f75d84ff35193a4b6896f79f8ee32c504cd998d8a7fde112c9",
+    "benchmark/unseen_fields.jsonl": "11801ec7eb4cb78f0dc89ef7aa40ac0c2875b929cc10407fd02a585a9ed151f1",
+    "benchmark/unseen_numeric_compositions.jsonl": "a65c2646abd69bb220f3bc446e59591cef5e97905b4ae0cfccd378be642e5e77",
+    "benchmark/unseen_templates.jsonl": "9dfca9095d34ea4ae4ca594e0b6064e9709925f742a8e7dca94dfcd7b688bdc6",
+    "plan.jsonl": "e9f0e3f4ad7496aa372927e348b70df1237c3515931e47e1ef5c7c68bd940513",
+    "test.jsonl": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+    "train.jsonl": "2b5a3ed386e3a4a46ae3784a8eb0d8f0272bd0e299c2efc5f87c069256abf167",
+    "validation.jsonl": "e0f6d7a48038eb09bb9e1409f7c49b0af5b4b582de265267686d450be01b941c"
+  },
+  "generator_version": "phase0-generator-1.0",
+  "model_id": "google/functiongemma-270m-it",
+  "quota_checks": {
+    "failed": 0,
+    "total": 102
+  },
+  "random_seed": 20261006,
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "spec_version": "1.0.0",
+  "split_counts": {
+    "test": 2500,
+    "train": 20000,
+    "validation": 2500
+  },
+  "teacher": {
+    "external_calls": 0,
+    "labels_from_teacher": false,
+    "mode": "deterministic_paraphrase_no_credentials"
+  },
+  "test_partition_counts": {
+    "asr_robustness": 200,
+    "hard_negatives_adversarial": 250,
+    "iid_control": 400,
+    "unseen_corrections": 250,
+    "unseen_enums": 300,
+    "unseen_fields": 400,
+    "unseen_numeric_compositions": 300,
+    "unseen_templates": 400
+  },
+  "total_rows": 25000
+}

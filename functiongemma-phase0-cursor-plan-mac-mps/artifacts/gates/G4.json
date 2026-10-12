@@ -1,0 +1,63 @@
+{
+  "attempts_gt0": 481,
+  "checks": [
+    {
+      "detail": 25000,
+      "name": "all_rows_realized_and_validated",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "exact_quotas_after_realization",
+      "ok": true
+    },
+    {
+      "detail": 5000,
+      "name": "every_correction_row_carries_correction_template",
+      "ok": true
+    },
+    {
+      "detail": 3750,
+      "name": "every_asr_row_has_applied_transform",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "clean_rows_have_no_transform_metadata",
+      "ok": true
+    },
+    {
+      "detail": {
+        "drift": 0,
+        "sampled": 3000
+      },
+      "name": "semantic_target_invariant_across_transforms",
+      "ok": true
+    },
+    {
+      "detail": {
+        "mismatch": 0,
+        "sampled": 500
+      },
+      "name": "realization_deterministic",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "no_teacher_external_calls",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "teacher_rows_proven_target_preserving",
+      "ok": true
+    }
+  ],
+  "gate": "G4",
+  "generated_at": "2026-10-07T08:00:44+00:00",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "Realization + transforms"
+}

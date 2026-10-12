@@ -1,0 +1,127 @@
+{
+  "audit_summary": {
+    "duplicate_ids": 0,
+    "prohibited_leakage": 0,
+    "quota_checks_failed": 0,
+    "quota_checks_total": 102,
+    "semantic_errors": 0,
+    "structural_errors": 0,
+    "total_rows": 25000
+  },
+  "checks": [
+    {
+      "detail": null,
+      "name": "audit_json_exists",
+      "ok": true
+    },
+    {
+      "detail": {
+        "problems": []
+      },
+      "name": "audit_passed",
+      "ok": true
+    },
+    {
+      "detail": 25000,
+      "name": "exactly_25000_rows",
+      "ok": true
+    },
+    {
+      "detail": {
+        "checks": 102,
+        "failed": []
+      },
+      "name": "exact_quota_match_every_hard_quota",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "zero_duplicate_ids",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "zero_structural_errors",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "zero_semantic_errors",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "zero_prohibited_leakage",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "zero_duplicate_content",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "output_exists:train.jsonl",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "output_exists:validation.jsonl",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "output_exists:test.jsonl",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "output_exists:manifest.json",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "output_exists:audit.json",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "benchmark_files_for_all_test_partitions",
+      "ok": true
+    },
+    {
+      "detail": {
+        "files_compared": 12
+      },
+      "name": "build_reproducible_from_seed",
+      "ok": true
+    },
+    {
+      "detail": 381,
+      "name": "stratified_review_sample_ge_200",
+      "ok": true
+    },
+    {
+      "detail": {
+        "rejected": []
+      },
+      "name": "stratified_review_sample_accepted",
+      "ok": true
+    }
+  ],
+  "gate": "G5",
+  "generated_at": "2026-10-07T08:01:20+00:00",
+  "manual_review": {
+    "accepted": 381,
+    "human_signoff": false,
+    "method": "automated stratified re-derivation (value/label/option recoverable from utterance) + agent spot-check",
+    "note": "Plan requires manual review >=200 stratified rows; no human reviewer has signed off. Review artifacts are provided for human sign-off before training.",
+    "rows": 381,
+    "sample_file": "artifacts/review/g5_review_sample.jsonl"
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "Split isolation + 25k build (DATASET GO)"
+}

@@ -1,0 +1,46 @@
+# Python / local env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*~
+*.swp
+*.swo
+
+# Model weights stay local. GitHub rejects files over 100MB.
+*.gguf
+*.ggml
+*.safetensors
+*.ckpt
+*.onnx
+*.pt
+*.pth
+*.msgpack
+pytorch_model*.bin
+training_args.bin
+optimizer.pt
+scheduler.pt
+rng_state.pth
+
+# Training caches and run artifacts
+outputs/
+checkpoints/
+wandb/
+.cache/
+huggingface-cache/
+artifacts/checkpoints/
+artifacts/remote-results/
+artifacts/remote-checkpoints/
+artifacts/packages/
+artifacts/*.tar.gz

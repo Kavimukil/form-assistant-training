@@ -1,0 +1,121 @@
+{
+  "checks": [
+    {
+      "detail": "google/functiongemma-270m-it",
+      "name": "tokenizer_loads",
+      "ok": true
+    },
+    {
+      "detail": {
+        "template_chars": 13792
+      },
+      "name": "chat_template_present_from_tokenizer",
+      "ok": true
+    },
+    {
+      "detail": {
+        "uses_apply_chat_template": true
+      },
+      "name": "no_hand_coded_render_path",
+      "ok": true
+    },
+    {
+      "detail": 22500,
+      "name": "canonical_rows_available",
+      "ok": true
+    },
+    {
+      "detail": {
+        "failures": [],
+        "render_ok": 100,
+        "sample_n": 100
+      },
+      "name": "sampled_rows_render_successfully",
+      "ok": true
+    },
+    {
+      "detail": {
+        "exact": 100,
+        "render_ok": 100
+      },
+      "name": "rendered_targets_exact_canonical_operations",
+      "ok": true
+    },
+    {
+      "detail": {
+        "max": 442,
+        "n": 100,
+        "p99": 439
+      },
+      "name": "p99_sequence_length_reported",
+      "ok": true
+    },
+    {
+      "detail": {
+        "max_seq_length": 1024,
+        "over": []
+      },
+      "name": "no_sample_exceeds_max_seq_length",
+      "ok": true
+    },
+    {
+      "detail": 20000,
+      "name": "train_sft_exists",
+      "ok": true
+    },
+    {
+      "detail": 2500,
+      "name": "validation_sft_exists",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "compile_report_passed",
+      "ok": true
+    },
+    {
+      "detail": {
+        "compiled_rows": 20000,
+        "max": 732,
+        "output": "generated/phase0-v1/train.sft.jsonl",
+        "p50": 189.0,
+        "p95": 384.0,
+        "p99": 525.0,
+        "rejected_rows": 0,
+        "rejects": "generated/phase0-v1/train.sft.rejects.jsonl",
+        "source_rows": 20000
+      },
+      "name": "train_sft_row_count",
+      "ok": true
+    },
+    {
+      "detail": {
+        "compiled_rows": 2500,
+        "max": 716,
+        "output": "generated/phase0-v1/validation.sft.jsonl",
+        "p50": 189.0,
+        "p95": 378.0499999999997,
+        "p99": 490.0299999999993,
+        "rejected_rows": 0,
+        "rejects": "generated/phase0-v1/validation.sft.rejects.jsonl",
+        "source_rows": 2500
+      },
+      "name": "validation_sft_row_count",
+      "ok": true
+    }
+  ],
+  "gate": "G6",
+  "generated_at": "2026-10-07T09:25:19+00:00",
+  "model_id": "google/functiongemma-270m-it",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "FunctionGemma compiler",
+  "token_length": {
+    "max": 442,
+    "max_seq_length": 1024,
+    "n": 100,
+    "p99": 439
+  }
+}

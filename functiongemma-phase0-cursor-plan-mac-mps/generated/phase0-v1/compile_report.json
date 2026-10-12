@@ -1,0 +1,42 @@
+{
+  "developer_prompt": "You are a model that can do function calling with the following functions",
+  "length_policy": "reject",
+  "max_seq_length": 1024,
+  "model_id": "google/functiongemma-270m-it",
+  "passed": true,
+  "problems": [],
+  "splits": {
+    "train": {
+      "compiled_rows": 20000,
+      "max": 732,
+      "output": "generated/phase0-v1/train.sft.jsonl",
+      "p50": 189.0,
+      "p95": 384.0,
+      "p99": 525.0,
+      "rejected_rows": 0,
+      "rejects": "generated/phase0-v1/train.sft.rejects.jsonl",
+      "source_rows": 20000
+    },
+    "validation": {
+      "compiled_rows": 2500,
+      "max": 716,
+      "output": "generated/phase0-v1/validation.sft.jsonl",
+      "p50": 189.0,
+      "p95": 378.0499999999997,
+      "p99": 490.0299999999993,
+      "rejected_rows": 0,
+      "rejects": "generated/phase0-v1/validation.sft.rejects.jsonl",
+      "source_rows": 2500
+    }
+  },
+  "strip_policy_note": "Official chat template opens <start_function_response> after the last assistant tool_calls turn. Phase-0 SFT strips that trailing incomplete marker so supervised targets end at <end_function_call>.",
+  "strip_trailing_open_function_response": true,
+  "token_length": {
+    "max": 732,
+    "mean": 220.05733333333333,
+    "n": 22500,
+    "p50": 189.0,
+    "p95": 383.0,
+    "p99": 523.0
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "detail": 25000,
+      "name": "exactly_25000_slots",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "unique_slot_ids",
+      "ok": true
+    },
+    {
+      "detail": {
+        "checks": 102,
+        "failed": []
+      },
+      "name": "all_quota_equations_reconcile_exactly",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "plan_audit_clean",
+      "ok": true
+    },
+    {
+      "detail": {
+        "sha256": "e9f0e3f4ad7496aa372927e348b70df1237c3515931e47e1ef5c7c68bd940513"
+      },
+      "name": "same_seed_byte_identical",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "different_seed_changes_assignments",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "different_seed_same_quotas",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "family_assigned_before_realization",
+      "ok": true
+    },
+    {
+      "detail": null,
+      "name": "split_assignment_before_realization_flag",
+      "ok": true
+    }
+  ],
+  "gate": "G2",
+  "generated_at": "2026-10-07T08:00:37+00:00",
+  "plan_sha256": "e9f0e3f4ad7496aa372927e348b70df1237c3515931e47e1ef5c7c68bd940513",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "quota_checks": 102,
+  "spec_sha256": "151d9ee78a10b794d28a2b9d2c29376c0ffe0b6a66a12533af63002b82c97ad2",
+  "status": "pass",
+  "title": "Quota planner"
+}

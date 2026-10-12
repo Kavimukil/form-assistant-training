@@ -1,0 +1,15 @@
+{
+  "frozen_test_path": "generated/phase0-v1/test.jsonl",
+  "frozen_test_sha256": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+  "level": 1,
+  "nested_in_previous": true,
+  "tag": "A1",
+  "title": "primitives (clean active-field, deterministic)",
+  "train": "artifacts/ablation/A1/train.sft.jsonl",
+  "train_ids": "artifacts/ablation/A1/train_ids.json",
+  "train_n": 4786,
+  "train_sha256": "80901b151cdeec16756f616a928f8c6fa2c31fd9313a02951668fceb0a27459b",
+  "validation": "artifacts/ablation/A1/validation.sft.jsonl",
+  "validation_n": 567,
+  "validation_sha256": "e43b739f9075baf3357366127a5fd8b98b7fcdc3e3ba21375bc52a26bd9ce411"
+}
