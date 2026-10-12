@@ -1,0 +1,35 @@
+{
+  "lengths": {
+    "test.sft.jsonl": {
+      "max": 1079,
+      "over_1024": 190,
+      "p50": 931,
+      "p95": 1065,
+      "p99": 1075,
+      "rows": 2500
+    },
+    "train.sft.jsonl": {
+      "max": 1086,
+      "over_1024": 1510,
+      "p50": 936,
+      "p95": 1062,
+      "p99": 1075,
+      "rows": 20000
+    },
+    "validation.sft.jsonl": {
+      "max": 1079,
+      "over_1024": 187,
+      "p50": 925,
+      "p95": 1060,
+      "p99": 1077,
+      "rows": 2500
+    }
+  },
+  "max_seq_length": 1086,
+  "model_id": "google/functiongemma-270m-it",
+  "predictions": {
+    "alias_share": "option_alias_on_half_of_train_sets",
+    "note": "v6 test enum 0.7973 against field 0.9192, so option aliases are the default drill.",
+    "status": "absent"
+  }
+}

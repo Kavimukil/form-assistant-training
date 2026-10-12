@@ -228,10 +228,20 @@ def build_records(spec: dict) -> tuple[list[DatasetRecordV2], list[DatasetRecord
             for index in range(count):
                 placed = False
                 for attempt in range(48):
+                    request = _request(phenomenon, split, index)
+                    if phenomenon == "single_set" and split == "train":
+                        perm = int(spec["coverage"]["option_permutation"]["train"])
+                        if index >= count - perm:
+                            request["type_name"] = "enum"
+                    if split == "train" and phenomenon not in {"no_change", "clear", "ambiguity"}:
+                        if index % 4 == 1:
+                            request["speak_field_alias"] = True
+                        if index % 2 == 0:
+                            request["speak_option_alias"] = True
                     truth = generate_scenario(
                         forms[split][index % family_count],
                         seed + index + len(phenomenon) * 1009 + attempt * 1_000_003,
-                        _request(phenomenon, split, index),
+                        request,
                     )
                     try:
                         add(truth)

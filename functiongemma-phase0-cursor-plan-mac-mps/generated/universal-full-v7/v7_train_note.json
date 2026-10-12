@@ -1,0 +1,10 @@
+{
+  "train_experiment": "universal-full-v7",
+  "frozen_validation_and_test": "universal-full-v1",
+  "init_checkpoint": "artifacts/checkpoints/universal-full-v6",
+  "train_rows": 20000,
+  "option_permutation_train": 2200,
+  "no_change_train": 1500,
+  "enum_single_set": 3150,
+  "max_seq_length": 1152
+}

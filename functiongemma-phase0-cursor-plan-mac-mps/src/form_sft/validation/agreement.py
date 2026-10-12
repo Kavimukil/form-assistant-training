@@ -24,6 +24,21 @@ def _has(utterance: str, piece: str) -> bool:
     return f" {_norm(piece)} " in f" {_norm(utterance)} "
 
 
+def _mentions_value(field, value: Any, utterance: str) -> bool:
+    if _has(utterance, _surface(field, value)):
+        return True
+    if field.type == "enum":
+        opt = next((item for item in field.options if item.id == value), None)
+        return bool(opt and any(_has(utterance, alias) for alias in opt.aliases))
+    if field.type == "multi":
+        alias_pieces = []
+        for item in value:
+            opt = next(option for option in field.options if option.id == item)
+            alias_pieces.append(opt.aliases[0] if opt.aliases else opt.label)
+        return _has(utterance, " and ".join(alias_pieces))
+    return False
+
+
 def _surface(field, value: Any) -> str:
     if field.type == "boolean":
         return "yes" if value else "no"
@@ -89,17 +104,20 @@ def semantic_agreement(record: DatasetRecordV2, *, old_surfaces: list[str] | Non
             if not (_has(utterance, field.label) or any(_has(utterance, alias) for alias in field.aliases)):
                 reasons.append(f"clear field missing for {field.field_id}")
             continue
-        surface = _surface(field, action.value)
         label_mentioned = _has(utterance, field.label) or any(_has(utterance, alias) for alias in field.aliases)
-        if not _has(utterance, surface):
+        if not _mentions_value(field, action.value, utterance):
             reasons.append(f"value surface missing for {field.field_id}")
         if not label_mentioned:
-            # An option label is enough when it identifies one reachable field.
+            # An option label or alias is enough when it identifies one reachable field.
             owners = []
             for other in record.schema.fields:
                 if other.field_id not in record.state.reachable_field_ids:
                     continue
-                if any(_has(utterance, opt.label) and opt.id == action.value for opt in other.options):
+                if any(
+                    (_has(utterance, opt.label) or any(_has(utterance, alias) for alias in opt.aliases))
+                    and opt.id == action.value
+                    for opt in other.options
+                ):
                     owners.append(other.field_id)
             if owners != [field.field_id]:
                 reasons.append(f"field not identified for {field.field_id}")

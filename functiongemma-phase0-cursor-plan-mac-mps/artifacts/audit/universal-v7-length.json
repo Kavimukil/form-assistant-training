@@ -1,0 +1,12 @@
+{
+  "file": "generated/universal-full-v7/train.sft.jsonl",
+  "max_length": 1152,
+  "rows": 20000,
+  "p50": 942,
+  "p95": 1058,
+  "p99": 1073,
+  "max": 1084,
+  "over_max": 0,
+  "passed": true,
+  "note": "1152 is above the v6 p99 of 1075 and the v7 train max of 1084. No train row loses Tools or the completion."
+}

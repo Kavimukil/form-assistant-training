@@ -1,0 +1,33 @@
+spec:
+  name: functiongemma-universal-full
+  version: 1.2.0
+  experiment_id: universal-full-v7
+  total_rows: 25000
+  random_seed: 20261012
+  model_id: google/functiongemma-270m-it
+  frozen_benchmark: universal-full-v1
+splits: {train: 20000, validation: 2500, test: 2500}
+families: {train: 80, validation: 10, test: 20}
+ambiguity_quarantine: 100
+coverage:
+  single_set: {train: 7900, validation: 1000, test: 1000}
+  multi_field: {train: 3000, validation: 375, test: 375}
+  correction: {train: 2000, validation: 250, test: 250}
+  clear: {train: 1000, validation: 125, test: 125}
+  no_change: {train: 1500, validation: 374, test: 374}
+  asr: {train: 1000, validation: 125, test: 125}
+  code_mixed: {train: 1000, validation: 125, test: 125}
+  option_permutation: {train: 2200, validation: 100, test: 100}
+  counterfactual: {train: 400, validation: 26, test: 26}
+go_no_go:
+  false_mutation_rate_max: 0.005
+  false_mutation_regression_max: 0.001
+  min_macro_delta: 0.03
+  max_suite_regression: 0.02
+  min_label_wilson: 0.99
+inference:
+  contract: production_json
+  decoding: greedy
+  max_seq_length: 1152
+  max_new_tokens: 256
+  loss_policy: assistant_only

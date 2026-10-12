@@ -88,6 +88,39 @@ def test_train_v6_wording_stays_off_the_frozen_frames():
     assert realize_scenario(valued, 99).startswith("place ")
 
 
+def test_train_alias_surfaces_keep_the_option_id():
+    from form_sft.validation.agreement import semantic_agreement
+    from form_sft.universal.build import assemble_record
+
+    form = generate_schema(11, split="train", family_index=0)
+    truth = generate_scenario(
+        form,
+        5,
+        {
+            "phenomenon": "single_set",
+            "split": "train",
+            "index": 3,
+            "mode": "active_field",
+            "type_name": "enum",
+            "speak_field_alias": True,
+            "speak_option_alias": True,
+        },
+    )
+    text = realize_scenario(truth, 1)
+    action = truth.actions[0]
+    field = next(item for item in form.fields if item.field_id == action.field_id)
+    opt = next(item for item in field.options if item.id == action.value)
+    assert field.aliases[0] in text
+    assert opt.aliases[0] in text
+    assert opt.label not in text
+    record = assemble_record(truth, text, record_id="alias", seed=1, family_seed=1)
+    assert semantic_agreement(record).ok
+    held = generate_scenario(
+        form, 1, {"phenomenon": "single_set", "split": "test", "index": 0, "mode": "active_field", "type_name": "enum", "speak_option_alias": True}
+    )
+    assert realize_scenario(held, 1).startswith("place ")
+
+
 def test_make_counterfactual_uses_the_alternate_form():
     rows, _ = build_records(tiny_spec())
     source = next(row for row in rows if row.coverage.phenomenon == "counterfactual")
