@@ -1,6 +1,6 @@
 from form_sft.contracts.models import CanonicalRow
 from form_sft.evaluation.evaluate import aggregate_json_metrics, PredRow
-from form_sft.training.json_examples import fixture_utterances, held_out_fixtures, synthetic_examples, v4_choice_rows
+from form_sft.training.json_examples import fixture_utterances, held_out_fixtures, synthetic_examples, v4_choice_rows, v5_choice_rows
 from form_sft.training.json_prompt import (
     calls_from_row,
     context_from_row,
@@ -246,6 +246,45 @@ def test_v4_choice_rows_are_unique_and_do_not_leak_test_ids():
     train_utt = {row["utterance"].casefold() for row in by_split["train"]}
     val_utt = {row["utterance"].casefold() for row in by_split["validation"]}
     assert train_utt.isdisjoint(val_utt)
+
+
+def test_v5_option_ids_hide_the_spoken_form():
+    from form_sft.training.json_examples import _V5_COUNTS, _v4_blocked_ids
+
+    blocked = _v4_blocked_ids()
+    by_split = {}
+    for split, (n_commit, n_abstain) in _V5_COUNTS.items():
+        rows = v5_choice_rows(split)
+        by_split[split] = rows
+        assert len(rows) == n_commit + n_abstain
+        utterances = [row["utterance"].casefold() for row in rows]
+        assert len(utterances) == len(set(utterances))
+        commits = [row for row in rows if row["metadata"]["skill"] == "choice_lookup"]
+        abstains = [row for row in rows if row["metadata"]["skill"] == "choice_lookup_abstain"]
+        assert len(commits) == n_commit
+        assert len(abstains) == n_abstain
+        assert len(abstains) < len(commits)
+        for row in commits:
+            call = row["target"]["function_calls"][0]
+            assert call["name"] == "set_choice"
+            assert call["arguments"]["value"].startswith("opt_")
+            fields = row["context"]["fields"]
+            assert call["arguments"]["field_id"] == fields[0]["id"]
+            for field in fields:
+                assert field["id"] not in blocked
+                for opt in field.get("options") or []:
+                    assert opt["id"] not in blocked
+                    folded = opt["id"].casefold()
+                    assert opt["label"].casefold() not in folded
+                    for alias in opt["aliases"]:
+                        assert alias.casefold() not in folded
+        for row in abstains:
+            assert row["target"]["function_calls"] == []
+    train_utt = {row["utterance"].casefold() for row in by_split["train"]}
+    val_utt = {row["utterance"].casefold() for row in by_split["validation"]}
+    assert train_utt.isdisjoint(val_utt)
+    two_fields = next(row for row in by_split["train"] if len(row["context"]["fields"]) == 2)
+    assert two_fields["target"]["function_calls"][0]["arguments"]["field_id"] == two_fields["context"]["fields"][0]["id"]
 
 
 def test_score_empty_and_multi_call():

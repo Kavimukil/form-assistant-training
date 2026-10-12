@@ -16,7 +16,13 @@ from form_sft.training.compiler import (
     _percentile,
     load_tokenizer,
 )
-from form_sft.training.json_examples import fixture_utterances, held_out_fixtures, synthetic_examples, v4_choice_rows
+from form_sft.training.json_examples import (
+    fixture_utterances,
+    held_out_fixtures,
+    synthetic_examples,
+    v4_choice_rows,
+    v5_choice_rows,
+)
 from form_sft.training.json_prompt import (
     assistant_span,
     calls_from_row,
@@ -150,6 +156,58 @@ def build_v4_corpus(
     return report
 
 
+def build_v5_corpus(
+    v2_dir: Path | str,
+    out_dir: Path | str,
+    *,
+    model_id: str = DEFAULT_MODEL_ID,
+    max_seq_length: int = DEFAULT_MAX_SEQ_LENGTH,
+    tokenizer=None,
+) -> dict[str, Any]:
+    """Copy the v2 set and append v5 lookup rows. The test file is unchanged."""
+    import shutil
+
+    v2_dir = Path(v2_dir)
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    if tokenizer is None:
+        tokenizer = load_tokenizer(model_id)
+
+    src_test = v2_dir / "test.sft.jsonl"
+    dst_test = out_dir / "test.sft.jsonl"
+    shutil.copyfile(src_test, dst_test)
+    if _sha256(src_test) != _sha256(dst_test):
+        raise CompileError("v5 test copy does not match the v2 test file")
+
+    report: dict[str, Any] = {
+        "model_id": model_id,
+        "format": "function_calls_json",
+        "base": str(v2_dir),
+        "test_sha256": _sha256(dst_test),
+        "splits": {},
+        "passed": True,
+    }
+    for split in ("train", "validation"):
+        src = v2_dir / f"{split}.sft.jsonl"
+        dst = out_dir / f"{split}.sft.jsonl"
+        shutil.copyfile(src, dst)
+        fresh = [
+            _compile_example(tokenizer, example, max_seq_length=max_seq_length)
+            for example in v5_choice_rows(split)
+        ]
+        with dst.open("a", encoding="utf-8") as handle:
+            for row in fresh:
+                handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+        report["splits"][split] = {
+            "v2_rows": sum(1 for _ in src.open(encoding="utf-8")),
+            "added_rows": len(fresh),
+            "output": str(dst),
+        }
+    report["splits"]["test"] = {"v2_rows": 2500, "added_rows": 0, "output": str(dst_test), "unchanged": True}
+    (out_dir / "build_report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
 def build_json_corpus(
     corpus_dir: Path | str,
     out_dir: Path | str,
@@ -218,3 +276,16 @@ def build_json_corpus(
     if not report["passed"]:
         raise CompileError("; ".join(report["problems"]) or "json compile failed")
     return report
+
+
+def compile_records_v2(records, tokenizer=None, *, max_seq_length: int = DEFAULT_MAX_SEQ_LENGTH) -> list[dict]:
+    """Serialize canonical v2 records. This facade does not append json_examples."""
+    from form_sft.training.serializer import serialize
+
+    compiled = []
+    for record in records:
+        example = serialize(record, contract="production_json", tokenizer=tokenizer)
+        if example.token_length > max_seq_length:
+            raise CompileError(f"{record.id}: token_length {example.token_length} > {max_seq_length}")
+        compiled.append(example.model_dump())
+    return compiled

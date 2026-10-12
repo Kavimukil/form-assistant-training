@@ -1,0 +1,18 @@
+{
+  "accepted": 2000,
+  "experiment_id": "universal-pilot-v1",
+  "generator_version": "universal-generator-1.0",
+  "passed": true,
+  "quarantine": 40,
+  "splits": {
+    "test": 600,
+    "train": 1200,
+    "validation": 200
+  },
+  "unseen": {
+    "test_families_in_train": [],
+    "test_target_ids": 645,
+    "unseen_target_ids": 645,
+    "unseen_target_ratio": 1.0
+  }
+}

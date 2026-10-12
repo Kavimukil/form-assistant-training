@@ -1,0 +1,52 @@
+{
+  "accepted": 2000,
+  "coverage": {
+    "test": {
+      "asr": 30,
+      "clear": 30,
+      "code_mixed": 30,
+      "correction": 60,
+      "counterfactual": 10,
+      "multi_field": 90,
+      "no_change": 90,
+      "option_permutation": 20,
+      "single_set": 240
+    },
+    "train": {
+      "asr": 60,
+      "clear": 60,
+      "code_mixed": 60,
+      "correction": 120,
+      "counterfactual": 20,
+      "multi_field": 180,
+      "no_change": 180,
+      "option_permutation": 40,
+      "single_set": 480
+    },
+    "validation": {
+      "asr": 10,
+      "clear": 10,
+      "code_mixed": 10,
+      "correction": 20,
+      "counterfactual": 2,
+      "multi_field": 30,
+      "no_change": 30,
+      "option_permutation": 8,
+      "single_set": 80
+    }
+  },
+  "duplicates": 0,
+  "label_precision": 1.0,
+  "label_precision_wilson_lower": 0.9980828823994872,
+  "leaks": 0,
+  "passed": true,
+  "quarantine": 40,
+  "structural_errors": 0,
+  "threshold": 0.9,
+  "unseen": {
+    "test_families_in_train": [],
+    "test_target_ids": 645,
+    "unseen_target_ids": 645,
+    "unseen_target_ratio": 1.0
+  }
+}

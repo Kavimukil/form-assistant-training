@@ -3,6 +3,9 @@
 The supervised target is one JSON object, {"function_calls":[...]}.
 This path does not pass tools into the chat template, so FunctionGemma's
 function-declaration tokens are never injected.
+
+DatasetRecordV2 serialization enters through ``training.serializer``. The
+helpers below stay the production prompt implementation.
 """
 from __future__ import annotations
 

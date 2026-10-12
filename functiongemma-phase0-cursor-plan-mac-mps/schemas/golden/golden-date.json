@@ -1,0 +1,377 @@
+{
+  "id": "universal-full-v1-train-00006",
+  "schema": {
+    "schema_id": "sch6916850912",
+    "schema_family_id": "fam-train-005",
+    "template_lineage_id": "tpl-train",
+    "ontology_lineage_id": "ont-train-005",
+    "locale": "en-IN",
+    "fields": [
+      {
+        "field_id": "fld5808041823",
+        "label": "bajab nejab",
+        "type": "integer",
+        "description": "Entry for bajab nejab",
+        "aliases": [
+          "bojab"
+        ],
+        "minimum": 100,
+        "maximum": 999,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-005"
+      },
+      {
+        "field_id": "fld4946692446",
+        "label": "cajab pejab",
+        "type": "number",
+        "description": "Entry for cajab pejab",
+        "aliases": [
+          "cojab"
+        ],
+        "minimum": 10.0,
+        "maximum": 250.0,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-005"
+      },
+      {
+        "field_id": "fld6623628624",
+        "label": "dajab rejab",
+        "type": "boolean",
+        "description": "Entry for dajab rejab",
+        "aliases": [
+          "dojab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-005"
+      },
+      {
+        "field_id": "fld1401126257",
+        "label": "fajab sejab",
+        "type": "enum",
+        "description": "Entry for fajab sejab",
+        "aliases": [
+          "fojab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt01116739",
+            "label": "rejab",
+            "aliases": [
+              "dujab"
+            ]
+          },
+          {
+            "id": "opt93258983",
+            "label": "sejab",
+            "aliases": [
+              "fujab"
+            ]
+          },
+          {
+            "id": "opt57333810",
+            "label": "tejab",
+            "aliases": [
+              "gujab"
+            ]
+          },
+          {
+            "id": "opt50262852",
+            "label": "vejab",
+            "aliases": [
+              "hujab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-005"
+      },
+      {
+        "field_id": "fld1396011118",
+        "label": "gajab tejab",
+        "type": "string",
+        "description": "Entry for gajab tejab",
+        "aliases": [
+          "gojab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 24,
+        "options": [],
+        "ontology_lineage": "ont-train-005"
+      },
+      {
+        "field_id": "fld5010170318",
+        "label": "hajab vejab",
+        "type": "date",
+        "description": "Entry for hajab vejab",
+        "aliases": [
+          "hojab"
+        ],
+        "minimum": "2027-01-01",
+        "maximum": "2029-12-31",
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-005"
+      },
+      {
+        "field_id": "fld5978822137",
+        "label": "jajab wejab",
+        "type": "multi",
+        "description": "Entry for jajab wejab",
+        "aliases": [
+          "jojab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt27576464",
+            "label": "gijab",
+            "aliases": [
+              "tujab"
+            ]
+          },
+          {
+            "id": "opt86259787",
+            "label": "hijab",
+            "aliases": [
+              "vujab"
+            ]
+          },
+          {
+            "id": "opt25247812",
+            "label": "jijab",
+            "aliases": [
+              "wujab"
+            ]
+          },
+          {
+            "id": "opt29910583",
+            "label": "kijab",
+            "aliases": [
+              "xujab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-005"
+      }
+    ],
+    "dependencies": [
+      {
+        "rule_id": "dep-fam-train-005-hide-date",
+        "when_field_id": "fld6623628624",
+        "when_value": false,
+        "then_field_id": "fld5010170318",
+        "effect": "hide",
+        "default_value": null
+      }
+    ]
+  },
+  "state": {
+    "revision": 6,
+    "active_field_id": null,
+    "values": {
+      "fld1396011118": "nohob",
+      "fld1401126257": "opt57333810",
+      "fld4946692446": 152.55,
+      "fld5010170318": "2028-10-13",
+      "fld5808041823": 637,
+      "fld5978822137": [
+        "opt25247812",
+        "opt27576464"
+      ],
+      "fld6623628624": true
+    },
+    "reachable_field_ids": [
+      "fld5808041823",
+      "fld4946692446",
+      "fld6623628624",
+      "fld1401126257",
+      "fld1396011118",
+      "fld5010170318",
+      "fld5978822137"
+    ],
+    "visible_field_ids": [
+      "fld5808041823",
+      "fld4946692446",
+      "fld6623628624",
+      "fld1401126257",
+      "fld1396011118",
+      "fld5010170318",
+      "fld5978822137"
+    ]
+  },
+  "semantic_context": {
+    "revision": 6,
+    "fingerprint": "sha256:737e3a434148280a09dcbf947c30c7c741582faf67fdbbe76e90af8ed851a26f",
+    "locale": "en-IN",
+    "active_field_id": null,
+    "reachable_field_ids": [
+      "fld5808041823",
+      "fld4946692446",
+      "fld6623628624",
+      "fld1401126257",
+      "fld1396011118",
+      "fld5010170318"
+    ],
+    "fields": [
+      {
+        "field_id": "fld5808041823",
+        "label": "bajab nejab",
+        "type": "integer",
+        "description": "Entry for bajab nejab",
+        "minimum": 100,
+        "maximum": 999,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld4946692446",
+        "label": "cajab pejab",
+        "type": "number",
+        "description": "Entry for cajab pejab",
+        "minimum": 10.0,
+        "maximum": 250.0,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld6623628624",
+        "label": "dajab rejab",
+        "type": "boolean",
+        "description": "Entry for dajab rejab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld1401126257",
+        "label": "fajab sejab",
+        "type": "enum",
+        "description": "Entry for fajab sejab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt01116739",
+            "label": "rejab",
+            "aliases": [
+              "dujab"
+            ]
+          },
+          {
+            "id": "opt93258983",
+            "label": "sejab",
+            "aliases": [
+              "fujab"
+            ]
+          },
+          {
+            "id": "opt57333810",
+            "label": "tejab",
+            "aliases": [
+              "gujab"
+            ]
+          },
+          {
+            "id": "opt50262852",
+            "label": "vejab",
+            "aliases": [
+              "hujab"
+            ]
+          }
+        ]
+      },
+      {
+        "field_id": "fld1396011118",
+        "label": "gajab tejab",
+        "type": "string",
+        "description": "Entry for gajab tejab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 24,
+        "options": []
+      },
+      {
+        "field_id": "fld5010170318",
+        "label": "hajab vejab",
+        "type": "date",
+        "description": "Entry for hajab vejab",
+        "minimum": "2027-01-01",
+        "maximum": "2029-12-31",
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      }
+    ]
+  },
+  "utterance": "assign hajab vejab as 2028-02-07",
+  "expected_actions": [
+    {
+      "kind": "set",
+      "field_id": "fld5010170318",
+      "value": "2028-02-07"
+    }
+  ],
+  "provenance": {
+    "generator": "universal",
+    "generator_version": "universal-generator-1.0",
+    "seed": 20261018,
+    "family_seed": 20261012,
+    "state_seed": 20261018,
+    "surface_seed": 20261018,
+    "template_id": "train.single_set.v1",
+    "template_lineage_id": "tpl-train",
+    "transforms": [],
+    "parent_schema_id": "sch6916850912",
+    "parent_scenario_id": "universal-full-v1-train-00006",
+    "validator_version": "record-validator-1.0",
+    "quarantine_reason": null,
+    "source": "deterministic_template",
+    "legacy_metadata": null,
+    "legacy_fingerprint": null
+  },
+  "coverage": {
+    "split": "train",
+    "phenomenon": "single_set",
+    "action_arity": 1,
+    "specialization_mode": "reachable_fields",
+    "suites": [
+      "opaque_id"
+    ],
+    "opaque_ids": true,
+    "correction": false,
+    "asr": false,
+    "code_mixed": false,
+    "counterfactual": false,
+    "option_permutation": false,
+    "ambiguity": "accepted",
+    "field_types": [
+      "date"
+    ]
+  },
+  "schema_fingerprint": "sha256:737e3a434148280a09dcbf947c30c7c741582faf67fdbbe76e90af8ed851a26f",
+  "counterfactual_group_id": null
+}

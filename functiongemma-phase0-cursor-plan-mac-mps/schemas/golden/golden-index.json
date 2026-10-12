@@ -1,0 +1,11 @@
+[
+  "boolean",
+  "clear",
+  "date",
+  "enum",
+  "integer",
+  "multi",
+  "no_change",
+  "number",
+  "string"
+]

@@ -1,0 +1,377 @@
+{
+  "id": "universal-full-v1-train-00004",
+  "schema": {
+    "schema_id": "sch0509674907",
+    "schema_family_id": "fam-train-003",
+    "template_lineage_id": "tpl-train",
+    "ontology_lineage_id": "ont-train-003",
+    "locale": "en-IN",
+    "fields": [
+      {
+        "field_id": "fld8275711846",
+        "label": "bofab nufab",
+        "type": "integer",
+        "description": "Entry for bofab nufab",
+        "aliases": [
+          "begab"
+        ],
+        "minimum": 0,
+        "maximum": 12,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-003"
+      },
+      {
+        "field_id": "fld6251063956",
+        "label": "cofab pufab",
+        "type": "number",
+        "description": "Entry for cofab pufab",
+        "aliases": [
+          "cegab"
+        ],
+        "minimum": 0.0,
+        "maximum": 10.0,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-003"
+      },
+      {
+        "field_id": "fld9868903206",
+        "label": "dofab rufab",
+        "type": "boolean",
+        "description": "Entry for dofab rufab",
+        "aliases": [
+          "degab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-003"
+      },
+      {
+        "field_id": "fld0821220239",
+        "label": "fofab sufab",
+        "type": "enum",
+        "description": "Entry for fofab sufab",
+        "aliases": [
+          "fegab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt91094348",
+            "label": "rufab",
+            "aliases": [
+              "digab"
+            ]
+          },
+          {
+            "id": "opt80105535",
+            "label": "sufab",
+            "aliases": [
+              "figab"
+            ]
+          },
+          {
+            "id": "opt00582844",
+            "label": "tufab",
+            "aliases": [
+              "gigab"
+            ]
+          },
+          {
+            "id": "opt41767539",
+            "label": "vufab",
+            "aliases": [
+              "higab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-003"
+      },
+      {
+        "field_id": "fld8598785959",
+        "label": "gofab tufab",
+        "type": "string",
+        "description": "Entry for gofab tufab",
+        "aliases": [
+          "gegab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 12,
+        "options": [],
+        "ontology_lineage": "ont-train-003"
+      },
+      {
+        "field_id": "fld4414400204",
+        "label": "hofab vufab",
+        "type": "date",
+        "description": "Entry for hofab vufab",
+        "aliases": [
+          "hegab"
+        ],
+        "minimum": "2024-01-01",
+        "maximum": "2026-12-31",
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-003"
+      },
+      {
+        "field_id": "fld5598844297",
+        "label": "jofab wufab",
+        "type": "multi",
+        "description": "Entry for jofab wufab",
+        "aliases": [
+          "jegab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt06828445",
+            "label": "gagab",
+            "aliases": [
+              "tigab"
+            ]
+          },
+          {
+            "id": "opt56669642",
+            "label": "hagab",
+            "aliases": [
+              "vigab"
+            ]
+          },
+          {
+            "id": "opt89629544",
+            "label": "jagab",
+            "aliases": [
+              "wigab"
+            ]
+          },
+          {
+            "id": "opt07372671",
+            "label": "kagab",
+            "aliases": [
+              "xigab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-003"
+      }
+    ],
+    "dependencies": [
+      {
+        "rule_id": "dep-fam-train-003-hide-date",
+        "when_field_id": "fld9868903206",
+        "when_value": false,
+        "then_field_id": "fld4414400204",
+        "effect": "hide",
+        "default_value": null
+      }
+    ]
+  },
+  "state": {
+    "revision": 4,
+    "active_field_id": null,
+    "values": {
+      "fld0821220239": "opt80105535",
+      "fld4414400204": "2026-08-20",
+      "fld5598844297": [
+        "opt89629544",
+        "opt06828445"
+      ],
+      "fld6251063956": 9.03,
+      "fld8275711846": 0,
+      "fld8598785959": "xusob",
+      "fld9868903206": true
+    },
+    "reachable_field_ids": [
+      "fld8275711846",
+      "fld6251063956",
+      "fld9868903206",
+      "fld0821220239",
+      "fld8598785959",
+      "fld4414400204",
+      "fld5598844297"
+    ],
+    "visible_field_ids": [
+      "fld8275711846",
+      "fld6251063956",
+      "fld9868903206",
+      "fld0821220239",
+      "fld8598785959",
+      "fld4414400204",
+      "fld5598844297"
+    ]
+  },
+  "semantic_context": {
+    "revision": 4,
+    "fingerprint": "sha256:695c8b96e49566990bc81683a81fa1fe6c63521f0d0b98bc1833d39b985194a9",
+    "locale": "en-IN",
+    "active_field_id": null,
+    "reachable_field_ids": [
+      "fld8275711846",
+      "fld6251063956",
+      "fld9868903206",
+      "fld0821220239",
+      "fld8598785959",
+      "fld4414400204"
+    ],
+    "fields": [
+      {
+        "field_id": "fld8275711846",
+        "label": "bofab nufab",
+        "type": "integer",
+        "description": "Entry for bofab nufab",
+        "minimum": 0,
+        "maximum": 12,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld6251063956",
+        "label": "cofab pufab",
+        "type": "number",
+        "description": "Entry for cofab pufab",
+        "minimum": 0.0,
+        "maximum": 10.0,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld9868903206",
+        "label": "dofab rufab",
+        "type": "boolean",
+        "description": "Entry for dofab rufab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld0821220239",
+        "label": "fofab sufab",
+        "type": "enum",
+        "description": "Entry for fofab sufab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt91094348",
+            "label": "rufab",
+            "aliases": [
+              "digab"
+            ]
+          },
+          {
+            "id": "opt80105535",
+            "label": "sufab",
+            "aliases": [
+              "figab"
+            ]
+          },
+          {
+            "id": "opt00582844",
+            "label": "tufab",
+            "aliases": [
+              "gigab"
+            ]
+          },
+          {
+            "id": "opt41767539",
+            "label": "vufab",
+            "aliases": [
+              "higab"
+            ]
+          }
+        ]
+      },
+      {
+        "field_id": "fld8598785959",
+        "label": "gofab tufab",
+        "type": "string",
+        "description": "Entry for gofab tufab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 12,
+        "options": []
+      },
+      {
+        "field_id": "fld4414400204",
+        "label": "hofab vufab",
+        "type": "date",
+        "description": "Entry for hofab vufab",
+        "minimum": "2024-01-01",
+        "maximum": "2026-12-31",
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      }
+    ]
+  },
+  "utterance": "assign fofab sufab as rufab",
+  "expected_actions": [
+    {
+      "kind": "set",
+      "field_id": "fld0821220239",
+      "value": "opt91094348"
+    }
+  ],
+  "provenance": {
+    "generator": "universal",
+    "generator_version": "universal-generator-1.0",
+    "seed": 20261016,
+    "family_seed": 20261012,
+    "state_seed": 20261016,
+    "surface_seed": 20261016,
+    "template_id": "train.single_set.v1",
+    "template_lineage_id": "tpl-train",
+    "transforms": [],
+    "parent_schema_id": "sch0509674907",
+    "parent_scenario_id": "universal-full-v1-train-00004",
+    "validator_version": "record-validator-1.0",
+    "quarantine_reason": null,
+    "source": "deterministic_template",
+    "legacy_metadata": null,
+    "legacy_fingerprint": null
+  },
+  "coverage": {
+    "split": "train",
+    "phenomenon": "single_set",
+    "action_arity": 1,
+    "specialization_mode": "reachable_fields",
+    "suites": [
+      "opaque_id"
+    ],
+    "opaque_ids": true,
+    "correction": false,
+    "asr": false,
+    "code_mixed": false,
+    "counterfactual": false,
+    "option_permutation": false,
+    "ambiguity": "accepted",
+    "field_types": [
+      "enum"
+    ]
+  },
+  "schema_fingerprint": "sha256:695c8b96e49566990bc81683a81fa1fe6c63521f0d0b98bc1833d39b985194a9",
+  "counterfactual_group_id": null
+}

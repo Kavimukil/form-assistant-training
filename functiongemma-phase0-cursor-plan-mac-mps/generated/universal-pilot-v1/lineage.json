@@ -1,0 +1,244 @@
+{
+  "families": [
+    {
+      "id": "fam-train-000",
+      "ontology": "ont-train-000",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-001",
+      "ontology": "ont-train-001",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-002",
+      "ontology": "ont-train-002",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-003",
+      "ontology": "ont-train-003",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-004",
+      "ontology": "ont-train-004",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-005",
+      "ontology": "ont-train-005",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-006",
+      "ontology": "ont-train-006",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-007",
+      "ontology": "ont-train-007",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-008",
+      "ontology": "ont-train-008",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-009",
+      "ontology": "ont-train-009",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-010",
+      "ontology": "ont-train-010",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-011",
+      "ontology": "ont-train-011",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-012",
+      "ontology": "ont-train-012",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-013",
+      "ontology": "ont-train-013",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-014",
+      "ontology": "ont-train-014",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-015",
+      "ontology": "ont-train-015",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-016",
+      "ontology": "ont-train-016",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-017",
+      "ontology": "ont-train-017",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-018",
+      "ontology": "ont-train-018",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-019",
+      "ontology": "ont-train-019",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-020",
+      "ontology": "ont-train-020",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-021",
+      "ontology": "ont-train-021",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-022",
+      "ontology": "ont-train-022",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-train-023",
+      "ontology": "ont-train-023",
+      "split": "train",
+      "template": "tpl-train"
+    },
+    {
+      "id": "fam-validation-000",
+      "ontology": "ont-validation-000",
+      "split": "validation",
+      "template": "tpl-validation"
+    },
+    {
+      "id": "fam-validation-001",
+      "ontology": "ont-validation-001",
+      "split": "validation",
+      "template": "tpl-validation"
+    },
+    {
+      "id": "fam-validation-002",
+      "ontology": "ont-validation-002",
+      "split": "validation",
+      "template": "tpl-validation"
+    },
+    {
+      "id": "fam-validation-003",
+      "ontology": "ont-validation-003",
+      "split": "validation",
+      "template": "tpl-validation"
+    },
+    {
+      "id": "fam-test-000",
+      "ontology": "ont-test-000",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-001",
+      "ontology": "ont-test-001",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-002",
+      "ontology": "ont-test-002",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-003",
+      "ontology": "ont-test-003",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-004",
+      "ontology": "ont-test-004",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-005",
+      "ontology": "ont-test-005",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-006",
+      "ontology": "ont-test-006",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-007",
+      "ontology": "ont-test-007",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-008",
+      "ontology": "ont-test-008",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-009",
+      "ontology": "ont-test-009",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-010",
+      "ontology": "ont-test-010",
+      "split": "test",
+      "template": "tpl-test"
+    },
+    {
+      "id": "fam-test-011",
+      "ontology": "ont-test-011",
+      "split": "test",
+      "template": "tpl-test"
+    }
+  ]
+}

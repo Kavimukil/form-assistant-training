@@ -1897,3 +1897,186 @@ def v4_choice_rows(split: str) -> list[dict[str, Any]]:
             utterance = f"leave the {label} undecided"
         add("choice_prod_abstain", "no_change", utterance, field, [])
     return rows
+
+
+_V5_COUNTS = {"train": (480, 120), "validation": (80, 24)}
+
+
+def _v5_opt_id(salt: str, spoken: list[str], blocked: frozenset[str]) -> str:
+    banned = [piece.casefold() for piece in spoken if piece]
+    for extra in range(24):
+        digest = hashlib.sha1(f"json-calls-v5|opt|{salt}|{extra}".encode()).hexdigest()[:6]
+        ident = f"opt_{digest}"
+        folded = ident.casefold()
+        if ident in blocked or any(piece in folded for piece in banned):
+            continue
+        return ident
+    raise RuntimeError(f"could not mint a v5 option id for {salt}")
+
+
+def _v5_field_id(split: str, role: str, index: int, blocked: frozenset[str]) -> str:
+    for extra in range(8):
+        digest = hashlib.sha1(f"json-calls-v5|fld|{split}|{role}|{index}|{extra}".encode()).hexdigest()[:8]
+        ident = f"fld_{digest}"
+        if ident not in blocked:
+            return ident
+    raise RuntimeError(f"could not mint a v5 field id for {split} {role} {index}")
+
+
+def _v5_enum_field(
+    fid: str,
+    label: str,
+    pairs: list[tuple[str, str]],
+    blocked: frozenset[str],
+    *,
+    salt: str,
+) -> dict[str, Any]:
+    options = []
+    for offset, (word, thing) in enumerate(pairs):
+        spoken_label = f"{word} {thing}"
+        options.append(
+            {
+                "id": _v5_opt_id(f"{salt}|{offset}", [spoken_label, word, thing], blocked),
+                "label": spoken_label,
+                "aliases": [word],
+            }
+        )
+    return {"id": fid, "type": "enum", "label": label, "options": options}
+
+
+def v5_choice_rows(split: str) -> list[dict[str, Any]]:
+    """Teach option-id lookup. The spoken label and alias never appear in the id.
+
+    Covers the v2 test misses: same field with the wrong option, an alias such as
+    a short name, the right option on the wrong field, and a rejected sibling.
+    No-change rows stay fewer than the commits.
+    """
+    n_commit, n_abstain = _V5_COUNTS[split]
+    if n_commit % 4 or n_abstain % 3:
+        raise RuntimeError("v5 counts must cover every style evenly")
+    adj, noun, heads, tails = _v4_lexicon(split)
+    pair_need = n_commit * 2 + (n_commit // 4) * 2
+    if pair_need > len(adj) * len(noun):
+        raise RuntimeError(f"{split} lexicon is too small for v5")
+    if n_commit + n_abstain + (n_commit // 4) > len(heads) * len(tails):
+        raise RuntimeError(f"{split} field names are too few for v5")
+    blocked = _v4_blocked_ids()
+    banned_utt = {utterance.casefold() for utterance in _frozen_test_utterances()}
+    rows: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    pair_at = 0
+    label_at = 0
+
+    def take_pairs(count: int) -> list[tuple[str, str]]:
+        nonlocal pair_at
+        found = [_v4_pair(adj, noun, pair_at + offset) for offset in range(count)]
+        pair_at += count
+        return found
+
+    def take_label() -> str:
+        nonlocal label_at
+        label = _v4_field_label(heads, tails, label_at)
+        label_at += 1
+        return label
+
+    def add(
+        skill: str,
+        kind: str,
+        utterance: str,
+        fields: list[dict[str, Any]],
+        calls: list[dict[str, Any]],
+        active: str,
+    ) -> None:
+        key = utterance.casefold()
+        if key in seen or key in banned_utt:
+            raise RuntimeError(f"v5 utterance is repeated or matches the frozen test: {utterance}")
+        for field in fields:
+            if field["id"] in blocked:
+                raise RuntimeError(f"v5 field id leaked: {field['id']}")
+            for opt in field.get("options") or []:
+                if opt["id"] in blocked:
+                    raise RuntimeError(f"v5 option id leaked: {opt['id']}")
+                folded = opt["id"].casefold()
+                spoken = [opt["label"], *opt.get("aliases", [])]
+                if any(piece.casefold() in folded for piece in spoken if piece):
+                    raise RuntimeError(f"v5 option id {opt['id']} contains spoken text")
+        seen.add(key)
+        rows.append(
+            _example(
+                f"json-v5-{split[:2]}-{len(rows):04d}",
+                utterance,
+                fields,
+                calls,
+                active=active,
+                primitive=kind,
+                split=split,
+                source="synthetic_json",
+                skill=skill,
+                mode="active_field",
+            )
+        )
+
+    for i in range(n_commit):
+        style = i % 4
+        label = take_label()
+        fid = _v5_field_id(split, "commit", i, blocked)
+        pairs = take_pairs(2)
+        field = _v5_enum_field(fid, label, pairs, blocked, salt=f"{split}|commit|{i}")
+        correct, wrong = field["options"]
+        if style == 0:
+            utterance = correct["label"]
+        elif style == 1:
+            utterance = f"use {correct['aliases'][0]} on {label}"
+        elif style == 2:
+            other_label = take_label()
+            other_id = _v5_field_id(split, "distractor", i, blocked)
+            other = _v5_enum_field(
+                other_id,
+                other_label,
+                take_pairs(2),
+                blocked,
+                salt=f"{split}|other|{i}",
+            )
+            utterance = f"for {label} it is {correct['label']}"
+            add(
+                "choice_lookup",
+                "enum",
+                utterance,
+                [field, other],
+                [set_call("set_choice", fid, correct["id"])],
+                fid,
+            )
+            continue
+        else:
+            utterance = f"{correct['label']} and not {wrong['label']}"
+        add(
+            "choice_lookup",
+            "enum",
+            utterance,
+            [field],
+            [set_call("set_choice", fid, correct["id"])],
+            fid,
+        )
+
+    for i in range(n_abstain):
+        style = i % 3
+        label = take_label()
+        if style == 0:
+            value = 400 + i
+            fid = _v5_field_id(split, "abstain-int", i, blocked)
+            field = _syn_field(fid, "integer", label)
+            utterance = f"my colleague mentioned {value} for {label}"
+            if split == "validation":
+                utterance = f"{utterance} earlier"
+        elif style == 1:
+            fid = _v5_field_id(split, "abstain-bool", i, blocked)
+            field = _syn_field(fid, "boolean", label)
+            utterance = f"is {label} off"
+            if split == "validation":
+                utterance = f"was {label} off earlier"
+        else:
+            fid = _v5_field_id(split, "abstain-enum", i, blocked)
+            field = _v5_enum_field(fid, label, take_pairs(2), blocked, salt=f"{split}|abstain|{i}")
+            utterance = f"not sure about {field['options'][0]['aliases'][0]} for {label}"
+        add("choice_lookup_abstain", "no_change", utterance, [field], [], fid)
+    return rows

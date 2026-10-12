@@ -1,0 +1,297 @@
+{
+  "id": "universal-full-v1-train-00003",
+  "schema": {
+    "schema_id": "sch2779735713",
+    "schema_family_id": "fam-train-002",
+    "template_lineage_id": "tpl-train",
+    "ontology_lineage_id": "ont-train-002",
+    "locale": "en-IN",
+    "fields": [
+      {
+        "field_id": "fld9401815653",
+        "label": "bidab nodab",
+        "type": "integer",
+        "description": "Entry for bidab nodab",
+        "aliases": [
+          "bafab"
+        ],
+        "minimum": 100,
+        "maximum": 999,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-002"
+      },
+      {
+        "field_id": "fld1886305735",
+        "label": "cidab podab",
+        "type": "number",
+        "description": "Entry for cidab podab",
+        "aliases": [
+          "cafab"
+        ],
+        "minimum": 10.0,
+        "maximum": 250.0,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-002"
+      },
+      {
+        "field_id": "fld7318815854",
+        "label": "didab rodab",
+        "type": "boolean",
+        "description": "Entry for didab rodab",
+        "aliases": [
+          "dafab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-002"
+      },
+      {
+        "field_id": "fld2035514398",
+        "label": "fidab sodab",
+        "type": "enum",
+        "description": "Entry for fidab sodab",
+        "aliases": [
+          "fafab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt79350594",
+            "label": "rodab",
+            "aliases": [
+              "defab"
+            ]
+          },
+          {
+            "id": "opt08050815",
+            "label": "sodab",
+            "aliases": [
+              "fefab"
+            ]
+          },
+          {
+            "id": "opt21370391",
+            "label": "todab",
+            "aliases": [
+              "gefab"
+            ]
+          },
+          {
+            "id": "opt40192182",
+            "label": "vodab",
+            "aliases": [
+              "hefab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-002"
+      },
+      {
+        "field_id": "fld9441554643",
+        "label": "gidab todab",
+        "type": "string",
+        "description": "Entry for gidab todab",
+        "aliases": [
+          "gafab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 24,
+        "options": [],
+        "ontology_lineage": "ont-train-002"
+      },
+      {
+        "field_id": "fld0505015017",
+        "label": "hidab vodab",
+        "type": "date",
+        "description": "Entry for hidab vodab",
+        "aliases": [
+          "hafab"
+        ],
+        "minimum": "2027-01-01",
+        "maximum": "2029-12-31",
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-002"
+      },
+      {
+        "field_id": "fld2506162498",
+        "label": "jidab wodab",
+        "type": "multi",
+        "description": "Entry for jidab wodab",
+        "aliases": [
+          "jafab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt47521808",
+            "label": "gudab",
+            "aliases": [
+              "tefab"
+            ]
+          },
+          {
+            "id": "opt77259920",
+            "label": "hudab",
+            "aliases": [
+              "vefab"
+            ]
+          },
+          {
+            "id": "opt21557116",
+            "label": "judab",
+            "aliases": [
+              "wefab"
+            ]
+          },
+          {
+            "id": "opt82634852",
+            "label": "kudab",
+            "aliases": [
+              "xefab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-002"
+      }
+    ],
+    "dependencies": [
+      {
+        "rule_id": "dep-fam-train-002-hide-date",
+        "when_field_id": "fld7318815854",
+        "when_value": false,
+        "then_field_id": "fld0505015017",
+        "effect": "hide",
+        "default_value": null
+      }
+    ]
+  },
+  "state": {
+    "revision": 3,
+    "active_field_id": "fld7318815854",
+    "values": {
+      "fld1886305735": 201.48,
+      "fld7318815854": false,
+      "fld9401815653": 945
+    },
+    "reachable_field_ids": [
+      "fld7318815854",
+      "fld9401815653",
+      "fld1886305735"
+    ],
+    "visible_field_ids": [
+      "fld7318815854",
+      "fld9401815653",
+      "fld1886305735"
+    ]
+  },
+  "semantic_context": {
+    "revision": 3,
+    "fingerprint": "sha256:4378a077071b5420e69383f82d686feaee7fa1c3976757bb8f018db82ec7e556",
+    "locale": "en-IN",
+    "active_field_id": "fld7318815854",
+    "reachable_field_ids": [
+      "fld7318815854",
+      "fld9401815653",
+      "fld1886305735"
+    ],
+    "fields": [
+      {
+        "field_id": "fld7318815854",
+        "label": "didab rodab",
+        "type": "boolean",
+        "description": "Entry for didab rodab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld9401815653",
+        "label": "bidab nodab",
+        "type": "integer",
+        "description": "Entry for bidab nodab",
+        "minimum": 100,
+        "maximum": 999,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld1886305735",
+        "label": "cidab podab",
+        "type": "number",
+        "description": "Entry for cidab podab",
+        "minimum": 10.0,
+        "maximum": 250.0,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      }
+    ]
+  },
+  "utterance": "assign didab rodab as yes",
+  "expected_actions": [
+    {
+      "kind": "set",
+      "field_id": "fld7318815854",
+      "value": true
+    }
+  ],
+  "provenance": {
+    "generator": "universal",
+    "generator_version": "universal-generator-1.0",
+    "seed": 20261015,
+    "family_seed": 20261012,
+    "state_seed": 20261015,
+    "surface_seed": 20261015,
+    "template_id": "train.single_set.v1",
+    "template_lineage_id": "tpl-train",
+    "transforms": [],
+    "parent_schema_id": "sch2779735713",
+    "parent_scenario_id": "universal-full-v1-train-00003",
+    "validator_version": "record-validator-1.0",
+    "quarantine_reason": null,
+    "source": "deterministic_template",
+    "legacy_metadata": null,
+    "legacy_fingerprint": null
+  },
+  "coverage": {
+    "split": "train",
+    "phenomenon": "single_set",
+    "action_arity": 1,
+    "specialization_mode": "active_field",
+    "suites": [
+      "opaque_id"
+    ],
+    "opaque_ids": true,
+    "correction": false,
+    "asr": false,
+    "code_mixed": false,
+    "counterfactual": false,
+    "option_permutation": false,
+    "ambiguity": "accepted",
+    "field_types": [
+      "boolean"
+    ]
+  },
+  "schema_fingerprint": "sha256:4378a077071b5420e69383f82d686feaee7fa1c3976757bb8f018db82ec7e556",
+  "counterfactual_group_id": null
+}

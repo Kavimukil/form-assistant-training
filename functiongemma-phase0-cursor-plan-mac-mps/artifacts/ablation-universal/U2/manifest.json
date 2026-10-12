@@ -1,0 +1,14 @@
+{
+  "frozen_test_sha256": "6343d1722a938553eaed68b088187ce64601496893117f9e92801c5f339cbbb7",
+  "matched_train_n": 480,
+  "nested_in_previous": true,
+  "phenomena": [
+    "single_set",
+    "clear",
+    "option_permutation"
+  ],
+  "tag": "U2",
+  "title": "opaque ids and option permutations",
+  "train_n": 580,
+  "validation_n": 98
+}

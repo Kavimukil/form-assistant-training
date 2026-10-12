@@ -1,0 +1,20 @@
+{
+  "frozen_test_sha256": "3c06e9b2f218dda6cbcab0b422f690015b1320b7af7253ccb18fb8bc9d2a46e1",
+  "matched_train_n": 8000,
+  "nested_in_previous": true,
+  "phenomena": [
+    "single_set",
+    "clear",
+    "option_permutation",
+    "counterfactual",
+    "no_change",
+    "multi_field",
+    "correction",
+    "asr",
+    "code_mixed"
+  ],
+  "tag": "U4",
+  "title": "multi-field corrections and noise",
+  "train_n": 20000,
+  "validation_n": 2500
+}

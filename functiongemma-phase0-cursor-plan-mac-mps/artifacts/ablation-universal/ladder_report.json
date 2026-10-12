@@ -1,0 +1,81 @@
+{
+  "frozen_test_path": "generated/universal-pilot-v1/test.jsonl",
+  "frozen_test_sha256": "6343d1722a938553eaed68b088187ce64601496893117f9e92801c5f339cbbb7",
+  "rungs": {
+    "U0": {
+      "frozen_test_sha256": "6343d1722a938553eaed68b088187ce64601496893117f9e92801c5f339cbbb7",
+      "matched_train_n": 480,
+      "nested_in_previous": true,
+      "phenomena": [
+        "single_set"
+      ],
+      "tag": "U0",
+      "title": "legacy-like single-field control",
+      "train_n": 480,
+      "validation_n": 80
+    },
+    "U1": {
+      "frozen_test_sha256": "6343d1722a938553eaed68b088187ce64601496893117f9e92801c5f339cbbb7",
+      "matched_train_n": 480,
+      "nested_in_previous": true,
+      "phenomena": [
+        "single_set",
+        "clear"
+      ],
+      "tag": "U1",
+      "title": "schema and state diversity",
+      "train_n": 540,
+      "validation_n": 90
+    },
+    "U2": {
+      "frozen_test_sha256": "6343d1722a938553eaed68b088187ce64601496893117f9e92801c5f339cbbb7",
+      "matched_train_n": 480,
+      "nested_in_previous": true,
+      "phenomena": [
+        "single_set",
+        "clear",
+        "option_permutation"
+      ],
+      "tag": "U2",
+      "title": "opaque ids and option permutations",
+      "train_n": 580,
+      "validation_n": 98
+    },
+    "U3": {
+      "frozen_test_sha256": "6343d1722a938553eaed68b088187ce64601496893117f9e92801c5f339cbbb7",
+      "matched_train_n": 480,
+      "nested_in_previous": true,
+      "phenomena": [
+        "single_set",
+        "clear",
+        "option_permutation",
+        "counterfactual",
+        "no_change"
+      ],
+      "tag": "U3",
+      "title": "counterfactuals and negatives",
+      "train_n": 780,
+      "validation_n": 130
+    },
+    "U4": {
+      "frozen_test_sha256": "6343d1722a938553eaed68b088187ce64601496893117f9e92801c5f339cbbb7",
+      "matched_train_n": 480,
+      "nested_in_previous": true,
+      "phenomena": [
+        "single_set",
+        "clear",
+        "option_permutation",
+        "counterfactual",
+        "no_change",
+        "multi_field",
+        "correction",
+        "asr",
+        "code_mixed"
+      ],
+      "tag": "U4",
+      "title": "multi-field corrections and noise",
+      "train_n": 1200,
+      "validation_n": 200
+    }
+  }
+}

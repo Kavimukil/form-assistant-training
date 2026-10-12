@@ -1,0 +1,32 @@
+[
+  {
+    "id": "universal-pilot-v1-train-00001",
+    "prompt_tokens_masked": 714,
+    "trainable_tokens": 108,
+    "ok": true
+  },
+  {
+    "id": "universal-pilot-v1-train-00002",
+    "prompt_tokens_masked": 2181,
+    "trainable_tokens": 109,
+    "ok": true
+  },
+  {
+    "id": "universal-pilot-v1-train-00003",
+    "prompt_tokens_masked": 683,
+    "trainable_tokens": 111,
+    "ok": true
+  },
+  {
+    "id": "universal-pilot-v1-train-00004",
+    "prompt_tokens_masked": 2182,
+    "trainable_tokens": 119,
+    "ok": true
+  },
+  {
+    "id": "universal-pilot-v1-train-00005",
+    "prompt_tokens_masked": 729,
+    "trainable_tokens": 113,
+    "ok": true
+  }
+]

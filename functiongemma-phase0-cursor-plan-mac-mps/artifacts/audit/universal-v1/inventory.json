@@ -1,0 +1,111 @@
+{
+  "counts": {
+    "test": {
+      "actual": 2500,
+      "expected": 2500,
+      "ok": true
+    },
+    "train": {
+      "actual": 20000,
+      "expected": 20000,
+      "ok": true
+    },
+    "validation": {
+      "actual": 2500,
+      "expected": 2500,
+      "ok": true
+    }
+  },
+  "historical": {
+    "a0": {
+      "exact_call": 0.3852,
+      "false_mutation_rate": 0.4727272727272727,
+      "split_path": "generated/phase0-v1/validation.jsonl"
+    },
+    "a0_is_unseen_schema_baseline": false,
+    "a0_scope": "validation_only",
+    "g9_decision": "NO-GO",
+    "phase0_checkpoint_frozen_test": {
+      "exact_call": 0.8668,
+      "false_mutation_rate": 0.0,
+      "interface": "native_tool_calls",
+      "note": "Do not compare these numbers with production JSON scores.",
+      "unseen_enums": 0.7333333333333333,
+      "unseen_fields": 0.75,
+      "unseen_numeric_compositions": 0.64
+    }
+  },
+  "inventory": {
+    "counts": {
+      "generated/phase0-v1/test.jsonl": 2500,
+      "generated/phase0-v1/train.jsonl": 20000,
+      "generated/phase0-v1/validation.jsonl": 2500
+    },
+    "field_ids": {
+      "generated/phase0-v1/test.jsonl": 288,
+      "generated/phase0-v1/train.jsonl": 198,
+      "generated/phase0-v1/validation.jsonl": 198
+    },
+    "files": [
+      {
+        "exists": true,
+        "lfs_pointer": false,
+        "path": "generated/phase0-v1/train.jsonl",
+        "rows": 20000,
+        "sha256": "2b5a3ed386e3a4a46ae3784a8eb0d8f0272bd0e299c2efc5f87c069256abf167",
+        "status": "ok"
+      },
+      {
+        "exists": true,
+        "lfs_pointer": false,
+        "path": "generated/phase0-v1/validation.jsonl",
+        "rows": 2500,
+        "sha256": "e0f6d7a48038eb09bb9e1409f7c49b0af5b4b582de265267686d450be01b941c",
+        "status": "ok"
+      },
+      {
+        "exists": true,
+        "lfs_pointer": false,
+        "path": "generated/phase0-v1/test.jsonl",
+        "rows": 2500,
+        "sha256": "abac6f08b85a2ef0937003a8f7baff208e0506dafd8e97efbc8e41a20037e9a3",
+        "status": "ok"
+      },
+      {
+        "exists": true,
+        "lfs_pointer": false,
+        "path": "generated/phase0-v1/train.sft.jsonl",
+        "rows": 20000,
+        "sha256": "8b974ba4fc191e4af515cf0b740ce7d7bef23e935861e0d8946d4db4a0fb670a",
+        "status": "ok"
+      },
+      {
+        "exists": true,
+        "lfs_pointer": false,
+        "path": "generated/json-calls-v5/train.sft.jsonl",
+        "rows": 37539,
+        "sha256": "3e3c685d3ad780e4d8f87775652bab3e3de6f80b21cf37647161e584d288f4f9",
+        "status": "ok"
+      },
+      {
+        "exists": true,
+        "lfs_pointer": false,
+        "path": "generated/json-calls-v5/test.sft.jsonl",
+        "rows": 2500,
+        "sha256": "52b4fa65cd0d6d2258ee787cc24a4694b252272512c08465b7f635f0bbf8124b",
+        "status": "ok"
+      }
+    ],
+    "fingerprints": {
+      "generated/phase0-v1/test.jsonl": 2421,
+      "generated/phase0-v1/train.jsonl": 17564,
+      "generated/phase0-v1/validation.jsonl": 2415
+    },
+    "problems": []
+  },
+  "label_error_count": 0,
+  "migration": {
+    "checked": 25000,
+    "errors": 0
+  }
+}

@@ -49,9 +49,55 @@ def main():
     ab_train.add_argument("--device", default="mps", choices=["auto","mps","cuda","cpu"])
     ab_train.add_argument("--smoke-steps", type=int, default=0)
     ab_train.add_argument("--ablation-root", default="artifacts/ablation")
+    sub.add_parser("audit-generalization").add_argument("--out", default="artifacts/audit/universal-v1")
+    bu = sub.add_parser("build-universal")
+    bu.add_argument("--spec", default="config/universal-pilot-v1.yaml")
+    bu.add_argument("--out-root", default="generated")
+    eb = sub.add_parser("evaluate-baseline")
+    eb.add_argument("--suite-manifest", default="generated/universal-pilot-v1/suites/manifest.json")
+    eb.add_argument("--model-id", default="google/functiongemma-270m-it")
+    eb.add_argument("--out", default="artifacts/audit/universal-v1")
     a=p.parse_args()
     if a.cmd=="doctor":
         print(json.dumps(doctor_info(), indent=2)); return
+    if a.cmd == "audit-generalization":
+        from pathlib import Path
+        from form_sft.audit.generalization import write_audit
+        report = write_audit(Path("."), Path(a.out))
+        print(json.dumps({"counts": report["counts"], "migration_errors": report["migration"]["errors"], "label_error_count": report["label_error_count"]}, indent=2))
+        return
+    if a.cmd == "build-universal":
+        from pathlib import Path
+        from form_sft.universal.pipeline import export_schemas, finalize_pilot
+        spec = load_spec(a.spec)
+        out = Path(a.out_root) / spec["spec"]["experiment_id"]
+        export_schemas(Path("schemas"))
+        summary = finalize_pilot(spec, out, Path("artifacts/audit") / spec["spec"]["experiment_id"])
+        print(json.dumps(summary, indent=2, default=str))
+        return
+    if a.cmd == "evaluate-baseline":
+        from pathlib import Path
+        manifest_path = Path(a.suite_manifest)
+        out = Path(a.out)
+        out.mkdir(parents=True, exist_ok=True)
+        destination = out / "baseline_manifest.json"
+        payload = json.loads(destination.read_text()) if destination.exists() else {}
+        payload.update({"model_id": a.model_id, "suite_manifest": str(manifest_path)})
+        if manifest_path.exists():
+            payload["suite_sha256"] = json.loads(manifest_path.read_text()).get("sha256")
+        from form_sft.audit.generalization import weights_ready
+        ready = weights_ready(a.model_id)
+        payload["weights_present"] = ready
+        payload["existing_checkpoint_present"] = ready
+        payload["a0_is_unseen_schema_baseline"] = False
+        if not ready:
+            payload["status"] = "blocked_model_not_local"
+            payload["reason"] = "Refusing to download weights or to substitute validation-only A0 metrics."
+        else:
+            payload["status"] = "weights_present_not_scored_in_this_run"
+        destination.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        print(json.dumps({"status": payload["status"], "weights_present": payload["weights_present"], "suite_sha256": payload.get("suite_sha256")}, indent=2))
+        return
     if a.cmd == "ablation":
         from pathlib import Path
         from form_sft.ablation.ladder import ABLATION_TITLES, materialize_ladder, summarize_evals

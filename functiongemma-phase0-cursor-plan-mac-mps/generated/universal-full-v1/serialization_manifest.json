@@ -1,0 +1,51 @@
+{
+  "headroom_under_1024": -1536,
+  "inspected_masks": [
+    {
+      "id": "universal-full-v1-train-00001",
+      "ok": true,
+      "prompt_tokens_masked": 714,
+      "trainable_tokens": 108
+    },
+    {
+      "id": "universal-full-v1-train-00002",
+      "ok": true,
+      "prompt_tokens_masked": 2181,
+      "trainable_tokens": 109
+    },
+    {
+      "id": "universal-full-v1-train-00003",
+      "ok": true,
+      "prompt_tokens_masked": 683,
+      "trainable_tokens": 111
+    },
+    {
+      "id": "universal-full-v1-train-00004",
+      "ok": true,
+      "prompt_tokens_masked": 2182,
+      "trainable_tokens": 119
+    },
+    {
+      "id": "universal-full-v1-train-00005",
+      "ok": true,
+      "prompt_tokens_masked": 729,
+      "trainable_tokens": 113
+    }
+  ],
+  "passed": true,
+  "problems": [],
+  "render_mode": "llama_cpp_compatible",
+  "rows": 25000,
+  "token_length": {
+    "max": 2560,
+    "p50": 2218,
+    "p95": 2530,
+    "p99": 2553
+  },
+  "tokenizer_note": "Official apply_chat_template prepends <bos>; llama_prompt does not. No other control tokens are hand-written.",
+  "versions": {
+    "torch": "2.14.1",
+    "transformers": "5.19.0",
+    "trl": "1.14.2"
+  }
+}

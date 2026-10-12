@@ -7,10 +7,20 @@ from pathlib import Path
 
 import yaml
 from datasets import load_dataset
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM
 from trl import SFTConfig, SFTTrainer
 
+from form_sft.training.compiler import load_tokenizer
 from form_sft.training.device import select_device
+
+
+def load_training_tokenizer(model_id: str):
+    """Same loader as compile and eval, unwrapped for TRL's processing class."""
+    loaded = load_tokenizer(model_id)
+    tokenizer = getattr(loaded, "tokenizer", loaded)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    return tokenizer
 
 
 def main() -> None:
@@ -34,9 +44,7 @@ def main() -> None:
 
     print(f"Phase-0 device={plan.device} dtype={plan.torch_dtype} bf16={plan.bf16} fp16={plan.fp16}")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
+    tokenizer = load_training_tokenizer(model_id)
     # Prefer dtype= for transformers>=5; keep torch_dtype kw for older callers via from_pretrained.
     try:
         model = AutoModelForCausalLM.from_pretrained(model_id, dtype=plan.torch_dtype)
@@ -73,6 +81,19 @@ def main() -> None:
         total_steps = steps_per_epoch * int(cfg["num_train_epochs"])
     warmup_steps = max(0, int(float(cfg.get("warmup_ratio", 0.0)) * total_steps))
 
+    loss_policy = cfg.get("loss_policy", "full_sequence")
+    sft_extra = {}
+    if loss_policy == "assistant_only":
+        fields = getattr(SFTConfig, "__dataclass_fields__", {})
+        if "assistant_only_loss" in fields:
+            sft_extra["assistant_only_loss"] = True
+        elif "completion_only_loss" in fields:
+            sft_extra["completion_only_loss"] = True
+        else:
+            raise SystemExit("assistant_only loss policy is not supported by the installed TRL")
+    elif loss_policy != "full_sequence":
+        raise SystemExit(f"unknown loss_policy {loss_policy}")
+
     training_args = SFTConfig(
         output_dir=output_dir,
         num_train_epochs=cfg["num_train_epochs"],
@@ -95,6 +116,7 @@ def main() -> None:
         dataset_text_field="text",
         max_length=int(cfg.get("max_seq_length", 1024)),
         packing=bool(cfg.get("packing", False)),
+        **sft_extra,
     )
 
     # Compiler creates the `text` column using FunctionGemma's tokenizer/chat template.
@@ -129,6 +151,7 @@ def main() -> None:
         "step_losses": step_losses,
         "finite_loss": bool(finite),
         "log_history": log_history,
+        "loss_policy": loss_policy,
         "checkpoint_reload": False,
     }
 

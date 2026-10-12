@@ -1,0 +1,377 @@
+{
+  "id": "universal-full-v1-train-00002",
+  "schema": {
+    "schema_id": "sch6615223205",
+    "schema_family_id": "fam-train-001",
+    "template_lineage_id": "tpl-train",
+    "ontology_lineage_id": "ont-train-001",
+    "locale": "en-IN",
+    "fields": [
+      {
+        "field_id": "fld4847612879",
+        "label": "becab nicab",
+        "type": "integer",
+        "description": "Entry for becab nicab",
+        "aliases": [
+          "bucab"
+        ],
+        "minimum": 10,
+        "maximum": 99,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-001"
+      },
+      {
+        "field_id": "fld0206593671",
+        "label": "cecab picab",
+        "type": "number",
+        "description": "Entry for cecab picab",
+        "aliases": [
+          "cucab"
+        ],
+        "minimum": 1.0,
+        "maximum": 50.0,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-001"
+      },
+      {
+        "field_id": "fld5946965045",
+        "label": "decab ricab",
+        "type": "boolean",
+        "description": "Entry for decab ricab",
+        "aliases": [
+          "ducab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-001"
+      },
+      {
+        "field_id": "fld6798832842",
+        "label": "fecab sicab",
+        "type": "enum",
+        "description": "Entry for fecab sicab",
+        "aliases": [
+          "fucab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt05755434",
+            "label": "ricab",
+            "aliases": [
+              "dadab"
+            ]
+          },
+          {
+            "id": "opt38889058",
+            "label": "sicab",
+            "aliases": [
+              "fadab"
+            ]
+          },
+          {
+            "id": "opt70414763",
+            "label": "ticab",
+            "aliases": [
+              "gadab"
+            ]
+          },
+          {
+            "id": "opt33310558",
+            "label": "vicab",
+            "aliases": [
+              "hadab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-001"
+      },
+      {
+        "field_id": "fld5025081973",
+        "label": "gecab ticab",
+        "type": "string",
+        "description": "Entry for gecab ticab",
+        "aliases": [
+          "gucab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 16,
+        "options": [],
+        "ontology_lineage": "ont-train-001"
+      },
+      {
+        "field_id": "fld4928926517",
+        "label": "hecab vicab",
+        "type": "date",
+        "description": "Entry for hecab vicab",
+        "aliases": [
+          "hucab"
+        ],
+        "minimum": "2026-01-01",
+        "maximum": "2028-06-30",
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-001"
+      },
+      {
+        "field_id": "fld9037335559",
+        "label": "jecab wicab",
+        "type": "multi",
+        "description": "Entry for jecab wicab",
+        "aliases": [
+          "jucab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt04361701",
+            "label": "gocab",
+            "aliases": [
+              "tadab"
+            ]
+          },
+          {
+            "id": "opt10174365",
+            "label": "hocab",
+            "aliases": [
+              "vadab"
+            ]
+          },
+          {
+            "id": "opt22679260",
+            "label": "jocab",
+            "aliases": [
+              "wadab"
+            ]
+          },
+          {
+            "id": "opt77661474",
+            "label": "kocab",
+            "aliases": [
+              "xadab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-001"
+      }
+    ],
+    "dependencies": [
+      {
+        "rule_id": "dep-fam-train-001-hide-date",
+        "when_field_id": "fld5946965045",
+        "when_value": false,
+        "then_field_id": "fld4928926517",
+        "effect": "hide",
+        "default_value": null
+      }
+    ]
+  },
+  "state": {
+    "revision": 2,
+    "active_field_id": null,
+    "values": {
+      "fld0206593671": 38.49,
+      "fld4847612879": 81,
+      "fld4928926517": "2027-06-17",
+      "fld5025081973": "xuceb",
+      "fld5946965045": true,
+      "fld6798832842": "opt70414763",
+      "fld9037335559": [
+        "opt04361701",
+        "opt22679260"
+      ]
+    },
+    "reachable_field_ids": [
+      "fld4847612879",
+      "fld0206593671",
+      "fld5946965045",
+      "fld6798832842",
+      "fld5025081973",
+      "fld4928926517",
+      "fld9037335559"
+    ],
+    "visible_field_ids": [
+      "fld4847612879",
+      "fld0206593671",
+      "fld5946965045",
+      "fld6798832842",
+      "fld5025081973",
+      "fld4928926517",
+      "fld9037335559"
+    ]
+  },
+  "semantic_context": {
+    "revision": 2,
+    "fingerprint": "sha256:c1a49c24006f1eb3f0f53a9a61538266daf1396f48ba18487dbec159ecfbf03d",
+    "locale": "en-IN",
+    "active_field_id": null,
+    "reachable_field_ids": [
+      "fld4847612879",
+      "fld0206593671",
+      "fld5946965045",
+      "fld6798832842",
+      "fld5025081973",
+      "fld4928926517"
+    ],
+    "fields": [
+      {
+        "field_id": "fld4847612879",
+        "label": "becab nicab",
+        "type": "integer",
+        "description": "Entry for becab nicab",
+        "minimum": 10,
+        "maximum": 99,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld0206593671",
+        "label": "cecab picab",
+        "type": "number",
+        "description": "Entry for cecab picab",
+        "minimum": 1.0,
+        "maximum": 50.0,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld5946965045",
+        "label": "decab ricab",
+        "type": "boolean",
+        "description": "Entry for decab ricab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld6798832842",
+        "label": "fecab sicab",
+        "type": "enum",
+        "description": "Entry for fecab sicab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt05755434",
+            "label": "ricab",
+            "aliases": [
+              "dadab"
+            ]
+          },
+          {
+            "id": "opt38889058",
+            "label": "sicab",
+            "aliases": [
+              "fadab"
+            ]
+          },
+          {
+            "id": "opt70414763",
+            "label": "ticab",
+            "aliases": [
+              "gadab"
+            ]
+          },
+          {
+            "id": "opt33310558",
+            "label": "vicab",
+            "aliases": [
+              "hadab"
+            ]
+          }
+        ]
+      },
+      {
+        "field_id": "fld5025081973",
+        "label": "gecab ticab",
+        "type": "string",
+        "description": "Entry for gecab ticab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 16,
+        "options": []
+      },
+      {
+        "field_id": "fld4928926517",
+        "label": "hecab vicab",
+        "type": "date",
+        "description": "Entry for hecab vicab",
+        "minimum": "2026-01-01",
+        "maximum": "2028-06-30",
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      }
+    ]
+  },
+  "utterance": "assign cecab picab as 8.6",
+  "expected_actions": [
+    {
+      "kind": "set",
+      "field_id": "fld0206593671",
+      "value": 8.6
+    }
+  ],
+  "provenance": {
+    "generator": "universal",
+    "generator_version": "universal-generator-1.0",
+    "seed": 20261014,
+    "family_seed": 20261012,
+    "state_seed": 20261014,
+    "surface_seed": 20261014,
+    "template_id": "train.single_set.v1",
+    "template_lineage_id": "tpl-train",
+    "transforms": [],
+    "parent_schema_id": "sch6615223205",
+    "parent_scenario_id": "universal-full-v1-train-00002",
+    "validator_version": "record-validator-1.0",
+    "quarantine_reason": null,
+    "source": "deterministic_template",
+    "legacy_metadata": null,
+    "legacy_fingerprint": null
+  },
+  "coverage": {
+    "split": "train",
+    "phenomenon": "single_set",
+    "action_arity": 1,
+    "specialization_mode": "reachable_fields",
+    "suites": [
+      "opaque_id"
+    ],
+    "opaque_ids": true,
+    "correction": false,
+    "asr": false,
+    "code_mixed": false,
+    "counterfactual": false,
+    "option_permutation": false,
+    "ambiguity": "accepted",
+    "field_types": [
+      "number"
+    ]
+  },
+  "schema_fingerprint": "sha256:c1a49c24006f1eb3f0f53a9a61538266daf1396f48ba18487dbec159ecfbf03d",
+  "counterfactual_group_id": null
+}

@@ -1,0 +1,378 @@
+{
+  "id": "universal-full-v1-train-17501",
+  "schema": {
+    "schema_id": "sch3316206620",
+    "schema_family_id": "fam-train-000",
+    "template_lineage_id": "tpl-train",
+    "ontology_lineage_id": "ont-train-000",
+    "locale": "en-IN",
+    "fields": [
+      {
+        "field_id": "fld0427788259",
+        "label": "babab nebab",
+        "type": "integer",
+        "description": "Entry for babab nebab",
+        "aliases": [
+          "bobab"
+        ],
+        "minimum": 0,
+        "maximum": 12,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-000"
+      },
+      {
+        "field_id": "fld4798100576",
+        "label": "cabab pebab",
+        "type": "number",
+        "description": "Entry for cabab pebab",
+        "aliases": [
+          "cobab"
+        ],
+        "minimum": 0.0,
+        "maximum": 10.0,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-000"
+      },
+      {
+        "field_id": "fld5241148021",
+        "label": "dabab rebab",
+        "type": "boolean",
+        "description": "Entry for dabab rebab",
+        "aliases": [
+          "dobab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-000"
+      },
+      {
+        "field_id": "fld9335562376",
+        "label": "fabab sebab",
+        "type": "enum",
+        "description": "Entry for fabab sebab",
+        "aliases": [
+          "fobab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt61553892",
+            "label": "rebab",
+            "aliases": [
+              "dubab"
+            ]
+          },
+          {
+            "id": "opt55622385",
+            "label": "sebab",
+            "aliases": [
+              "fubab"
+            ]
+          },
+          {
+            "id": "opt54338959",
+            "label": "tebab",
+            "aliases": [
+              "gubab"
+            ]
+          },
+          {
+            "id": "opt36732301",
+            "label": "vebab",
+            "aliases": [
+              "hubab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-000"
+      },
+      {
+        "field_id": "fld5709668354",
+        "label": "gabab tebab",
+        "type": "string",
+        "description": "Entry for gabab tebab",
+        "aliases": [
+          "gobab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 12,
+        "options": [],
+        "ontology_lineage": "ont-train-000"
+      },
+      {
+        "field_id": "fld0133145535",
+        "label": "habab vebab",
+        "type": "date",
+        "description": "Entry for habab vebab",
+        "aliases": [
+          "hobab"
+        ],
+        "minimum": "2024-01-01",
+        "maximum": "2026-12-31",
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-000"
+      },
+      {
+        "field_id": "fld8478817750",
+        "label": "jabab webab",
+        "type": "multi",
+        "description": "Entry for jabab webab",
+        "aliases": [
+          "jobab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt43561870",
+            "label": "gibab",
+            "aliases": [
+              "tubab"
+            ]
+          },
+          {
+            "id": "opt81670429",
+            "label": "hibab",
+            "aliases": [
+              "vubab"
+            ]
+          },
+          {
+            "id": "opt33155640",
+            "label": "jibab",
+            "aliases": [
+              "wubab"
+            ]
+          },
+          {
+            "id": "opt77890431",
+            "label": "kibab",
+            "aliases": [
+              "xubab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-000"
+      }
+    ],
+    "dependencies": [
+      {
+        "rule_id": "dep-fam-train-000-hide-date",
+        "when_field_id": "fld5241148021",
+        "when_value": false,
+        "then_field_id": "fld0133145535",
+        "effect": "hide",
+        "default_value": null
+      }
+    ]
+  },
+  "state": {
+    "revision": 1,
+    "active_field_id": null,
+    "values": {
+      "fld0133145535": "2024-05-01",
+      "fld0427788259": 6,
+      "fld4798100576": 8.79,
+      "fld5241148021": true,
+      "fld5709668354": "cekoc",
+      "fld8478817750": [
+        "opt33155640",
+        "opt81670429"
+      ],
+      "fld9335562376": "opt36732301"
+    },
+    "reachable_field_ids": [
+      "fld0427788259",
+      "fld4798100576",
+      "fld5241148021",
+      "fld9335562376",
+      "fld5709668354",
+      "fld0133145535",
+      "fld8478817750"
+    ],
+    "visible_field_ids": [
+      "fld0427788259",
+      "fld4798100576",
+      "fld5241148021",
+      "fld9335562376",
+      "fld5709668354",
+      "fld0133145535",
+      "fld8478817750"
+    ]
+  },
+  "semantic_context": {
+    "revision": 1,
+    "fingerprint": "sha256:883ef111a6149ddd6cdd38dc1673b1b7d43974d85b8afafa13d277bc8c175819",
+    "locale": "en-IN",
+    "active_field_id": null,
+    "reachable_field_ids": [
+      "fld0427788259",
+      "fld4798100576",
+      "fld5241148021",
+      "fld9335562376",
+      "fld5709668354",
+      "fld0133145535"
+    ],
+    "fields": [
+      {
+        "field_id": "fld0427788259",
+        "label": "babab nebab",
+        "type": "integer",
+        "description": "Entry for babab nebab",
+        "minimum": 0,
+        "maximum": 12,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld4798100576",
+        "label": "cabab pebab",
+        "type": "number",
+        "description": "Entry for cabab pebab",
+        "minimum": 0.0,
+        "maximum": 10.0,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld5241148021",
+        "label": "dabab rebab",
+        "type": "boolean",
+        "description": "Entry for dabab rebab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld9335562376",
+        "label": "fabab sebab",
+        "type": "enum",
+        "description": "Entry for fabab sebab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt61553892",
+            "label": "rebab",
+            "aliases": [
+              "dubab"
+            ]
+          },
+          {
+            "id": "opt55622385",
+            "label": "sebab",
+            "aliases": [
+              "fubab"
+            ]
+          },
+          {
+            "id": "opt54338959",
+            "label": "tebab",
+            "aliases": [
+              "gubab"
+            ]
+          },
+          {
+            "id": "opt36732301",
+            "label": "vebab",
+            "aliases": [
+              "hubab"
+            ]
+          }
+        ]
+      },
+      {
+        "field_id": "fld5709668354",
+        "label": "gabab tebab",
+        "type": "string",
+        "description": "Entry for gabab tebab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 12,
+        "options": []
+      },
+      {
+        "field_id": "fld0133145535",
+        "label": "habab vebab",
+        "type": "date",
+        "description": "Entry for habab vebab",
+        "minimum": "2024-01-01",
+        "maximum": "2026-12-31",
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      }
+    ]
+  },
+  "utterance": "forecast board stays quiet",
+  "expected_actions": [
+    {
+      "kind": "no_change",
+      "field_id": null,
+      "value": null
+    }
+  ],
+  "provenance": {
+    "generator": "universal",
+    "generator_version": "universal-generator-1.0",
+    "seed": 20278513,
+    "family_seed": 20261012,
+    "state_seed": 20278513,
+    "surface_seed": 20278513,
+    "template_id": "train.no_change.v1",
+    "template_lineage_id": "tpl-train",
+    "transforms": [],
+    "parent_schema_id": "sch3316206620",
+    "parent_scenario_id": "universal-full-v1-train-17501",
+    "validator_version": "record-validator-1.0",
+    "quarantine_reason": null,
+    "source": "deterministic_template",
+    "legacy_metadata": null,
+    "legacy_fingerprint": null
+  },
+  "coverage": {
+    "split": "train",
+    "phenomenon": "no_change",
+    "action_arity": 0,
+    "specialization_mode": "reachable_fields",
+    "suites": [
+      "opaque_id",
+      "no_change"
+    ],
+    "opaque_ids": true,
+    "correction": false,
+    "asr": false,
+    "code_mixed": false,
+    "counterfactual": false,
+    "option_permutation": false,
+    "ambiguity": "accepted",
+    "field_types": [
+      "string"
+    ]
+  },
+  "schema_fingerprint": "sha256:883ef111a6149ddd6cdd38dc1673b1b7d43974d85b8afafa13d277bc8c175819",
+  "counterfactual_group_id": null
+}

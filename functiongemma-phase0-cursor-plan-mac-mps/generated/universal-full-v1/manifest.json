@@ -1,0 +1,18 @@
+{
+  "accepted": 25000,
+  "experiment_id": "universal-full-v1",
+  "generator_version": "universal-generator-1.0",
+  "passed": true,
+  "quarantine": 100,
+  "splits": {
+    "test": 2500,
+    "train": 20000,
+    "validation": 2500
+  },
+  "unseen": {
+    "test_families_in_train": [],
+    "test_target_ids": 2688,
+    "unseen_target_ids": 2688,
+    "unseen_target_ratio": 1.0
+  }
+}

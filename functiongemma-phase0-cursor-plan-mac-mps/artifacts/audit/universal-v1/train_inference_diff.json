@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "code": "ENUM_NAME",
+      "detail": "Canonical set_enum/option_id becomes production set_choice/value."
+    },
+    {
+      "code": "NO_CHANGE",
+      "detail": "Canonical no_change tool becomes an empty function_calls list."
+    },
+    {
+      "code": "USER_CONTEXT",
+      "detail": "Native prompts contain the utterance only; production prompts add Context and Tools."
+    },
+    {
+      "code": "TOOL_SCHEMA",
+      "detail": "specialize() is per field, tools_for_row merges fields, tool_line is text."
+    },
+    {
+      "code": "EXTRA_OPS",
+      "detail": "Production fixtures add clear_field and set_multi_choice, which Phase-0 OperationName does not contain."
+    },
+    {
+      "code": "TOKENIZER",
+      "detail": "Compile and eval load AutoProcessor; train.py must use the same loader."
+    },
+    {
+      "code": "A0_SCOPE",
+      "detail": "A0 metrics are validation-only and are not an unseen-schema baseline."
+    }
+  ]
+}

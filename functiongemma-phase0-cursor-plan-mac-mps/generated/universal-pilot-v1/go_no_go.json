@@ -1,0 +1,35 @@
+{
+  "checks": [
+    {
+      "detail": true,
+      "name": "qc_passed",
+      "ok": true
+    },
+    {
+      "detail": true,
+      "name": "serialization_passed",
+      "ok": true
+    },
+    {
+      "detail": 0.9980828823994872,
+      "name": "label_precision_wilson",
+      "ok": true
+    },
+    {
+      "detail": false,
+      "name": "candidate_metrics_present",
+      "ok": false
+    }
+  ],
+  "decision": "NO-GO",
+  "full_dataset_allowed": false,
+  "go": false,
+  "signed": false,
+  "thresholds": {
+    "false_mutation_rate_max": 0.005,
+    "false_mutation_regression_max": 0.001,
+    "max_suite_regression": 0.02,
+    "min_label_wilson": 0.99,
+    "min_macro_delta": 0.03
+  }
+}

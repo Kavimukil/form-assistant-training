@@ -1,0 +1,32 @@
+spec:
+  name: functiongemma-universal-pilot
+  version: 1.0.0
+  experiment_id: universal-pilot-v1
+  total_rows: 2000
+  random_seed: 20261012
+  model_id: google/functiongemma-270m-it
+splits: {train: 1200, validation: 200, test: 600}
+families: {train: 24, validation: 4, test: 12}
+ambiguity_quarantine: 40
+coverage:
+  single_set: {train: 480, validation: 80, test: 240}
+  multi_field: {train: 180, validation: 30, test: 90}
+  correction: {train: 120, validation: 20, test: 60}
+  clear: {train: 60, validation: 10, test: 30}
+  no_change: {train: 180, validation: 30, test: 90}
+  asr: {train: 60, validation: 10, test: 30}
+  code_mixed: {train: 60, validation: 10, test: 30}
+  option_permutation: {train: 40, validation: 8, test: 20}
+  counterfactual: {train: 20, validation: 2, test: 10}
+go_no_go:
+  false_mutation_rate_max: 0.005
+  false_mutation_regression_max: 0.001
+  min_macro_delta: 0.03
+  max_suite_regression: 0.02
+  min_label_wilson: 0.99
+inference:
+  contract: production_json
+  decoding: greedy
+  max_seq_length: 1024
+  max_new_tokens: 256
+  loss_policy: assistant_only

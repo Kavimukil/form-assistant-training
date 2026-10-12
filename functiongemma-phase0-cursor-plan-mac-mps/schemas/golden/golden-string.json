@@ -1,0 +1,297 @@
+{
+  "id": "universal-full-v1-train-00005",
+  "schema": {
+    "schema_id": "sch3477250633",
+    "schema_family_id": "fam-train-004",
+    "template_lineage_id": "tpl-train",
+    "ontology_lineage_id": "ont-train-004",
+    "locale": "en-IN",
+    "fields": [
+      {
+        "field_id": "fld2109276937",
+        "label": "bugab nahab",
+        "type": "integer",
+        "description": "Entry for bugab nahab",
+        "aliases": [
+          "bihab"
+        ],
+        "minimum": 10,
+        "maximum": 99,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-004"
+      },
+      {
+        "field_id": "fld3548815174",
+        "label": "cugab pahab",
+        "type": "number",
+        "description": "Entry for cugab pahab",
+        "aliases": [
+          "cihab"
+        ],
+        "minimum": 1.0,
+        "maximum": 50.0,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-004"
+      },
+      {
+        "field_id": "fld2097441027",
+        "label": "dugab rahab",
+        "type": "boolean",
+        "description": "Entry for dugab rahab",
+        "aliases": [
+          "dihab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-004"
+      },
+      {
+        "field_id": "fld1683374563",
+        "label": "fugab sahab",
+        "type": "enum",
+        "description": "Entry for fugab sahab",
+        "aliases": [
+          "fihab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt75435783",
+            "label": "rahab",
+            "aliases": [
+              "dohab"
+            ]
+          },
+          {
+            "id": "opt79329185",
+            "label": "sahab",
+            "aliases": [
+              "fohab"
+            ]
+          },
+          {
+            "id": "opt09523279",
+            "label": "tahab",
+            "aliases": [
+              "gohab"
+            ]
+          },
+          {
+            "id": "opt68547935",
+            "label": "vahab",
+            "aliases": [
+              "hohab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-004"
+      },
+      {
+        "field_id": "fld4789528457",
+        "label": "gugab tahab",
+        "type": "string",
+        "description": "Entry for gugab tahab",
+        "aliases": [
+          "gihab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 16,
+        "options": [],
+        "ontology_lineage": "ont-train-004"
+      },
+      {
+        "field_id": "fld2478684630",
+        "label": "hugab vahab",
+        "type": "date",
+        "description": "Entry for hugab vahab",
+        "aliases": [
+          "hihab"
+        ],
+        "minimum": "2026-01-01",
+        "maximum": "2028-06-30",
+        "min_length": null,
+        "max_length": null,
+        "options": [],
+        "ontology_lineage": "ont-train-004"
+      },
+      {
+        "field_id": "fld8250303901",
+        "label": "jugab wahab",
+        "type": "multi",
+        "description": "Entry for jugab wahab",
+        "aliases": [
+          "jihab"
+        ],
+        "minimum": null,
+        "maximum": null,
+        "min_length": null,
+        "max_length": null,
+        "options": [
+          {
+            "id": "opt34264218",
+            "label": "gehab",
+            "aliases": [
+              "tohab"
+            ]
+          },
+          {
+            "id": "opt29141902",
+            "label": "hehab",
+            "aliases": [
+              "vohab"
+            ]
+          },
+          {
+            "id": "opt81301579",
+            "label": "jehab",
+            "aliases": [
+              "wohab"
+            ]
+          },
+          {
+            "id": "opt72135879",
+            "label": "kehab",
+            "aliases": [
+              "xohab"
+            ]
+          }
+        ],
+        "ontology_lineage": "ont-train-004"
+      }
+    ],
+    "dependencies": [
+      {
+        "rule_id": "dep-fam-train-004-hide-date",
+        "when_field_id": "fld2097441027",
+        "when_value": false,
+        "then_field_id": "fld2478684630",
+        "effect": "hide",
+        "default_value": null
+      }
+    ]
+  },
+  "state": {
+    "revision": 5,
+    "active_field_id": "fld4789528457",
+    "values": {
+      "fld2109276937": 23,
+      "fld3548815174": 42.23,
+      "fld4789528457": "yabib"
+    },
+    "reachable_field_ids": [
+      "fld4789528457",
+      "fld2109276937",
+      "fld3548815174"
+    ],
+    "visible_field_ids": [
+      "fld4789528457",
+      "fld2109276937",
+      "fld3548815174"
+    ]
+  },
+  "semantic_context": {
+    "revision": 5,
+    "fingerprint": "sha256:d90a6b6cf1e3b7b302f278f2c51b26cd34ec6a06cc48498ec52e1d07d601cbad",
+    "locale": "en-IN",
+    "active_field_id": "fld4789528457",
+    "reachable_field_ids": [
+      "fld4789528457",
+      "fld2109276937",
+      "fld3548815174"
+    ],
+    "fields": [
+      {
+        "field_id": "fld4789528457",
+        "label": "gugab tahab",
+        "type": "string",
+        "description": "Entry for gugab tahab",
+        "minimum": null,
+        "maximum": null,
+        "min_length": 3,
+        "max_length": 16,
+        "options": []
+      },
+      {
+        "field_id": "fld2109276937",
+        "label": "bugab nahab",
+        "type": "integer",
+        "description": "Entry for bugab nahab",
+        "minimum": 10,
+        "maximum": 99,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      },
+      {
+        "field_id": "fld3548815174",
+        "label": "cugab pahab",
+        "type": "number",
+        "description": "Entry for cugab pahab",
+        "minimum": 1.0,
+        "maximum": 50.0,
+        "min_length": null,
+        "max_length": null,
+        "options": []
+      }
+    ]
+  },
+  "utterance": "assign gugab tahab as muluc",
+  "expected_actions": [
+    {
+      "kind": "set",
+      "field_id": "fld4789528457",
+      "value": "muluc"
+    }
+  ],
+  "provenance": {
+    "generator": "universal",
+    "generator_version": "universal-generator-1.0",
+    "seed": 20261017,
+    "family_seed": 20261012,
+    "state_seed": 20261017,
+    "surface_seed": 20261017,
+    "template_id": "train.single_set.v1",
+    "template_lineage_id": "tpl-train",
+    "transforms": [],
+    "parent_schema_id": "sch3477250633",
+    "parent_scenario_id": "universal-full-v1-train-00005",
+    "validator_version": "record-validator-1.0",
+    "quarantine_reason": null,
+    "source": "deterministic_template",
+    "legacy_metadata": null,
+    "legacy_fingerprint": null
+  },
+  "coverage": {
+    "split": "train",
+    "phenomenon": "single_set",
+    "action_arity": 1,
+    "specialization_mode": "active_field",
+    "suites": [
+      "opaque_id"
+    ],
+    "opaque_ids": true,
+    "correction": false,
+    "asr": false,
+    "code_mixed": false,
+    "counterfactual": false,
+    "option_permutation": false,
+    "ambiguity": "accepted",
+    "field_types": [
+      "string"
+    ]
+  },
+  "schema_fingerprint": "sha256:d90a6b6cf1e3b7b302f278f2c51b26cd34ec6a06cc48498ec52e1d07d601cbad",
+  "counterfactual_group_id": null
+}

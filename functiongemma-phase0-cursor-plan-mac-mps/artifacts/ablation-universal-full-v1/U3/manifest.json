@@ -1,0 +1,16 @@
+{
+  "frozen_test_sha256": "3c06e9b2f218dda6cbcab0b422f690015b1320b7af7253ccb18fb8bc9d2a46e1",
+  "matched_train_n": 8000,
+  "nested_in_previous": true,
+  "phenomena": [
+    "single_set",
+    "clear",
+    "option_permutation",
+    "counterfactual",
+    "no_change"
+  ],
+  "tag": "U3",
+  "title": "counterfactuals and negatives",
+  "train_n": 13000,
+  "validation_n": 1625
+}
