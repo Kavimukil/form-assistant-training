@@ -38,12 +38,12 @@ pwd
 
 `pwd` must look like `/home/<you>/form-assistant-training/functiongemma-phase0-cursor-plan-mac-mps`. A path starting with `/mnt/c` or `/mnt/d` is the wrong disk.
 
-`git lfs pull` is required. `generated/json-calls-v1/train.sft.jsonl` is stored in Git LFS (about 74 MB). Without LFS you get a pointer file and training fails.
+`git lfs pull` is required. `generated/json-calls-v2/train.sft.jsonl` is stored in Git LFS (about 88 MB). Without LFS you get a pointer file and training fails.
 
 Confirm the dataset is real text, not a pointer:
 
 ```bash
-head -c 80 generated/json-calls-v1/train.sft.jsonl; echo
+head -c 80 generated/json-calls-v2/train.sft.jsonl; echo
 ```
 
 The line should start with `{`. A line that starts with `version https://git-lfs.github.com` means LFS did not download the file. Run `git lfs pull` again.
@@ -101,33 +101,33 @@ It prints the GPU name, VRAM, and whether BF16 is supported. Under 20 GiB of VRA
 
 `--device cuda` refuses to train if CUDA is missing. `--device auto` prefers CUDA, then Apple MPS, then CPU. On WSL, pass `--device cuda`.
 
-## 7. Smoke test (50 steps)
+## 7. One training set
 
-Do this before a full run. The smoke run writes `artifacts/checkpoints/<name>-smoke/` and does not keep mid-run checkpoints. It still saves a final snapshot and `smoke_report.json`.
+Train once from `google/functiongemma-270m-it`. Do not resume an older checkpoint.
 
-JSON-call corpus (the dataset in this repo):
+`config/train-json-calls.yaml` is the only training config for this run. It reads:
+
+- `generated/json-calls-v2/train.sft.jsonl` (36,939 rows)
+- `generated/json-calls-v2/validation.sft.jsonl` (4,522 rows)
+
+v2 contains every json-calls v1 example, plus extra `set_choice` rows and extra true no-change rows. The test file `generated/json-calls-v2/test.sft.jsonl` is the same 2,500-row file as v1. Do not train on it.
+
+## 8. Smoke test (50 steps)
+
+Do this before the full run. The smoke run writes `artifacts/checkpoints/json-calls-sft-v2-smoke/` and does not keep mid-run checkpoints. It still saves a final snapshot and `smoke_report.json`.
 
 ```bash
 python -m form_sft.training.train \
   --config config/train-json-calls.yaml \
-  --device cuda \
-  --smoke-steps 50
-```
-
-Phase-0 form corpus, after `generated/phase0-v1/train.sft.jsonl` and `validation.sft.jsonl` exist:
-
-```bash
-python -m form_sft.training.train \
-  --config config/train-full-sft.yaml \
   --device cuda \
   --smoke-steps 50
 ```
 
 A passing smoke run prints a finite loss and `checkpoint_reload=PASS`. Stop if the loss is NaN or the process is killed for out-of-memory.
 
-## 8. Full training
+## 9. Full training
 
-JSON-call SFT (3 epochs). Checkpoints go to `artifacts/checkpoints/json-calls-sft/`:
+One SFT run, 3 epochs. The checkpoint goes to `artifacts/checkpoints/json-calls-sft-v2/`:
 
 ```bash
 python -m form_sft.training.train \
@@ -135,52 +135,43 @@ python -m form_sft.training.train \
   --device cuda
 ```
 
-Phase-0 full SFT. Checkpoints go to `artifacts/checkpoints/phase0-full-sft/`:
-
-```bash
-python -m form_sft.training.train \
-  --config config/train-full-sft.yaml \
-  --device cuda
-```
-
-`./scripts/train_phase0.sh` runs the Phase-0 smoke test and then the full Phase-0 job. It uses `--device auto`, so run `./scripts/preflight_wsl_cuda.sh` first.
-
 On CUDA, the trainer uses BF16 when the GPU supports it, otherwise FP16. Watch progress with `nvidia-smi` in a second Ubuntu terminal.
 
-## 9. Evaluate the checkpoint
+## 10. Evaluate the checkpoint
 
-JSON-call validation set:
+Validation first:
 
 ```bash
 python -m form_sft.cli evaluate-json \
-  --file generated/json-calls-v1/validation.sft.jsonl \
-  --model-id artifacts/checkpoints/json-calls-sft \
+  --file generated/json-calls-v2/validation.sft.jsonl \
+  --model-id artifacts/checkpoints/json-calls-sft-v2 \
   --device cuda \
-  --tag json-calls-val \
+  --tag json-calls-v2-val \
   --batch-size 8
 ```
 
-Phase-0 validation set (`generated/phase0-v1/validation.jsonl`):
+If validation looks right, run the frozen test set once:
 
 ```bash
-python -m form_sft.cli evaluate \
-  --split validation \
-  --model-id artifacts/checkpoints/phase0-full-sft \
+python -m form_sft.cli evaluate-json \
+  --file generated/json-calls-v2/test.sft.jsonl \
+  --model-id artifacts/checkpoints/json-calls-sft-v2 \
   --device cuda \
-  --tag phase0-val \
+  --tag json-calls-v2-test \
   --batch-size 8
 ```
 
-Metrics and predictions are written under `artifacts/eval/<tag>/`.
+Metrics and predictions are written under `artifacts/eval/<tag>/`. Leave the checkpoint as it is after the test run. Converting it to GGUF is outside this repo.
 
-## 10. Where files land
+## 11. Where files land
 
 | Path | What it is |
 | --- | --- |
-| `artifacts/checkpoints/json-calls-sft-smoke/` | JSON-call 50-step smoke snapshot |
-| `artifacts/checkpoints/json-calls-sft/` | JSON-call full SFT |
-| `artifacts/checkpoints/phase0-full-sft-smoke/` | Phase-0 50-step smoke snapshot |
-| `artifacts/checkpoints/phase0-full-sft/` | Phase-0 full SFT |
+| `generated/json-calls-v2/train.sft.jsonl` | The only training file |
+| `generated/json-calls-v2/validation.sft.jsonl` | The only validation file |
+| `generated/json-calls-v2/test.sft.jsonl` | Frozen 2,500-row test file |
+| `artifacts/checkpoints/json-calls-sft-v2-smoke/` | 50-step smoke snapshot |
+| `artifacts/checkpoints/json-calls-sft-v2/` | The one full SFT checkpoint |
 | `~/.cache/huggingface/` | Downloaded base model and tokenizer |
 
-These checkpoint directories are gitignored. Leave them on the WSL disk.
+Checkpoint directories are gitignored. Leave them on the WSL disk.
