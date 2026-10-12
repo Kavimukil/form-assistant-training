@@ -64,11 +64,27 @@ def main() -> None:
             "validation": validation_file,
         },
     )
-    # JSON-call rows also store an eval `prompt`. TRL treats that column as
-    # prompt-completion format and requires `completion`. SFT uses the full `text`.
-    for split in ds:
-        if "prompt" in ds[split].column_names:
-            ds[split] = ds[split].remove_columns("prompt")
+    loss_policy = cfg.get("loss_policy", "full_sequence")
+    # This TRL build applies assistant_only_loss only to conversational rows.
+    # The SFT files are plain text, so assistant-only loss uses the prompt prefix
+    # already stored on each row and trains on the completion after it.
+    if loss_policy == "assistant_only":
+        def _with_completion(row: dict) -> dict:
+            prompt = row["prompt"]
+            text = row["text"]
+            if not text.startswith(prompt):
+                raise ValueError(f"{row.get('id')}: prompt is not a prefix of text")
+            row["completion"] = text[len(prompt) :]
+            return row
+
+        for split in ds:
+            if "prompt" not in ds[split].column_names:
+                raise SystemExit(f"{split} rows have no prompt column for assistant_only loss")
+            ds[split] = ds[split].map(_with_completion)
+    else:
+        for split in ds:
+            if "prompt" in ds[split].column_names:
+                ds[split] = ds[split].remove_columns("prompt")
 
     # transformers>=5 removed warmup_ratio; derive warmup_steps from ratio × planned steps.
     per_device = int(cfg["per_device_train_batch_size"])
@@ -81,16 +97,12 @@ def main() -> None:
         total_steps = steps_per_epoch * int(cfg["num_train_epochs"])
     warmup_steps = max(0, int(float(cfg.get("warmup_ratio", 0.0)) * total_steps))
 
-    loss_policy = cfg.get("loss_policy", "full_sequence")
     sft_extra = {}
     if loss_policy == "assistant_only":
         fields = getattr(SFTConfig, "__dataclass_fields__", {})
-        if "assistant_only_loss" in fields:
-            sft_extra["assistant_only_loss"] = True
-        elif "completion_only_loss" in fields:
-            sft_extra["completion_only_loss"] = True
-        else:
+        if "completion_only_loss" not in fields:
             raise SystemExit("assistant_only loss policy is not supported by the installed TRL")
+        sft_extra["completion_only_loss"] = True
     elif loss_policy != "full_sequence":
         raise SystemExit(f"unknown loss_policy {loss_policy}")
 
