@@ -44,6 +44,50 @@ def test_truth_is_unchanged_by_realization_and_counterfactual_diverges():
     assert text == again
 
 
+def test_train_v6_wording_stays_off_the_frozen_frames():
+    from form_sft.validation.agreement import semantic_agreement
+
+    form = generate_schema(11, split="train", family_index=0)
+    singles = []
+    for index in range(12):
+        truth = generate_scenario(
+            form,
+            20 + index,
+            {"phenomenon": "single_set", "split": "train", "index": index, "mode": "active_field"},
+        )
+        singles.append(realize_scenario(truth, index))
+    assert any(" for " in text or text.startswith("put ") for text in singles)
+    assert all("place " not in text and " into " not in text for text in singles)
+    no_change = []
+    for index in range(8):
+        truth = generate_scenario(
+            form,
+            40 + index,
+            {
+                "phenomenon": "no_change",
+                "split": "train",
+                "index": index,
+                "mode": "reachable_fields",
+                "echo_current": index % 2 == 1,
+            },
+        )
+        text = realize_scenario(truth, index)
+        no_change.append(text)
+        from form_sft.universal.build import assemble_record
+
+        record = assemble_record(truth, text, record_id=f"t-{index}", seed=index, family_seed=1)
+        assert semantic_agreement(record).ok
+    assert len(set(no_change)) > 2
+    assert "calendar slate holds steady" not in no_change
+    assert "schedule slate remains idle" not in no_change
+    held = generate_scenario(form, 1, {"phenomenon": "no_change", "split": "test", "index": 0, "mode": "reachable_fields"})
+    assert realize_scenario(held, 99) == "schedule slate remains idle"
+    valued = generate_scenario(
+        form, 1, {"phenomenon": "single_set", "split": "test", "index": 0, "mode": "active_field", "type_name": "integer"}
+    )
+    assert realize_scenario(valued, 99).startswith("place ")
+
+
 def test_make_counterfactual_uses_the_alternate_form():
     rows, _ = build_records(tiny_spec())
     source = next(row for row in rows if row.coverage.phenomenon == "counterfactual")

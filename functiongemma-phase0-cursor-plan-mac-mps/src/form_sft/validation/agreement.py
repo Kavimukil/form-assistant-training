@@ -47,13 +47,38 @@ def semantic_agreement(record: DatasetRecordV2, *, old_surfaces: list[str] | Non
     utterance = record.utterance
     actions = record.expected_actions
     if len(actions) == 1 and actions[0].kind == "no_change":
+        keep_cues = ("keep", "leave", "already", "stays")
+        has_keep = any(_has(utterance, cue) for cue in keep_cues)
+        if any(_has(utterance, cue) for cue in ("blank out", "erase", "wipe", "clear", "remove")):
+            reasons.append("no_change uses a clear cue")
         for fid in record.state.reachable_field_ids:
             field = by_id[fid]
-            if _has(utterance, field.label):
+            mentions_field = _has(utterance, field.label) or any(_has(utterance, alias) for alias in field.aliases)
+            named_labels = [other.label for other in by_id.values() if other.field_id != field.field_id and _has(utterance, other.label)]
+            mentioned_options = [
+                opt
+                for opt in field.options
+                if _has(utterance, opt.label) and not any(_has(label, opt.label) for label in named_labels)
+            ]
+            if mentions_field and any(
+                other.field_id != field.field_id and _has(utterance, other.label) and _has(other.label, field.label)
+                for other in by_id.values()
+            ):
+                mentions_field = False
+            if not mentions_field and not mentioned_options:
+                continue
+            current = record.state.values.get(fid)
+            surface = _surface(field, current) if current is not None else ""
+            if not surface or not _has(utterance, surface) or not has_keep:
                 reasons.append(f"no_change mentions {field.field_id}")
-            for opt in field.options:
-                if _has(utterance, opt.label):
-                    reasons.append(f"no_change mentions option {opt.id}")
+                continue
+            named_labels = [other.label for other in by_id.values() if _has(utterance, other.label)]
+            for opt in mentioned_options:
+                if opt.id == current or _has(field.label, opt.label) or _has(surface, opt.label):
+                    continue
+                if any(_has(label, opt.label) for label in named_labels):
+                    continue
+                reasons.append(f"no_change mentions option {opt.id}")
         return AgreementResult(ok=not reasons, reasons=reasons)
 
     for action in actions:

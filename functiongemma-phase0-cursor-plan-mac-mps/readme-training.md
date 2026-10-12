@@ -1,6 +1,6 @@
 # Train FunctionGemma on NVIDIA CUDA (WSL2)
 
-This run trains the unseen-schema corpus `universal-full-v1`. Run it inside **Ubuntu on WSL2**, with the repo on the Linux filesystem (`~/...`), not under `/mnt/c`. Training from a Windows drive is slow and `scripts/bootstrap_wsl.sh` refuses that path.
+This run trains the unseen-schema corpus `universal-full-v6`. The validation and test files are the frozen `universal-full-v1` benchmark. Run it inside **Ubuntu on WSL2**, with the repo on the Linux filesystem (`~/...`), not under `/mnt/c`. Training from a Windows drive is slow and `scripts/bootstrap_wsl.sh` refuses that path.
 
 The Windows NVIDIA driver is what WSL uses. Do not install a separate Linux NVIDIA driver inside Ubuntu.
 
@@ -40,12 +40,12 @@ pwd
 
 ## 4. Copy the 25k dataset onto that disk
 
-`generated/universal-full-v1/` is built locally and is not in the clone. Copy it from the machine that generated it into the Linux checkout. From that machine, in `functiongemma-phase0-cursor-plan-mac-mps`:
+`generated/universal-full-v6/` is built locally and is not in the clone. Copy it from the machine that generated it into the Linux checkout. From that machine, in `functiongemma-phase0-cursor-plan-mac-mps`:
 
 ```bash
 rsync -az --info=progress2 \
-  generated/universal-full-v1/ \
-  USER@HOST:~/form-assistant-training/functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v1/
+  generated/universal-full-v6/ \
+  USER@HOST:~/form-assistant-training/functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v6/
 ```
 
 Replace `USER@HOST` with the Ubuntu SSH target. If Ubuntu is this same WSL instance and the files are already under the Linux path above, skip the copy.
@@ -53,10 +53,10 @@ Replace `USER@HOST` with the Ubuntu SSH target. If Ubuntu is this same WSL insta
 On Ubuntu, confirm the three SFT files are real JSONL:
 
 ```bash
-wc -l generated/universal-full-v1/train.sft.jsonl \
-  generated/universal-full-v1/validation.sft.jsonl \
-  generated/universal-full-v1/test.sft.jsonl
-head -c 80 generated/universal-full-v1/train.sft.jsonl; echo
+wc -l generated/universal-full-v6/train.sft.jsonl \
+  generated/universal-full-v6/validation.sft.jsonl \
+  generated/universal-full-v6/test.sft.jsonl
+head -c 80 generated/universal-full-v6/train.sft.jsonl; echo
 ```
 
 The counts must be 20000, 2500, and 2500. The first line must start with `{`. A line that starts with `version https://git-lfs.github.com` is a pointer, not data.
@@ -110,7 +110,7 @@ This fails unless all of the following are true:
 - `.venv` exists
 - `torch.cuda.is_available()` is true
 
-It prints the GPU name, VRAM, and whether BF16 is supported. Under 20 GiB of VRAM it prints a warning. The training config uses batch size 8 and gradient accumulation 4 (effective batch 32). If you run out of memory, lower `per_device_train_batch_size` in a copy of `config/train-universal-full.yaml` and raise `gradient_accumulation_steps` so the effective batch stays 32. Leave the original config unchanged.
+It prints the GPU name, VRAM, and whether BF16 is supported. Under 20 GiB of VRAM it prints a warning. The training config uses batch size 8 and gradient accumulation 4 (effective batch 32). If you run out of memory, lower `per_device_train_batch_size` in a copy of `config/train-universal-v6.yaml` and raise `gradient_accumulation_steps` so the effective batch stays 32. Leave the original config unchanged.
 
 `--device cuda` refuses to train if CUDA is missing. `--device auto` prefers CUDA, then Apple MPS, then CPU. On WSL, pass `--device cuda`.
 
@@ -118,24 +118,24 @@ It prints the GPU name, VRAM, and whether BF16 is supported. Under 20 GiB of VRA
 
 Train once from `google/functiongemma-270m-it`. Do not resume an older checkpoint.
 
-`config/train-universal-full.yaml` is the training config. It reads:
+`config/train-universal-v6.yaml` is the training config. It reads:
 
-- `generated/universal-full-v1/train.sft.jsonl` (20,000 rows)
-- `generated/universal-full-v1/validation.sft.jsonl` (2,500 rows)
+- `generated/universal-full-v6/train.sft.jsonl` (20,000 rows)
+- `generated/universal-full-v6/validation.sft.jsonl` (2,500 rows, frozen from `universal-full-v1`)
 
 The loss is `assistant_only`: prompt tokens are masked and the supervised text is the `{"function_calls":[...]}` target. Three epochs, seed `20261012`, max sequence length 1024.
 
-`generated/universal-full-v1/test.sft.jsonl` (2,500 rows) is the frozen test file. Do not train on it. Do not train on `quarantine.jsonl`.
+`generated/universal-full-v6/test.sft.jsonl` (2,500 rows) is the frozen `universal-full-v1` test file. Do not train on it. Do not train on `quarantine.jsonl`. The v6 training split adds no-change paraphrases, value-before-field wording, and 1,200 option-order rows. It does not use the validation or test sentences.
 
 The `eval_loss` printed each epoch is the language-model loss on the validation file. It is not the slot score in step 11.
 
 ## 9. Smoke test (50 steps)
 
-Do this before the full run. The smoke run writes `artifacts/checkpoints/universal-full-v1-smoke/` and does not keep mid-run checkpoints. It still saves a final snapshot and `smoke_report.json`.
+Do this before the full run. The smoke run writes `artifacts/checkpoints/universal-full-v6-smoke/` and does not keep mid-run checkpoints. It still saves a final snapshot and `smoke_report.json`.
 
 ```bash
 python -m form_sft.training.train \
-  --config config/train-universal-full.yaml \
+  --config config/train-universal-v6.yaml \
   --device cuda \
   --smoke-steps 50
 ```
@@ -144,11 +144,11 @@ A passing smoke run prints a finite loss and `checkpoint_reload=PASS`. Stop if t
 
 ## 10. Full training
 
-One SFT run, 3 epochs, from `google/functiongemma-270m-it`. Do not resume the smoke checkpoint. The new checkpoint goes to `artifacts/checkpoints/universal-full-v1/`:
+One SFT run, 3 epochs, from `google/functiongemma-270m-it`. Do not resume the smoke checkpoint. The new checkpoint goes to `artifacts/checkpoints/universal-full-v6/`:
 
 ```bash
 python -m form_sft.training.train \
-  --config config/train-universal-full.yaml \
+  --config config/train-universal-v6.yaml \
   --device cuda
 ```
 
@@ -156,50 +156,65 @@ On CUDA, the trainer uses BF16 when the GPU supports it, otherwise FP16. Watch p
 
 A passing run prints a finite loss and `checkpoint_reload=PASS`. The checkpoint directory must contain `config.json` and a weight file such as `model.safetensors`.
 
-## 11. Evaluate the checkpoint
+## 11. Evaluate and screenshot the comparison
 
-Run validation before the frozen test. This command scores greedy `function_calls` JSON. It writes:
+Run validation first, then the frozen test once. Use the same command shape as the universal-full-v1 screenshots: `evaluate-json`, `--device cuda`, `--batch-size 8`, and the frozen 2,500-row file. The printed JSON has the same keys, so the two screenshots compare directly. `n` must be 2500. Epoch `eval_loss` is not part of this comparison.
 
-- `artifacts/eval/universal-full-v1-val/universal-full-v1-val_metrics.json`
-- `artifacts/eval/universal-full-v1-val/universal-full-v1-val_predictions.jsonl`
+Screenshot the terminal after each command, with the command and the JSON summary both visible. Copy the metrics and predictions files back as well. Do not retype the numbers.
 
-```bash
-python -m form_sft.cli evaluate-json \
-  --file generated/universal-full-v1/validation.sft.jsonl \
-  --model-id artifacts/checkpoints/universal-full-v1 \
-  --device cuda \
-  --tag universal-full-v1-val \
-  --batch-size 8
-```
-
-The process prints a short JSON summary: row count, exact call, operation, field, value, enum, no-change precision and recall, and false-mutation rate. That printout is enough to decide whether validation looks right. Copy the two files above back to the machine where you review results. Do not retype the numbers.
-
-If validation looks right, run the frozen test set once:
+Validation:
 
 ```bash
 python -m form_sft.cli evaluate-json \
-  --file generated/universal-full-v1/test.sft.jsonl \
-  --model-id artifacts/checkpoints/universal-full-v1 \
+  --file generated/universal-full-v6/validation.sft.jsonl \
+  --model-id artifacts/checkpoints/universal-full-v6 \
   --device cuda \
-  --tag universal-full-v1-test \
+  --tag universal-full-v6-val \
   --batch-size 8
 ```
 
-That writes `artifacts/eval/universal-full-v1-test/universal-full-v1-test_metrics.json` and `universal-full-v1-test_predictions.jsonl`. Copy those two files back as well. Leave the checkpoint as it is after the test run. Converting it to GGUF is outside this repo.
+This writes `artifacts/eval/universal-full-v6-val/universal-full-v6-val_metrics.json` and `universal-full-v6-val_predictions.jsonl`.
 
-These files do not sign `generated/universal-full-v1/go_no_go.json`. That decision still needs the unseen-schema suite comparison.
+Frozen test, once:
+
+```bash
+python -m form_sft.cli evaluate-json \
+  --file generated/universal-full-v6/test.sft.jsonl \
+  --model-id artifacts/checkpoints/universal-full-v6 \
+  --device cuda \
+  --tag universal-full-v6-test \
+  --batch-size 8
+```
+
+This writes `artifacts/eval/universal-full-v6-test/universal-full-v6-test_metrics.json` and `universal-full-v6-test_predictions.jsonl`. Leave the checkpoint unchanged after the test run.
+
+The previous checkpoint, `artifacts/checkpoints/universal-full-v1`, scored these frozen files as follows. Read a v6 number against the same row.
+
+| Printed field | v1 validation | v1 test |
+| --- | ---: | ---: |
+| `n` | 2500 | 2500 |
+| `exact_call` | 0.7032 | 0.4452 |
+| `op` | 0.798 | 0.652 |
+| `field` | 0.798 | 0.652 |
+| `value` | 0.7164 | 0.5315 |
+| `enum` | 0.9197 | 0.3469 |
+| `no_change_precision` | 1.0 | 0.0 |
+| `no_change_recall` | 0.6283 | 0.0 |
+| `false_mutation_rate` | 0.3717 | 1.0 |
+
+Improvement on the test screenshot is a higher `exact_call`, a higher `enum`, a higher `no_change_recall`, and a lower `false_mutation_rate`. The test false-mutation rate was 1.0, so that number has to move before the run is an improvement. These files do not sign `generated/universal-full-v6/go_no_go.json`.
 
 ## 12. Where files land
 
 | Path | What it is |
 | --- | --- |
-| `generated/universal-full-v1/train.sft.jsonl` | The only training file (20,000 rows) |
-| `generated/universal-full-v1/validation.sft.jsonl` | The only validation file (2,500 rows) |
-| `generated/universal-full-v1/test.sft.jsonl` | Frozen test file (2,500 rows). Evaluate once, after validation |
-| `artifacts/checkpoints/universal-full-v1-smoke/` | 50-step smoke snapshot |
-| `artifacts/checkpoints/universal-full-v1/` | The one full SFT checkpoint |
-| `artifacts/eval/universal-full-v1-val/` | Validation metrics and per-row predictions |
-| `artifacts/eval/universal-full-v1-test/` | One-shot test metrics and per-row predictions |
+| `generated/universal-full-v6/train.sft.jsonl` | The only training file (20,000 rows) |
+| `generated/universal-full-v6/validation.sft.jsonl` | Frozen universal-full-v1 validation file (2,500 rows) |
+| `generated/universal-full-v6/test.sft.jsonl` | Frozen universal-full-v1 test file (2,500 rows). Evaluate once, after validation |
+| `artifacts/checkpoints/universal-full-v6-smoke/` | 50-step smoke snapshot |
+| `artifacts/checkpoints/universal-full-v6/` | The one full SFT checkpoint |
+| `artifacts/eval/universal-full-v6-val/` | Validation metrics and per-row predictions |
+| `artifacts/eval/universal-full-v6-test/` | One-shot test metrics and per-row predictions |
 | `~/.cache/huggingface/` | Downloaded base model and tokenizer |
 
 Checkpoint directories are gitignored. Leave them on the WSL disk. Bring back the eval directories, not the weight files, unless you explicitly want the checkpoint.

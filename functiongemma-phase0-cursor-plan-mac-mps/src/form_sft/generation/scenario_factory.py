@@ -68,6 +68,52 @@ class ScenarioTruth(BaseModel):
     option_permutation: bool = False
     ambiguity: str = "accepted"
     field_types: list[str] = Field(default_factory=list)
+    echo_field_id: str | None = None
+
+
+# Train-only wording. Validation and test keep the single frame in _FRAMES.
+_TRAIN_SINGLE = (
+    "assign {field} as {value}",
+    "set {field} to {value}",
+    "{value} for {field}",
+    "make {field} {value}",
+    "{field} should be {value}",
+    "put {value} on {field}",
+)
+_TRAIN_CORRECTION = (
+    "assign {field} as {old} but now {new}",
+    "{field} was {old} now {new}",
+    "change {field} from {old} to {new}",
+    "{field} from {old} becomes {new}",
+)
+_TRAIN_PAIR = (
+    "{field} as {value}",
+    "{value} for {field}",
+    "{field} to {value}",
+)
+_TRAIN_JOINER = (" plus ", " and ", " with ")
+_TRAIN_CLEAR = ("blank out {field}", "clear {field}", "remove {field}")
+_TRAIN_CHOOSE = ("choose {value}", "go with {value}")
+_TRAIN_NO_CHANGE = (
+    "forecast board stays quiet",
+    "nothing on the form needs a change",
+    "leave every field as it is",
+    "no update for this form",
+    "the answers stay as they are",
+    "do not change any field",
+    "all current answers still stand",
+    "skip updates and keep the form",
+)
+_TRAIN_ECHO = (
+    "keep {field} as {value}",
+    "leave {field} at {value}",
+    "{field} already {value}",
+    "{field} stays {value}",
+)
+
+
+def _pick(options: tuple[str, ...], seed: int) -> str:
+    return options[seed % len(options)]
 
 
 def _rng(seed: int, *parts: object) -> random.Random:
@@ -168,8 +214,12 @@ def generate_scenario(form: FormIR, state_seed: int, coverage_request: dict) -> 
     actions: list[CanonicalAction] = []
     old_surfaces: list[str] = []
     phenomenon = request["phenomenon"]
+    echo_field_id = None
     if phenomenon == "no_change":
         actions = [CanonicalAction(kind="no_change")]
+        if request.get("echo_current"):
+            kind = ("string", "enum", "integer")[request["index"] % 3]
+            echo_field_id = _field_by_type(form, kind).field_id
     elif phenomenon == "clear":
         actions = [CanonicalAction(kind="clear", field_id=targets[0].field_id)]
     elif phenomenon == "ambiguity":
@@ -208,6 +258,11 @@ def generate_scenario(form: FormIR, state_seed: int, coverage_request: dict) -> 
         values[field.field_id] = _sample_value(field, rng, avoid=avoid)
         if action and action.kind == "clear":
             values[field.field_id] = _sample_value(field, rng)
+    if echo_field_id and echo_field_id in values:
+        echo_field = next(field for field in form.fields if field.field_id == echo_field_id)
+        values[echo_field_id] = _sample_value(echo_field, rng)
+    else:
+        echo_field_id = None
     state = FormState(
         revision=1 + (request.get("index", 0) % 7),
         active_field_id=active,
@@ -222,6 +277,8 @@ def generate_scenario(form: FormIR, state_seed: int, coverage_request: dict) -> 
     state.visible_field_ids = list(state.reachable_field_ids)
     if state.active_field_id in hidden:
         state.active_field_id = state.reachable_field_ids[0]
+    if echo_field_id in hidden:
+        echo_field_id = None
     return ScenarioTruth(
         form=form,
         state=state,
@@ -239,47 +296,66 @@ def generate_scenario(form: FormIR, state_seed: int, coverage_request: dict) -> 
         option_permutation=bool(request.get("option_permutation")),
         ambiguity="quarantine" if phenomenon == "ambiguity" else "accepted",
         field_types=[field.type for field in targets],
+        echo_field_id=echo_field_id,
     )
 
 
 def realize_scenario(truth: ScenarioTruth, surface_seed: int) -> str:
     """Render an utterance. The truth object is not modified."""
-    del surface_seed
     frames = _FRAMES[truth.split]
     by_id = {field.field_id: field for field in truth.form.fields}
+    train = truth.split == "train"
     if truth.phenomenon == "no_change":
-        text = frames["no_change"]
+        if train and truth.echo_field_id:
+            field = by_id[truth.echo_field_id]
+            text = _pick(_TRAIN_ECHO, surface_seed).format(
+                field=field.label,
+                value=surface_for(field, truth.state.values[truth.echo_field_id]),
+            )
+        elif train:
+            text = _pick(_TRAIN_NO_CHANGE, surface_seed)
+        else:
+            text = frames["no_change"]
     elif truth.phenomenon == "clear":
         field = by_id[truth.actions[0].field_id]
-        text = frames["clear"].format(field=field.label)
+        template = _pick(_TRAIN_CLEAR, surface_seed) if train else frames["clear"]
+        text = template.format(field=field.label)
     elif truth.phenomenon == "ambiguity":
         field = by_id[truth.actions[0].field_id]
         text = surface_for(field, truth.actions[0].value)
     elif truth.phenomenon == "counterfactual":
         field = by_id[truth.actions[0].field_id]
-        text = frames["choose"].format(value=surface_for(field, truth.actions[0].value))
+        template = _pick(_TRAIN_CHOOSE, surface_seed) if train else frames["choose"]
+        text = template.format(value=surface_for(field, truth.actions[0].value))
     elif truth.correction:
         action = truth.actions[0]
         field = by_id[action.field_id]
-        text = frames["correction"].format(
+        template = _pick(_TRAIN_CORRECTION, surface_seed) if train else frames["correction"]
+        text = template.format(
             field=field.label,
             old=truth.old_surfaces[0],
             new=surface_for(field, action.value),
         )
     elif truth.phenomenon == "multi_field":
         parts = []
+        pair = _pick(_TRAIN_PAIR, surface_seed) if train else frames["pair"]
+        joiner = _pick(_TRAIN_JOINER, surface_seed // 3) if train else frames["joiner"]
         for action in truth.actions:
             field = by_id[action.field_id]
-            parts.append(frames["pair"].format(field=field.label, value=surface_for(field, action.value)))
-        text = frames["joiner"].join(parts)
+            parts.append(pair.format(field=field.label, value=surface_for(field, action.value)))
+        text = joiner.join(parts)
     else:
         action = truth.actions[0]
         field = by_id[action.field_id]
-        text = frames["single"].format(field=field.label, value=surface_for(field, action.value))
+        template = _pick(_TRAIN_SINGLE, surface_seed) if train else frames["single"]
+        text = template.format(field=field.label, value=surface_for(field, action.value))
     if truth.code_mixed:
         text = f"{frames['code']} {text}"
     if truth.asr:
-        text = text.replace(" ", f" {frames['filler']} ", 1)
+        if train:
+            text = f"{frames['filler']} {text}"
+        else:
+            text = text.replace(" ", f" {frames['filler']} ", 1)
     return " ".join(text.split())
 
 

@@ -140,6 +140,8 @@ def _request(phenomenon: str, split: str, index: int) -> dict:
         request["mode"] = "active_field"
     elif phenomenon in {"no_change", "multi_field", "counterfactual", "ambiguity"}:
         request["mode"] = "reachable_fields"
+        if phenomenon == "no_change" and split == "train" and index % 2:
+            request["echo_current"] = True
     elif phenomenon == "clear":
         request["mode"] = "active_field"
     else:

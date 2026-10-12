@@ -1,0 +1,7 @@
+{
+  "train_experiment": "universal-full-v6",
+  "frozen_validation_and_test": "universal-full-v1",
+  "train_rows": 20000,
+  "option_permutation_train": 1200,
+  "no_change_unique_utterances": 1099
+}
