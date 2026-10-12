@@ -188,6 +188,15 @@ def _assert_holdout_skill_slice():
     assert choice == "brisk"
     assert any(opt["id"] == opt["label"] == "brisk" for field in surface["context"]["fields"] for opt in field.get("options") or [])
     alias = next(row for row in by_split["train"] if row["metadata"]["skill"] == "enum_surface" and row["utterance"] == "it is veg")
+    mapped = next(
+        row
+        for row in by_split["train"]
+        if row["metadata"]["skill"] == "choice_map" and row["utterance"] == "go with indigo"
+    )
+    assert mapped["target"]["function_calls"][0]["arguments"]["value"] == "indigo_wash"
+    assert mapped["target"]["function_calls"][0]["arguments"]["value"] != "indigo"
+    abstain = next(row for row in by_split["train"] if row["metadata"]["skill"] == "choice_abstain")
+    assert abstain["target"]["function_calls"] == []
     alias_value = alias["target"]["function_calls"][0]["arguments"]["value"]
     alias_field = next(field for field in alias["context"]["fields"] if field["label"] == "plate choice")
     assert alias_value == next(opt["id"] for opt in alias_field["options"] if opt["label"] == "vegetarian")

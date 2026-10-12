@@ -491,6 +491,8 @@ _SKILL_COUNTS = {
         "restart_correction": 320,
         "restart_abstain": 320,
         "enum_surface": 1200,
+        "choice_map": 960,
+        "choice_abstain": 480,
         "active_integer": 160,
         "hundred_remainder": 180,
         "large_integer": 120,
@@ -513,6 +515,8 @@ _SKILL_COUNTS = {
         "restart_correction": 40,
         "restart_abstain": 40,
         "enum_surface": 120,
+        "choice_map": 128,
+        "choice_abstain": 64,
         "active_integer": 16,
         "hundred_remainder": 20,
         "large_integer": 12,
@@ -689,6 +693,7 @@ def _add_holdout_skills(add, split: str) -> None:
     _add_hedged_commits(emit, split)
     _add_restart_corrections(emit, split)
     _add_enum_surface(emit, split)
+    _add_choice_maps(emit, split)
     _add_active_integers(emit, split)
     _add_hundred_remainders(emit, split)
     _add_large_integers(emit, split)
@@ -1424,6 +1429,154 @@ def _add_enum_surface(emit, split: str) -> None:
             [field, sibling],
             [set_call("set_choice", fid, oid)],
             active,
+        )
+
+
+# Spoken form -> option id. Ids and labels are invented so frozen test fields stay out.
+# Each option is (id, spaced speech, short alias or "").
+_CHOICE_MAPS = {
+    "train": (
+        (
+            "dye lot",
+            (
+                ("indigo_wash", "indigo wash", "indigo"),
+                ("rust_wash", "rust wash", "rust"),
+                ("sand_wash", "sand wash", "sand"),
+            ),
+        ),
+        (
+            "crate grade",
+            (
+                ("export_grade", "export grade", "export"),
+                ("local_grade", "local grade", "local"),
+                ("scrap_grade", "scrap grade", "scrap"),
+            ),
+        ),
+        (
+            "bay light",
+            (
+                ("cool_white", "cool white", "cool"),
+                ("warm_white", "warm white", "warm"),
+                ("amber_glow", "amber glow", "amber"),
+            ),
+        ),
+        (
+            "route pace",
+            (
+                ("dawn_run", "dawn run", "dawn"),
+                ("noon_run", "noon run", "noon"),
+                ("dusk_run", "dusk run", "dusk"),
+            ),
+        ),
+    ),
+    "validation": (
+        (
+            "cloth weave",
+            (
+                ("plain_weave", "plain weave", "plain"),
+                ("twill_weave", "twill weave", "twill"),
+                ("satin_weave", "satin weave", "satin"),
+            ),
+        ),
+        (
+            "drum tone",
+            (
+                ("low_tone", "low tone", "low"),
+                ("mid_tone", "mid tone", "mid"),
+                ("bright_tone", "bright tone", "bright"),
+            ),
+        ),
+        (
+            "ink family",
+            (
+                ("matte_black", "matte black", "matte"),
+                ("gloss_black", "gloss black", "gloss"),
+                ("dye_black", "dye black", "dye"),
+            ),
+        ),
+        (
+            "shelf zone",
+            (
+                ("front_zone", "front zone", "front"),
+                ("mid_zone", "mid zone", "middle"),
+                ("back_zone", "back zone", "back"),
+            ),
+        ),
+    ),
+}
+
+
+def _choice_map_field(fid: str, label: str, options: tuple[tuple[str, str, str], ...]) -> dict[str, Any]:
+    rendered = []
+    for oid, spaced, alias in options:
+        item: dict[str, Any] = {"id": oid, "label": spaced}
+        if alias:
+            item["aliases"] = [alias]
+        rendered.append(item)
+    return _field(fid, "enum", label, options=rendered)
+
+
+def _add_choice_maps(emit, split: str) -> None:
+    """Map spoken aliases, spaces, rejections, and light disfluency onto option ids.
+
+    A paired abstain set uses the same fields when the speaker does not commit.
+    """
+    groups = _CHOICE_MAPS[split]
+    n_map = _SKILL_COUNTS[split]["choice_map"]
+    n_abstain = _SKILL_COUNTS[split]["choice_abstain"]
+    if n_map % (len(groups) * 4) != 0:
+        raise RuntimeError("choice_map count must cover every group and style evenly")
+    for i in range(n_map):
+        label, options = groups[i % len(groups)]
+        correct = options[i % len(options)]
+        wrong = options[(i + 1) % len(options)]
+        fid = f"syn_cm_{split[:2]}_{i:04d}"
+        field = _choice_map_field(fid, label, options)
+        style = (i // len(groups)) % 4
+        oid, spaced, alias = correct
+        if style == 0:
+            utterance = f"go with {alias}" if split == "train" else f"mark {alias} thanks"
+        elif style == 1:
+            utterance = spaced if split == "train" else f"{spaced} thanks"
+        elif style == 2:
+            utterance = (
+                f"{spaced} and not {wrong[1]}"
+                if split == "train"
+                else f"use {spaced}, not {wrong[1]}"
+            )
+        else:
+            utterance = f"uh {spaced}" if split == "train" else f"so so {spaced}"
+        emit(
+            "choice_map",
+            "enum",
+            _avoid_test_utterance(utterance),
+            [field],
+            [set_call("set_choice", fid, oid)],
+            fid,
+        )
+    abstain_frames = (
+        "maybe {a} or {b}",
+        "not sure if it is {a}",
+        "leave the {label} undecided",
+        "{a}, or actually never mind",
+    )
+    for i in range(n_abstain):
+        label, options = groups[i % len(groups)]
+        fid = f"syn_ca_{split[:2]}_{i:04d}"
+        field = _choice_map_field(fid, label, options)
+        a = options[i % len(options)][2]
+        b = options[(i + 1) % len(options)][2]
+        frame = abstain_frames[i % len(abstain_frames)]
+        utterance = frame.format(a=a, b=b, label=label)
+        if split == "validation":
+            utterance = f"{utterance} thanks"
+        emit(
+            "choice_abstain",
+            "no_change",
+            _avoid_test_utterance(utterance),
+            [field],
+            [],
+            fid,
         )
 
 
