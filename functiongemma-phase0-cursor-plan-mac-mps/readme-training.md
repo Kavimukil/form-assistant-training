@@ -87,15 +87,16 @@ SKIP_TORCH_INSTALL=1 ./scripts/bootstrap_wsl.sh
 source .venv/bin/activate
 ```
 
-## 6. Log in to Hugging Face
+## 6. Confirm the v6 checkpoint
 
-The trainer downloads `google/functiongemma-270m-it`. Accept the model terms on Hugging Face, then:
+This run loads weights from `artifacts/checkpoints/universal-full-v6`. It does not download `google/functiongemma-270m-it`.
 
 ```bash
-hf auth login
+test -f artifacts/checkpoints/universal-full-v6/config.json \
+  && ls artifacts/checkpoints/universal-full-v6
 ```
 
-`huggingface-cli login` works on older `huggingface_hub` releases.
+The directory must contain `config.json`, tokenizer files, and a weight file such as `model.safetensors`. If those files are missing, copy the finished v6 checkpoint onto this disk before the smoke test. A Mac smoke from the base model is not this run.
 
 ## 7. Run the CUDA preflight
 
@@ -193,7 +194,7 @@ The previous checkpoint, `artifacts/checkpoints/universal-full-v6`, scored these
 | Printed field | v6 validation | v6 test |
 | --- | ---: | ---: |
 | `n` | 2500 | 2500 |
-| `exact_call` | 0.9040 | 0.7992 |
+| `exact_call` | 0.904 | 0.7992 |
 | `op` | 0.9192 | 0.9192 |
 | `field` | 0.9192 | 0.9192 |
 | `value` | 0.8871 | 0.7637 |
