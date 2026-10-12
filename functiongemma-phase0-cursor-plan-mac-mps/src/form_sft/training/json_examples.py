@@ -1657,3 +1657,243 @@ def _add_large_integers(emit, split: str) -> None:
             [set_call("set_integer", fid, value)],
             active,
         )
+
+
+# v4 production slice. Each field is used once and every sentence is unique.
+# These rows are appended to the v2 files. They are not part of synthetic_examples,
+# so the repeated v3 choice_map lines are not included.
+_V4_COUNTS = {"train": (600, 600), "validation": (80, 80)}
+
+_V4_TRAIN_ADJ = (
+    "amber", "apricot", "ashen", "azure", "biscuit", "bronze", "cedar", "chalk",
+    "cinder", "citrus", "cobalt", "copper", "coral", "cream", "crimson", "denim",
+    "dusk", "ebony", "ember", "fern", "flint", "foggy", "ginger", "granite",
+    "hazel", "honey", "indigo", "ivory", "jade", "khaki", "lemon", "lilac",
+    "linen", "maple", "maroon", "mint", "mocha", "moss", "navy", "ochre",
+    "olive", "opal", "peach", "pearl", "plum", "rosewood", "ruby", "rust",
+    "saffron", "sage", "salmon", "sand", "scarlet", "slate", "steel", "taupe",
+    "teal", "topaz", "violet", "willow",
+)
+_V4_TRAIN_NOUN = (
+    "badge", "band", "bead", "belt", "binding", "bolt", "braid", "brush",
+    "buckle", "button", "cable", "canvas", "clip", "cloth", "cord", "cover",
+    "dye", "fabric", "fiber", "film", "finish", "foil", "gasket", "glaze",
+    "grain", "handle", "hem", "hinge", "ink", "knit", "label", "latch",
+    "lining", "luster", "mesh", "nap", "panel", "pigment", "plait", "resin",
+    "ribbon", "rivet", "roller", "seam", "shade", "sheen", "shell", "stitch",
+    "strand", "strap", "stud", "swatch", "tape", "thread", "tile", "tint",
+    "trim", "varnish", "weave", "yarn",
+)
+_V4_VAL_ADJ = (
+    "arctic", "basil", "birch", "blizzard", "bramble", "breeze", "canyon", "clover",
+    "comet", "creek", "cypress", "daisy", "delta", "dune", "falcon", "fjord",
+    "glacier", "harbor", "heath", "lagoon", "meadow", "pebble", "prairie", "quartz",
+)
+_V4_VAL_NOUN = (
+    "atlas", "beacon", "cairn", "compass", "folio", "globe", "hammock", "journal",
+    "kiosk", "lantern", "leaflet", "marker", "notebook", "paddle", "quill", "saddle",
+    "signal", "spool", "ticket", "wagon",
+)
+_V4_TRAIN_HEAD = (
+    "alpha", "beta", "gamma", "delta", "echo", "foxtrot", "golf", "hotel",
+    "india", "juliet", "kilo", "lima", "mike", "november", "oscar", "papa",
+    "quebec", "romeo", "sierra", "tango", "uniform", "victor", "whiskey", "xray",
+    "yankee", "zulu", "north", "south", "east", "west",
+)
+_V4_TRAIN_TAIL = (
+    "rack", "bin", "drawer", "shelf", "tray", "crate", "carton", "case",
+    "folder", "sleeve", "pocket", "slot", "hook", "peg", "rail", "post",
+    "stand", "desk", "bench", "stool", "cabinet", "locker", "chest", "trunk",
+    "hamper", "basket", "pail", "tub", "jar", "vial", "flask", "beaker",
+    "coil", "spindle", "bobbin", "reel", "drum", "canister", "caddy", "holster",
+)
+_V4_VAL_HEAD = (
+    "aspen", "cedar", "elm", "fir", "holly", "larch", "maple", "oak", "pine", "spruce",
+)
+_V4_VAL_TAIL = (
+    "aisle", "bay", "cell", "dock", "gate", "lane", "loft", "nook",
+    "pier", "row", "wing", "yard", "zone", "deck", "hall", "room",
+)
+_V4_OUTSIDER = (
+    "quartzite", "obsidian", "pumice", "gypsum", "mica", "feldspar", "basalt", "shale",
+)
+
+
+def _v4_lexicon(split: str) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...], tuple[str, ...]]:
+    if split == "train":
+        return _V4_TRAIN_ADJ, _V4_TRAIN_NOUN, _V4_TRAIN_HEAD, _V4_TRAIN_TAIL
+    if split == "validation":
+        return _V4_VAL_ADJ, _V4_VAL_NOUN, _V4_VAL_HEAD, _V4_VAL_TAIL
+    raise ValueError(split)
+
+
+def _v4_pair(adj: tuple[str, ...], noun: tuple[str, ...], index: int) -> tuple[str, str]:
+    span = len(adj) * len(noun)
+    if index < 0 or index >= span:
+        raise RuntimeError(f"v4 pair index {index} outside 0..{span - 1}")
+    return adj[index % len(adj)], noun[index // len(adj)]
+
+
+def _v4_field_label(heads: tuple[str, ...], tails: tuple[str, ...], index: int) -> str:
+    span = len(heads) * len(tails)
+    if index < 0 or index >= span:
+        raise RuntimeError(f"v4 field index {index} outside 0..{span - 1}")
+    return f"{heads[index % len(heads)]} {tails[index // len(heads)]}"
+
+
+@lru_cache(maxsize=1)
+def _v4_blocked_ids() -> frozenset[str]:
+    blocked = set(_banned_holdout_ids())
+    path = _repo_root() / "generated" / "json-calls-v2" / "test.sft.jsonl"
+    if path.exists():
+        with path.open(encoding="utf-8") as handle:
+            for line in handle:
+                if not line.strip():
+                    continue
+                calls = (json.loads(line).get("target") or {}).get("function_calls") or []
+                for call in calls:
+                    if call.get("name") != "set_choice":
+                        continue
+                    args = call.get("arguments") or {}
+                    blocked.add(str(args.get("field_id")))
+                    blocked.add(str(args.get("value")))
+    return frozenset(blocked)
+
+
+def _v4_option_id(adj: str, noun: str, blocked: frozenset[str]) -> str:
+    stem = f"{adj}_{noun}"
+    for extra in range(12):
+        digest = hashlib.sha1(f"json-calls-v4|{stem}|{extra}".encode()).hexdigest()[:4]
+        ident = f"{stem}_{digest}"
+        if ident not in blocked and ident != adj and ident != noun:
+            return ident
+    raise RuntimeError(f"could not mint a v4 option id for {stem}")
+
+
+def _v4_field_id(split: str, role: str, index: int, blocked: frozenset[str]) -> str:
+    for extra in range(8):
+        digest = hashlib.sha1(f"json-calls-v4|{split}|{role}|{index}|{extra}".encode()).hexdigest()[:8]
+        ident = f"fld_{digest}"
+        if ident not in blocked:
+            return ident
+    raise RuntimeError(f"could not mint a v4 field id for {split} {role} {index}")
+
+
+def _v4_options(
+    adj: tuple[str, ...],
+    noun: tuple[str, ...],
+    start: int,
+    blocked: frozenset[str],
+) -> list[dict[str, Any]]:
+    options = []
+    for offset in range(3):
+        word, thing = _v4_pair(adj, noun, start + offset)
+        options.append(
+            {
+                "id": _v4_option_id(word, thing, blocked),
+                "label": f"{word} {thing}",
+                "aliases": [word],
+                "word": word,
+                "thing": thing,
+            }
+        )
+    return options
+
+
+def v4_choice_rows(split: str) -> list[dict[str, Any]]:
+    """Unique alias, spaced-id, rejection, disfluency, and no-change rows.
+
+    Train and validation lexicons are disjoint. Option ids are rejected when
+    they match a holdout id or a frozen-test set_choice id.
+    """
+    n_commit, n_abstain = _V4_COUNTS[split]
+    adj, noun, heads, tails = _v4_lexicon(split)
+    if n_commit * 3 + n_abstain * 3 > len(adj) * len(noun):
+        raise RuntimeError(f"{split} lexicon is too small for the v4 counts")
+    if n_commit + n_abstain > len(heads) * len(tails):
+        raise RuntimeError(f"{split} field names are too few for the v4 counts")
+    blocked = _v4_blocked_ids()
+    banned_utt = {utterance.casefold() for utterance in _frozen_test_utterances()}
+    holdout_labels = {
+        "furnishing level",
+        "meal preference",
+        "exam board",
+        "delivery slot",
+        "transmission mode",
+        "exercise frequency",
+        "crop season",
+        "priority level",
+    }
+    rows: list[dict[str, Any]] = []
+    seen: set[str] = set()
+
+    def add(skill: str, kind: str, utterance: str, field: dict[str, Any], calls: list[dict[str, Any]]) -> None:
+        key = utterance.casefold()
+        if key in seen or key in banned_utt:
+            raise RuntimeError(f"v4 utterance is repeated or matches the frozen test: {utterance}")
+        if field["label"].casefold() in holdout_labels:
+            raise RuntimeError(f"v4 field label is a holdout label: {field['label']}")
+        idents = _iter_ids([{k: v for k, v in field.items() if k != "word"}])
+        for ident in idents:
+            if ident in blocked:
+                raise RuntimeError(f"v4 id {ident} collides with a holdout or test id")
+        seen.add(key)
+        public = {k: v for k, v in field.items() if k not in {"word", "thing"}}
+        public_options = []
+        for opt in public["options"]:
+            public_options.append({k: v for k, v in opt.items() if k not in {"word", "thing"}})
+        public["options"] = public_options
+        rows.append(
+            _example(
+                f"json-v4-{split[:2]}-{len(rows):04d}",
+                utterance,
+                [public],
+                calls,
+                active=public["id"],
+                primitive=kind,
+                split=split,
+                source="synthetic_json",
+                skill=skill,
+                mode="active_field",
+            )
+        )
+
+    for i in range(n_commit):
+        label = _v4_field_label(heads, tails, i)
+        fid = _v4_field_id(split, "commit", i, blocked)
+        options = _v4_options(adj, noun, i * 3, blocked)
+        correct = options[i % 3]
+        wrong = options[(i + 1) % 3]
+        field = {"id": fid, "type": "enum", "label": label, "options": options}
+        style = i % 4
+        if style == 0:
+            utterance = f"just {correct['word']} for the {label}"
+        elif style == 1:
+            utterance = correct["label"]
+        elif style == 2:
+            utterance = f"{correct['label']} and not {wrong['label']}"
+        else:
+            utterance = f"uh {correct['label']}"
+        add(
+            "choice_prod",
+            "enum",
+            utterance,
+            field,
+            [set_call("set_choice", fid, correct["id"])],
+        )
+
+    for i in range(n_abstain):
+        label = _v4_field_label(heads, tails, n_commit + i)
+        fid = _v4_field_id(split, "abstain", i, blocked)
+        options = _v4_options(adj, noun, (n_commit + i) * 3, blocked)
+        field = {"id": fid, "type": "enum", "label": label, "options": options}
+        style = i % 3
+        if style == 0:
+            utterance = f"maybe {options[0]['label']} or {options[1]['label']}"
+        elif style == 1:
+            outsider = _V4_OUTSIDER[i % len(_V4_OUTSIDER)]
+            utterance = f"{outsider} for the {label}"
+        else:
+            utterance = f"leave the {label} undecided"
+        add("choice_prod_abstain", "no_change", utterance, field, [])
+    return rows

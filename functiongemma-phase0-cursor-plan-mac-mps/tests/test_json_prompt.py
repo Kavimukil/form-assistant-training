@@ -1,6 +1,6 @@
 from form_sft.contracts.models import CanonicalRow
 from form_sft.evaluation.evaluate import aggregate_json_metrics, PredRow
-from form_sft.training.json_examples import fixture_utterances, held_out_fixtures, synthetic_examples
+from form_sft.training.json_examples import fixture_utterances, held_out_fixtures, synthetic_examples, v4_choice_rows
 from form_sft.training.json_prompt import (
     calls_from_row,
     context_from_row,
@@ -207,6 +207,45 @@ def _assert_holdout_skill_slice():
     remainder = next(row for row in by_split["train"] if row["metadata"]["skill"] == "hundred_remainder")
     assert " and " in remainder["utterance"]
     assert remainder["target"]["function_calls"][0]["arguments"]["value"] % 100 != 0
+
+
+def test_v4_choice_rows_are_unique_and_do_not_leak_test_ids():
+    from form_sft.training.json_examples import _V4_COUNTS, _banned_holdout_ids, _v4_blocked_ids
+
+    blocked = _v4_blocked_ids()
+    assert _banned_holdout_ids() <= blocked
+    by_split = {}
+    for split, (n_commit, n_abstain) in _V4_COUNTS.items():
+        rows = v4_choice_rows(split)
+        by_split[split] = rows
+        assert len(rows) == n_commit + n_abstain
+        utterances = [row["utterance"] for row in rows]
+        assert len(utterances) == len({item.casefold() for item in utterances})
+        commits = [row for row in rows if row["metadata"]["skill"] == "choice_prod"]
+        abstains = [row for row in rows if row["metadata"]["skill"] == "choice_prod_abstain"]
+        assert len(commits) == n_commit
+        assert len(abstains) == n_abstain
+        field_ids = []
+        for row in rows:
+            assert row["target"]["function_calls"] == [] or row["metadata"]["skill"] == "choice_prod"
+            field = row["context"]["fields"][0]
+            field_ids.append(field["id"])
+            assert field["id"] not in blocked
+            for opt in field["options"]:
+                assert opt["id"] not in blocked
+                assert opt["aliases"][0] != opt["id"]
+        assert len(field_ids) == len(set(field_ids))
+    train_alias = next(row for row in by_split["train"] if row["utterance"].startswith("just "))
+    call = train_alias["target"]["function_calls"][0]
+    assert call["name"] == "set_choice"
+    spoken = train_alias["utterance"].split()[1]
+    assert call["arguments"]["value"] != spoken
+    assert spoken in call["arguments"]["value"]
+    train_abstain = next(row for row in by_split["train"] if row["metadata"]["skill"] == "choice_prod_abstain")
+    assert train_abstain["target"]["function_calls"] == []
+    train_utt = {row["utterance"].casefold() for row in by_split["train"]}
+    val_utt = {row["utterance"].casefold() for row in by_split["validation"]}
+    assert train_utt.isdisjoint(val_utt)
 
 
 def test_score_empty_and_multi_call():

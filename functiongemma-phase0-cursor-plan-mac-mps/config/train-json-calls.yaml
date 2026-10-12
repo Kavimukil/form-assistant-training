@@ -1,5 +1,5 @@
 model_id: google/functiongemma-270m-it
-output_dir: artifacts/checkpoints/json-calls-sft-v3
+output_dir: artifacts/checkpoints/json-calls-sft-v4
 seed: 20261006
 max_seq_length: 1024
 num_train_epochs: 3
@@ -16,5 +16,5 @@ bf16: auto
 fp16: auto
 gradient_checkpointing: false
 packing: false
-train_file: generated/json-calls-v3/train.sft.jsonl
-validation_file: generated/json-calls-v3/validation.sft.jsonl
+train_file: generated/json-calls-v4/train.sft.jsonl
+validation_file: generated/json-calls-v4/validation.sft.jsonl

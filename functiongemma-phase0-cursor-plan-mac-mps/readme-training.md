@@ -38,12 +38,12 @@ pwd
 
 `pwd` must look like `/home/<you>/form-assistant-training/functiongemma-phase0-cursor-plan-mac-mps`. A path starting with `/mnt/c` or `/mnt/d` is the wrong disk.
 
-`git lfs pull` is required. `generated/json-calls-v3/train.sft.jsonl` is stored in Git LFS (about 91 MB). Without LFS you get a pointer file and training fails.
+`git lfs pull` is required. `generated/json-calls-v4/train.sft.jsonl` is stored in Git LFS (about 91 MB). Without LFS you get a pointer file and training fails.
 
 Confirm the dataset is real text, not a pointer:
 
 ```bash
-head -c 80 generated/json-calls-v3/train.sft.jsonl; echo
+head -c 80 generated/json-calls-v4/train.sft.jsonl; echo
 ```
 
 The line should start with `{`. A line that starts with `version https://git-lfs.github.com` means LFS did not download the file. Run `git lfs pull` again.
@@ -107,14 +107,14 @@ Train once from `google/functiongemma-270m-it`. Do not resume an older checkpoin
 
 `config/train-json-calls.yaml` is the only training config for this run. It reads:
 
-- `generated/json-calls-v3/train.sft.jsonl` (38,379 rows)
-- `generated/json-calls-v3/validation.sft.jsonl` (4,714 rows)
+- `generated/json-calls-v4/train.sft.jsonl` (38,139 rows)
+- `generated/json-calls-v4/validation.sft.jsonl` (4,682 rows)
 
-v3 contains every json-calls v2 example. The added rows teach spoken aliases, spaced words against underscored option ids, a rejected option in the same sentence, light disfluency, and true no-change on those same fields. The test file `generated/json-calls-v3/test.sft.jsonl` is the same 2,500-row file as v1 and v2. Do not train on it.
+v4 starts from every json-calls v2 row. It adds 1,200 unique training sentences and 160 unique validation sentences: a short alias, a spaced phrase against an underscored option id, a rejected option in the same sentence, a light disfluency, and the same number of true no-change rows. No sentence is repeated. The test file `generated/json-calls-v4/test.sft.jsonl` is the same 2,500-row file as v2. Do not train on it.
 
 ## 8. Smoke test (50 steps)
 
-Do this before the full run. The smoke run writes `artifacts/checkpoints/json-calls-sft-v3-smoke/` and does not keep mid-run checkpoints. It still saves a final snapshot and `smoke_report.json`.
+Do this before the full run. The smoke run writes `artifacts/checkpoints/json-calls-sft-v4-smoke/` and does not keep mid-run checkpoints. It still saves a final snapshot and `smoke_report.json`.
 
 ```bash
 python -m form_sft.training.train \
@@ -127,7 +127,7 @@ A passing smoke run prints a finite loss and `checkpoint_reload=PASS`. Stop if t
 
 ## 9. Full training
 
-One SFT run, 3 epochs. The checkpoint goes to `artifacts/checkpoints/json-calls-sft-v3/`:
+One SFT run, 3 epochs, from `google/functiongemma-270m-it`. Do not resume the v2 or v3 checkpoint. The new checkpoint goes to `artifacts/checkpoints/json-calls-sft-v4/`:
 
 ```bash
 python -m form_sft.training.train \
@@ -143,10 +143,10 @@ Validation first:
 
 ```bash
 python -m form_sft.cli evaluate-json \
-  --file generated/json-calls-v3/validation.sft.jsonl \
-  --model-id artifacts/checkpoints/json-calls-sft-v3 \
+  --file generated/json-calls-v4/validation.sft.jsonl \
+  --model-id artifacts/checkpoints/json-calls-sft-v4 \
   --device cuda \
-  --tag json-calls-v3-val \
+  --tag json-calls-v4-val \
   --batch-size 8
 ```
 
@@ -154,10 +154,10 @@ If validation looks right, run the frozen test set once:
 
 ```bash
 python -m form_sft.cli evaluate-json \
-  --file generated/json-calls-v3/test.sft.jsonl \
-  --model-id artifacts/checkpoints/json-calls-sft-v3 \
+  --file generated/json-calls-v4/test.sft.jsonl \
+  --model-id artifacts/checkpoints/json-calls-sft-v4 \
   --device cuda \
-  --tag json-calls-v3-test \
+  --tag json-calls-v4-test \
   --batch-size 8
 ```
 
@@ -167,11 +167,11 @@ Metrics and predictions are written under `artifacts/eval/<tag>/`. Leave the che
 
 | Path | What it is |
 | --- | --- |
-| `generated/json-calls-v3/train.sft.jsonl` | The only training file |
-| `generated/json-calls-v3/validation.sft.jsonl` | The only validation file |
-| `generated/json-calls-v3/test.sft.jsonl` | Frozen 2,500-row test file |
-| `artifacts/checkpoints/json-calls-sft-v3-smoke/` | 50-step smoke snapshot |
-| `artifacts/checkpoints/json-calls-sft-v3/` | The one full SFT checkpoint |
+| `generated/json-calls-v4/train.sft.jsonl` | The only training file |
+| `generated/json-calls-v4/validation.sft.jsonl` | The only validation file |
+| `generated/json-calls-v4/test.sft.jsonl` | Frozen 2,500-row test file, identical to v2 |
+| `artifacts/checkpoints/json-calls-sft-v4-smoke/` | 50-step smoke snapshot |
+| `artifacts/checkpoints/json-calls-sft-v4/` | The one full SFT checkpoint |
 | `~/.cache/huggingface/` | Downloaded base model and tokenizer |
 
 Checkpoint directories are gitignored. Leave them on the WSL disk.

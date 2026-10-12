@@ -1,0 +1,25 @@
+{
+  "model_id": "google/functiongemma-270m-it",
+  "format": "function_calls_json",
+  "base": "generated/json-calls-v2",
+  "test_sha256": "52b4fa65cd0d6d2258ee787cc24a4694b252272512c08465b7f635f0bbf8124b",
+  "splits": {
+    "train": {
+      "v2_rows": 36939,
+      "added_rows": 1200,
+      "output": "generated/json-calls-v4/train.sft.jsonl"
+    },
+    "validation": {
+      "v2_rows": 4522,
+      "added_rows": 160,
+      "output": "generated/json-calls-v4/validation.sft.jsonl"
+    },
+    "test": {
+      "v2_rows": 2500,
+      "added_rows": 0,
+      "output": "generated/json-calls-v4/test.sft.jsonl",
+      "unchanged": true
+    }
+  },
+  "passed": true
+}
