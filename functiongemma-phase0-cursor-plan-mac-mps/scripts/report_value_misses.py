@@ -6,6 +6,8 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from form_sft.evaluation.set_choice_slice import slice_set_choice
+from form_sft.evaluation.value_misses import classify_files
 from form_sft.training.compiler import load_tokenizer
 from form_sft.training.length_gate import _encode, percentile
 
@@ -86,13 +88,19 @@ def length_report(paths: list[Path], tokenizer) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--predictions", type=Path, default=None)
+    parser.add_argument("--dataset", type=Path, default=None, help="frozen jsonl joined by id")
     parser.add_argument("--sft", type=Path, nargs="*", default=[])
     parser.add_argument("--model-id", default="google/functiongemma-270m-it")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     payload: dict = {"model_id": args.model_id}
-    if args.predictions and args.predictions.exists():
+    if args.predictions:
+        if not args.predictions.exists():
+            raise SystemExit(f"predictions file not found: {args.predictions}")
         payload["predictions"] = slice_predictions(args.predictions)
+        payload["set_choice"] = slice_set_choice(args.predictions)
+        if args.dataset:
+            payload["value_misses"] = classify_files(args.predictions, args.dataset)
     else:
         payload["predictions"] = {
             "status": "absent",

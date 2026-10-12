@@ -13,3 +13,5 @@ functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v6/train.jsonl
 functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v6/train.sft.jsonl filter=lfs diff=lfs merge=lfs -text
 functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v7/train.jsonl filter=lfs diff=lfs merge=lfs -text
 functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v7/train.sft.jsonl filter=lfs diff=lfs merge=lfs -text
+functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v8/train.jsonl filter=lfs diff=lfs merge=lfs -text
+functiongemma-phase0-cursor-plan-mac-mps/generated/universal-full-v8/train.sft.jsonl filter=lfs diff=lfs merge=lfs -text

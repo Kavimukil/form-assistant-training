@@ -127,6 +127,15 @@ def _check_quotas(spec: dict) -> None:
             raise UniversalBuildError(f"{split} coverage {actual} != split size {expected}")
 
 
+def train_single_set_type(index: int, count: int, perm: int, string_force: int) -> str | None:
+    """Force the tail of train single-set rows so permutation and string copy have bases."""
+    if index >= count - perm:
+        return "enum"
+    if string_force and index >= count - perm - string_force:
+        return "string"
+    return None
+
+
 def _request(phenomenon: str, split: str, index: int) -> dict:
     request = {
         "phenomenon": phenomenon,
@@ -231,13 +240,13 @@ def build_records(spec: dict) -> tuple[list[DatasetRecordV2], list[DatasetRecord
                     request = _request(phenomenon, split, index)
                     if phenomenon == "single_set" and split == "train":
                         perm = int(spec["coverage"]["option_permutation"]["train"])
-                        if index >= count - perm:
-                            request["type_name"] = "enum"
+                        string_force = int(spec.get("forced_string_train") or 0)
+                        forced = train_single_set_type(index, count, perm, string_force)
+                        if forced:
+                            request["type_name"] = forced
                     if split == "train" and phenomenon not in {"no_change", "clear", "ambiguity"}:
                         if index % 4 == 1:
                             request["speak_field_alias"] = True
-                        if index % 2 == 0:
-                            request["speak_option_alias"] = True
                     truth = generate_scenario(
                         forms[split][index % family_count],
                         seed + index + len(phenomenon) * 1009 + attempt * 1_000_003,

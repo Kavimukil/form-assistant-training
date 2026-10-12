@@ -1,0 +1,35 @@
+{
+  "test": {
+    "asr": 125,
+    "clear": 125,
+    "code_mixed": 125,
+    "correction": 250,
+    "counterfactual": 26,
+    "multi_field": 375,
+    "no_change": 374,
+    "option_permutation": 100,
+    "single_set": 1000
+  },
+  "train": {
+    "asr": 1000,
+    "clear": 1000,
+    "code_mixed": 1000,
+    "correction": 2000,
+    "counterfactual": 400,
+    "multi_field": 3000,
+    "no_change": 1500,
+    "option_permutation": 1200,
+    "single_set": 8900
+  },
+  "validation": {
+    "asr": 125,
+    "clear": 125,
+    "code_mixed": 125,
+    "correction": 250,
+    "counterfactual": 26,
+    "multi_field": 375,
+    "no_change": 374,
+    "option_permutation": 100,
+    "single_set": 1000
+  }
+}
