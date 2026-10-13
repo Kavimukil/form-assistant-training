@@ -90,8 +90,11 @@ def main() -> None:
     per_device = int(cfg["per_device_train_batch_size"])
     grad_acc = int(cfg["gradient_accumulation_steps"])
     effective_batch = max(1, per_device * grad_acc)
+    configured_steps = int(cfg.get("max_steps") or 0)
     if args.smoke_steps:
         total_steps = args.smoke_steps
+    elif configured_steps > 0:
+        total_steps = configured_steps
     else:
         steps_per_epoch = max(1, (len(ds["train"]) + effective_batch - 1) // effective_batch)
         total_steps = steps_per_epoch * int(cfg["num_train_epochs"])
@@ -106,6 +109,13 @@ def main() -> None:
     elif loss_policy != "full_sequence":
         raise SystemExit(f"unknown loss_policy {loss_policy}")
 
+    step_extra = {}
+    if not args.smoke_steps:
+        if cfg.get("save_steps"):
+            step_extra["save_steps"] = int(cfg["save_steps"])
+        if cfg.get("eval_steps"):
+            step_extra["eval_steps"] = int(cfg["eval_steps"])
+
     training_args = SFTConfig(
         output_dir=output_dir,
         num_train_epochs=cfg["num_train_epochs"],
@@ -115,7 +125,7 @@ def main() -> None:
         gradient_accumulation_steps=grad_acc,
         weight_decay=cfg["weight_decay"],
         warmup_steps=warmup_steps,
-        logging_steps=min(cfg["logging_steps"], args.smoke_steps) if args.smoke_steps else cfg["logging_steps"],
+        logging_steps=min(cfg["logging_steps"], total_steps) if args.smoke_steps or configured_steps else cfg["logging_steps"],
         # Smoke: no mid-run checkpoints; final reloadable snapshot is saved after train().
         save_strategy="no" if args.smoke_steps else cfg["save_strategy"],
         eval_strategy="no" if args.smoke_steps else cfg["eval_strategy"],
@@ -123,12 +133,13 @@ def main() -> None:
         fp16=plan.fp16,
         use_cpu=(plan.device == "cpu"),
         report_to="none",
-        max_steps=args.smoke_steps if args.smoke_steps else -1,
+        max_steps=total_steps if args.smoke_steps or configured_steps else -1,
         seed=cfg.get("seed", 20261006),
         dataset_text_field="text",
         max_length=int(cfg.get("max_seq_length", 1024)),
         packing=bool(cfg.get("packing", False)),
         **sft_extra,
+        **step_extra,
     )
 
     # Compiler creates the `text` column using FunctionGemma's tokenizer/chat template.

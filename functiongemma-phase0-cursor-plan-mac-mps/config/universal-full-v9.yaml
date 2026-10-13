@@ -1,0 +1,20 @@
+spec:
+  name: functiongemma-universal-full
+  version: 1.2.0
+  experiment_id: universal-full-v9
+  total_rows: 25000
+  random_seed: 20261012
+  model_id: google/functiongemma-270m-it
+  frozen_benchmark: universal-full-v1
+  init_checkpoint: artifacts/checkpoints/universal-full-v7
+  replay_rows: 18000
+  string_drills: 1000
+  choice_drills: 1000
+splits: {train: 20000, validation: 2500, test: 2500}
+families: {train: 80, validation: 10, test: 20}
+inference:
+  contract: production_json
+  decoding: greedy
+  max_seq_length: 1152
+  max_new_tokens: 256
+  loss_policy: assistant_only

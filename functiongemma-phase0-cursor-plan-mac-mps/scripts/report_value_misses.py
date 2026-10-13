@@ -7,7 +7,7 @@ from collections import Counter
 from pathlib import Path
 
 from form_sft.evaluation.set_choice_slice import slice_set_choice
-from form_sft.evaluation.value_misses import classify_files
+from form_sft.evaluation.value_misses import classify_files, compare_predictions
 from form_sft.training.compiler import load_tokenizer
 from form_sft.training.length_gate import _encode, percentile
 
@@ -88,6 +88,8 @@ def length_report(paths: list[Path], tokenizer) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--predictions", type=Path, default=None)
+    parser.add_argument("--compare-v7", type=Path, default=None)
+    parser.add_argument("--compare-v8", type=Path, default=None)
     parser.add_argument("--dataset", type=Path, default=None, help="frozen jsonl joined by id")
     parser.add_argument("--sft", type=Path, nargs="*", default=[])
     parser.add_argument("--model-id", default="google/functiongemma-270m-it")
@@ -107,6 +109,14 @@ def main() -> None:
             "alias_share": "option_alias_on_half_of_train_sets",
             "note": "v6 test enum 0.7973 against field 0.9192, so option aliases are the default drill.",
         }
+    if args.compare_v7 or args.compare_v8:
+        if args.dataset is None:
+            raise SystemExit("--dataset is required with --compare-v7 and --compare-v8")
+        payload["comparison"] = compare_predictions(args.compare_v7, args.compare_v8, args.dataset)
+        if not payload["comparison"]["proceed"]:
+            args.out.parent.mkdir(parents=True, exist_ok=True)
+            args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+            raise SystemExit("v9 build gate: prediction files are absent")
     if args.sft:
         payload["lengths"] = length_report(args.sft, load_tokenizer(args.model_id))
         maxima = [item["max"] for item in payload["lengths"].values()]

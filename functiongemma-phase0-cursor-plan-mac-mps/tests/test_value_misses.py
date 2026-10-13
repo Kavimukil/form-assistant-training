@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from form_sft.evaluation.value_misses import classify_files, classify_joined
+from form_sft.evaluation.value_misses import classify_files, classify_joined, compare_predictions
 from form_sft.universal.build import train_single_set_type
 
 
@@ -90,6 +90,28 @@ def test_string_classes_and_file_gate(tmp_path: Path):
     assert report["proceed"] is True
     assert report["set_string"]["current_state"] == 1
     assert report["set_choice"]["spoken_label"] == 1
+
+
+def test_malformed_id_and_truncated_string_are_separate_classes():
+    record = _record()
+    choice = [{"name": "set_choice", "arguments": {"field_id": "enum-field", "value": "opt-a"}}]
+    malformed = classify_joined(
+        _pred(choice, [{"name": "set_choice", "arguments": {"field_id": "enum-field", "value": "opt-missing"}}]),
+        record,
+    )
+    string = [{"name": "set_string", "arguments": {"field_id": "string-field", "value": "spoken"}}]
+    truncated = classify_joined(
+        _pred(string, [{"name": "set_string", "arguments": {"field_id": "string-field", "value": "spok"}}]),
+        record,
+    )
+    assert malformed[0]["class"] == "malformed_id"
+    assert truncated[0]["class"] == "truncated_substring"
+
+
+def test_missing_predictions_do_not_select_alias_drills(tmp_path: Path):
+    report = compare_predictions(tmp_path / "v7.jsonl", tmp_path / "v8.jsonl", tmp_path / "test.jsonl")
+    assert report["predictions_present"] is False
+    assert report["proceed"] is False
 
 
 def test_string_force_sits_before_the_enum_tail():

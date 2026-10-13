@@ -485,3 +485,10 @@ def write_dataset(spec: dict, out_dir: str | Path, *, near_duplicate_threshold: 
     )
     (out / "manifest.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
     return summary
+
+
+def write_v9_dataset(*args, **kwargs):
+    """Replay v7 rows and add copy drills. Refuses to write when the prediction gate fails."""
+    from form_sft.universal.v9_replay import write_v9_dataset as impl
+
+    return impl(*args, **kwargs)
